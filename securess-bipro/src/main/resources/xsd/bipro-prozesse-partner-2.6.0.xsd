@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/prozesse/partner"
+            xmlns:pz-partner="http://www.bipro.net/namespace/prozesse/partner"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:nachr="http://www.bipro.net/namespace/nachrichten"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:gevo="http://www.bipro.net/namespace/gevo"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/prozesse/partner"
+            bipro:Name="bipro-prozesse-partner-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/gevo"
+               schemaLocation="bipro-gevo-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/nachrichten"
+               schemaLocation="bipro-nachrichten-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_ChangeRequest">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="AenderungsantragPartner" type="CT_AenderungsantragPartner" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungPartnerAllgemeineDaten">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungPartner">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="setChangeResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_ChangeResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_AenderungPartnerBankverbindung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungPartner">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="getChange">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_ChangeRequest" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="getChangeResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_ChangeResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="setChange">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_ChangeRequest" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_Partnerauskunft">
+      <xsd:complexContent>
+         <xsd:extension base="gevo:CT_Geschaeftsvorgang">
+            <xsd:sequence>
+               <xsd:element name="Partnernummer" type="dt:ST_Text030" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Partnernummer des gewünschten Partners bei demjenigen Unternehmen bei dem die Partnerdaten abgefragt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Unternehmen" type="allg:CT_Unternehmen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ChangeResponse">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence>
+               <xsd:element name="AenderungsantragPartner" type="CT_AenderungsantragPartner" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungPartner" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_GeVoArt" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Partneränderung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="getData">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_PartnerauskunftRequest" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_AenderungsantragPartner">
+      <xsd:complexContent>
+         <xsd:extension base="gevo:CT_Geschaeftsvorgang">
+            <xsd:sequence>
+               <xsd:element name="GueltigAb" type="dt:ST_Datum" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, zu dem die Partneränderung wirksam wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unterschriftsverfahren" type="dt:ST_Unterschriftsverfahren" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Attribut zur Festlegung, wie die Willenserklärung erfolgt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unternehmen" type="allg:CT_Unternehmen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AenderungPartner" type="CT_AenderungPartner" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="getDataResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_PartnerauskunftResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_AenderungPartnerBesteuerung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Änderung der Besteuerung eines Partners (z.B. des Freistellungsauftrags).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungPartner">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_PartnerauskunftResponse">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence>
+               <xsd:element name="Partnerauskunft" type="CT_Partnerauskunft" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_PartnerauskunftRequest">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="Partnerauskunft" type="CT_Partnerauskunft" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungPartnerAnschrift">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungPartner">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

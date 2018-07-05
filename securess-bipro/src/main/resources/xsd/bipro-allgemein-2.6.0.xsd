@@ -1,0 +1,1044 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/allgemein"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:nachr="http://www.bipro.net/namespace/nachrichten"
+            xmlns:mime="http://www.w3.org/2005/05/xmlmime"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            targetNamespace="http://www.bipro.net/namespace/allgemein"
+            bipro:Name="bipro-allgemein-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.w3.org/2005/05/xmlmime"
+               schemaLocation="xmlmime-2005-05.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/nachrichten"
+               schemaLocation="bipro-nachrichten-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Zeitraum2">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung von Zeiträumen und Dauern. Die Angaben MÜSSEN einen Zeitraum eindeutig definieren. Es MUSS also mindestens beide Zeitpunkte (Beginn, Ende) oder ein Zeitpunkt und eine Dauer (AnzahlJahre, AnzahlMonate, AnzahlTage) angegeben werden.
+Wenn aus fachlichen Gründen eine konkrete Angabe nicht möglich ist, DARF auf die Angabe verzichtet werden (z.B. Ende der Rentenzahlung = Tod, Ende der Versicherungsdauer in KV = Tod)
+WENN in der Dokumentation der Refernzierung der Klasse Zeitraum ein "weicher" Bezugszeitpunkt (z.B. Eintritt des Schadenfalls) angegeben ist, MUSS NUR die Dauer (AnzahlJahre, AnzahlMonate bzw AnzahlTage) des Zeitraums angegeben werden.
+Bei Anfragen (Requests) im Kontext TAA DARF der Consumer auf die vollständige Angabe konkreter Zeitpunkte oder der Dauer verzichten, da die korrekte Ermittlung der dieser Größen in der Hand des Produktgebers liegt. Der Produktgeber MUSS die fehlenden Größen ermitteln und in der Antwort zurückliefern.
+Die Angabe einer Dauer MUSS entweder als AnzahlJahre und AnzahlMonate erfolgen oder als AnzahlTage.
+Ist die Anzahl größer 11, MÜSSEN die vollen Jahre nach AnzahlJahre übertragen werden.
+Beispiel: Die Darstellung einer Dauer von 15 Monaten erfolgt also als AnzahlJahre=1, AnzahlMonate=3; 12 Monate erfolgt als AnzahlJahre=1, AnzahlMonate=0.
+
+Diese Klasse nutzende Assoziationen MÜSSEN in ihrer Dokumentation die Genauigkeit und Optionalität der Zeitzone in den Attributen Beginn und Ende explizit definieren.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Beginn" type="dt:ST_Zeitpunkt" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Beginn des abzubildenden Zeitraums.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ende" type="dt:ST_Zeitpunkt" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das Ende des abzubildenden Zeitraums.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlJahre" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Jahre der abzubildenden Dauer.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlMonate" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Monate der abzubildenden Dauer.
+Ist die Anzahl größer 11, MÜSSEN die vollen Jahre nach AnzahlJahre übertragen werden. Beispiel: Die Darstellung einer Dauer von 15 Monaten erfolgt also als AnzahlJahre=1, AnzahlMonate=3; 12 Monate erfolgt als AnzahlJahre=1, AnzahlMonate=0.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlTage" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Tage der abzubildenden Dauer.
+Dient zur expliziten Angabe von Dauern in Tagen (z.B. Karrenzeit = 42 Tage)
+DARF NICHT zusammen mit AnzahlMonate und/oder AnzahlJahre genutzt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Pachtwert">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Der Pachtwert entspricht dem maximalen Jahresmietzins für Bauten und bauliche Anlagen gewerblicher Nutzung, der nach Bewertungszweck und rechtlichen Verhältnissen als erzielbar angenommen werden kann. Dieser errechnet sich i.d.R. als das Produkt aus Fläche und ortsüblicher Vergleichsmiete pro Quadratmeter. Wird zur Zeit nur von Rechtsschutz genutzt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_FileResponse">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Nachrichten-Objekt zur Übertragung von Dateien</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence>
+               <xsd:element name="Datei" type="CT_Datei" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="getFile">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_FileRequest" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_Beinhaltet">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Diese Klasse spezifiziert das Enthaltensein eines Gegenstands in einem anderen Gegenstand wie z.B. einer Betriebsstätte mit mehreren Anlagen und Gebäuden mit gemischter Nutzung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Gegenstandsrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Partnernummer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eindeutige Identifizierung eines Partners bei dem Partner, der als Quelle spezifiziert wird. 
+Wird benötigt um eine Partnernummer zu spezifieren, die nicht vom produktgebenden Unternehmen oder vom Vermittler sondern von einem Dritten vergeben wurde, z. B. einem Dienstleister.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Nummer" type="dt:ST_Text030" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Identifizierung eines Partners.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Quelle" type="CT_Quelle" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Unternehmen">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Daten eines produktgebenden Unternehmens, z.B. Versicherungsunternehmen, Kapitalanlageunternehmen, Bausparunternehmen, gesetzlicher Krankenversicherer.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Nummer" type="dt:ST_Unternehmensnummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Nummer dient der eindeutigen Identifizierung des Unternehmens. Die Art der Nummer wird über das Attribut Nummernart näher spezifiziert.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Name" type="dt:ST_Text060" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Ort" type="dt:ST_Text030" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Geschaeftsstelle" type="dt:ST_Geschaeftsstellennummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Nummernart" type="dt:ST_Unternehmensnummernart" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Spezifizierung der Herkunft einer identifizierenden Nummer im Attribut Nummer. Sofern das Attribut keinen Wert enthält handelt es sich bei der identifizierenden Nummer immer um die BaFin-Nummer des Unternehmens.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="PartnerID" type="dt:ST_ID" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz auf die eindeutige Identifikationsnummer des Partners im Nachrichtenaustausch. In einigen Kontexten kann es sinnvoll sein, Kommunikationsdaten und Adressen, etc. des Providers zu übertragen. Eine Modellierung des Providers über eine Ableitung von Partnerrolle ist zum Zeitpunkt der Anforderung (04.2009) abwärtsinkompatibel. Aus diesem Grund wurde das Attribut PartnerID als Referenz auf einen im Nachrichtenaustausch gelieferten Partner modelliert. Vergleiche hierzu auch Vermittler.PartnerID.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Groesse">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die physische Ausdehnung eines Gegenstandes.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Laenge" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zahlwert der Länge. Die Maßeinheit MUSS in LaengenWerteinheit angegeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Breite" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zahlwert der Breite. Die Maßeinheit MUSS in LaengenWerteinheit angegeben werden</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Hoehe" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zahlwert der Höhe, teilweise auch "Dicke" genannt, z.B. bei Glasplatten. Die Maßeinheit MUSS in LaengenWerteinheit angegeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Umfang" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zahlwert des Umfangs. Die Maßeinheit MUSS in LaengenWerteinheit angegeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="LaengenWerteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Werteinheit für die Attribute Laenge, Breite, Hoehe und Umfang.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Flaeche" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zahlwert der Fläche. Die Maßeinheit MUSS in FlaechenWerteinheit angegeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="FlaechenWerteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Werteinheit für das Attribut Flaeche.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Volumen" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zahlwert des Volumens. Die Maßeinheit MUSS in VolumenWerteinheit angegeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VolumenWerteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Werteinheit für das Attribut Volumen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vermittlerrolle">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Rolle(n) des Vermittlers innerhalb des Geschaeftsvorgangs.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Vermittlerrolle" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Wert" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angaben zur möglichen Anteilsverteilung von Untervermittlern.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Wertschluessel" type="dt:STE_VermittlerrolleSchluessel" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Werteinheit" type="dt:ST_Berechnungseinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Vermittlertyp" type="dt:ST_Vermittlertyp" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Geoposition">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Angabe von geografischen Koordinaten</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Breite" type="dt:ST_Geokoordinate" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Geografische Breite in Dezimalgrad (Referenzellipsoid: WGS 84)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Laenge" type="dt:ST_Geokoordinate" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Geografische Länge in Dezimalgrad (Referenzellipsoid: WGS 84)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Hoehe" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Höhe in Metern über dem Ellipsoid (Referenzellipsoid: WGS 84)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="getFileResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_FileResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_FileRequest">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Nachrichten-Objekt zur Abfrage des Status eines laufenden Prozesses.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="Datei" type="CT_Datei" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Aktivitaetsrolle" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="AktivitaetID" type="dt:ST_ID" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Bestaetigungssumme">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die Bestätigungssumme gibt den versicherten Wert in der angegebenen Währungseinheit an. Dieser Wert wird dem Sicherungsgläubiger oder Sicherungsempfänger bestätigt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Unterschrift">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Übermittlung von Informationen, wann, wo und ob eine Unterschrift geleistet wurde. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Ort" type="dt:ST_Text030" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ort, an dem die Unterschrift geleistet wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Datum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, an dem die Unterschrift geleistet wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="UnterschriftLiegtVor" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Information, ob die Unterschrift vorliegt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gegenstandsrolle" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="GegenstandID" type="dt:ST_ID" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Adresse" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Basisklasse von der alle Anschriften abgeleitet werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Strasse" type="dt:ST_Text050" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Strasse der Adresse
+Hinweis: Es kann eine optionale Rückmeldung an die Datenquelle im Status erfolgen, wenn ein Abschneiden der Feldlänge des Attributes notwendig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Hausnummer" type="dt:ST_Text017" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Hausnummer der Adresse. Für Meldungen zur ZfA DARF die Hausnummer NICHT länger als 9-stellig übermittelt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Postleitzahl" type="dt:ST_Postleitzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Postleitzahl der Adresse.
+Für Meldungen zur ZfA MUSS die Postleitzahl 5-stellig übermittelt werden: Bei Inlandanschriften wird die fünfstellige Postleitzahl eingetragen.
+Bei Auslandsanschriften sind für den Aufbau der ausländischen Anschrift zwei Möglichkeiten vorgesehen:
+1. Das Länderkennzeichen wird im Attribut "Land" mit ST_Laenderkennzeichen aufgenommen. Das Feld "Postleitzahl" ist mit der fiktiven Postleitzahl "99999" zu füllen. Die tatsächliche Postleitzahl ist gemäß den jeweiligen postalischen Ländervorgaben im Attribut "Ort" zu hinterlegen.
+2. Sofern das Länderkennzeichen nicht getrennt übermittelt werden kann, wird das Attribut "Land" nicht belegt. Das Attribut "Postleitzahl" wird ebenfalls mit der fiktiven Postleitzahl "99999" gefüllt. Das Attribut "Ort" ist mit dem Länderkennzeichen1, der Postleitzahl und dem Wohnort gemäß den postalischen Ländervorgaben zu füllen.
+Beispiele für Auslandsanschriften:
+Land Postleitzahl Ort
+AT 99999 1011 Wien
+99999 DK-8410 R0nde
+99999 New York, NY 10006-US</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ort" type="dt:ST_Text050" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ort der Adresse. Hinweis: Es kann eine optionale Rückmeldung an die Datenquelle im Status erfolgen, wenn ein Abschneiden der Feldlänge des Attributes notwendig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Land" type="dt:ST_Laenderkennzeichen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Landname" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Ortsteil" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ortsteil (ggf. für ZÜRS relevant)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vom Provider generierte, eindeutige Referenznummer zur Identifizierung des Objektes über Prozesse hinweg, insbesondere zwischen Auskunfts- und Änderungsprozessen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Geoposition" type="CT_Geoposition" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Aktivitaet" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="AktivitaetID" type="dt:ST_ID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Identifikationsnummer zur Referenzierung des Objektes innerhalb des Datenaustauschs.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vom Provider generierte, eindeutige Referenznummer zur Identifizierung des Objektes über Prozesse hinweg, insbesondere zwischen Auskunfts- und Änderungsprozessen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Steuer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Informationen zu einer Steuer (z.B. Versicherungsteuer, Umsatzsteuer).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Steuerart" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Steuer.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Satz" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Prozentsatz der Steuer</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Land" type="dt:ST_Laenderkennzeichen" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Land in dem die Steuer abgeführt werden muss</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Versicherungsteuerabfuehrung" type="dt:ST_Versicherungsteuerabfuehrung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Information, wer die Versicherungsteuer abführt.
+Bei Versicherungsteuerfreiheit (Leben, Kranken etc.) DARF dieses Attribut nicht verwendet werden. Ist die Steuer ungleich Null und fehlt dieses Attribut, MUSS das Attribut als mit "1" (VU) belegt interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Betrag" type="CT_Betrag" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Schadennummer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ordnungsbegriff zur Verwaltung eines Schadenfalls bzw. eines Leistungsfalls bei dem Partner, der als Quelle spezifiziert wird. Ist keine Quelle spezifiziert, ist die Schadenummer desjenigen Partners gemeint, der den Schadenfall bearbeitet (üblicherweise der Versicherer).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Nummer" type="dt:ST_Schadennummer" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ordnungsbegriff zur Verwaltung eines Schadenfalls bzw. eines Leistungsfalls.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Quelle" type="CT_Quelle" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Zeitraum">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung von Zeiträumen und Dauern. Die Angaben MÜSSEN einen Zeitraum eindeutig definieren. Es MUSS also mindestens beide Zeitpunkte (Beginn, Ende) oder ein Zeitpunkt und eine Dauer (AnzahlJahre, AnzahlMonate, AnzahlTage) angegeben werden.
+Wenn aus fachlichen Gründen eine konkrete Angabe nicht möglich ist, DARF auf die Angabe verzichtet werden (z.B. Ende der Rentenzahlung = Tod, Ende der Versicherungsdauer in KV = Tod)
+
+WENN in der Dokumentation der Refernzierung der Klasse Zeitraum ein "weicher" Bezugszeitpunkt (z.B. Eintritt des Schadenfalls) angegeben ist, MUSS NUR die Dauer (AnzahlJahre, AnzahlMonate bzw AnzahlTage) des Zeitraums angegeben werden.
+
+Bei Anfragen (Requests) im Kontext TAA DARF der Consumer auf die vollständige Angabe konkreter Zeitpunkte oder der Dauer verzichten, da die korrekte Ermittlung der dieser Größen in der Hand des Produktgebers liegt. Der Produktgeber MUSS die fehlenden Größen ermitteln und in der Antwort zurückliefern.
+
+Die Angabe einer Dauer MUSS entweder als AnzahlJahre und AnzahlMonate erfolgen oder als AnzahlTage.
+Ist die Anzahl größer 11, MÜSSEN die vollen Jahre nach AnzahlJahre übertragen werden.
+Beispiel: Die Darstellung einer Dauer von 15 Monaten erfolgt also als AnzahlJahre=1, AnzahlMonate=3; 12 Monate erfolgt als AnzahlJahre=1, AnzahlMonate=0.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Beginn" type="dt:ST_DatumZeit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Beginn des abzubildenden Zeitraums.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ende" type="dt:ST_DatumZeit" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das Ende des abzubildenden Zeitraums.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlJahre" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Jahre der abzubildenden Dauer.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlMonate" type="dt:ST_Monate" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Monate der abzubildenden Dauer.
+Ist die Anzahl größer 11, MÜSSEN die vollen Jahre nach AnzahlJahre übertragen werden. Beispiel: Die Darstellung einer Dauer von 15 Monaten erfolgt also als AnzahlJahre=1, AnzahlMonate=3; 12 Monate erfolgt als AnzahlJahre=1, AnzahlMonate=0.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlTage" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Tage der abzubildenden Dauer.
+Dient zur expliziten Angabe von Dauern in Tagen (z.B. Karrenzeit = 42 Tage)
+DARF NICHT zusammen mit AnzahlMonate und/oder AnzahlJahre genutzt werden. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Mietwert">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Der Mietwert entspricht dem maximalen Jahresmietzins für Bauten und bauliche Anlagen, der nach Bewertungszweck und rechtlichen Verhältnissen als erzielbar angenommen werden kann. Dieser errechnet sich i.d.R. als das Produkt aus Fläche und ortsüblicher Vergleichsmiete pro Quadratmeter. Wird zur Zeit nur von Rechtsschutz genutzt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Freitext">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Freier Text, zum dem der Verfasser als Quelle spezifiziert werden kann.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Text" type="dt:ST_Text2000" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beliebiger Text</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Quelle" type="CT_Quelle" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Devisenkurs">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Der Umrechnungskurs von einer Währung in eine andere Währung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Ausgangswaehrung" type="dt:ST_Waehrungsschluessel" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ausgangswährung der Währungsumrechnung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zielwaehrung" type="dt:ST_Waehrungsschluessel" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zielwährung der Währungsumrechnung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kurs" type="dt:ST_Dezimalzahl" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Kurs, der zum Zeitpunkt für die Umrechnung der Ausgangswährung in die Zielwährung gültig ist. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zeitpunkt" type="dt:ST_DatumZeit" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Zeitpunkt, zu dem der Umrechnungskurs gültig ist. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Zeitwert">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Der Zeitwert beschreibt den Wert eines Objektes zu einem festgelegten Zeitpunkt und berücksichtigt dadurch die Zeitkomponente bei der Wertermittlung. Wird zur Zeit nur von Rechtsschutz genutzt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Quelle">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der der Ursprung einer Information ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="PartnerID" type="dt:ST_ID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Referenz auf einen Partner in der Partnerliste.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Betrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Geldwert zur Abbildung von Beträgen. Diese Klasse DARF NICHT erweitert werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vermittler">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Daten des fuer den Geschaeftsvorgang verantwortlichen Vermittlers.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Vermittlernummer" type="dt:ST_Vermittlernummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Identifzierung des Vermittlers beim produktgebenden Unternehmen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VermittlernummerVM" type="dt:ST_Vermittlernummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vermittlernummer beim Vermittler: Eindeutige Identifzierung des Vermittlers beim Vermittler selbst.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="PartnerID" type="dt:ST_ID" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz auf die Partnerdaten zum Vermittler</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="IHKRegistrierungsnummer" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Offizielle Nummer des Vermittlers bei der Industrie- und Handelskammer</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Art" type="dt:ST_Vermittlerart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Vermittlungstätigkeit. Verwendung z. B. im Kontext Beratungsprotokoll bei unterschiedlichen Anforderungen je nach Vermittlungstätigkeit</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vermittlerrolle" type="CT_Vermittlerrolle" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Vermittler" type="CT_Vermittler" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Vertriebskanal" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Abbildung des Vertriebskanals für Vermittlerorganisationen, die als Vermittler übergeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Kaufpreis">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Als Kaufpreis bezeichnet man den Preis, den ein Käufer dem Verkäufer gibt, wenn er einen Kauf durchführen will. Der Stichtag MUSS dem Kaufjahr entsprechen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Neuwert">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Wert einer Investition beim Kauf. Neuwert ist der Wiederherstellungs- bzw. Wiederbeschaffungspreis von Sachen gleicher Art und Güte in neuwertigem Zustand zum Zeitpunkt des Versicherungsfalles.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ZusaetzlicheGegenstandsdaten" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Pruefsumme">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Dient der Uebertragung von Pruefsummen zur automatischen Verifikation, dass die angeforderte Datei fehlerfrei uebertragen wurde.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Typ" type="dt:ST_Pruefsummetyp" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Wert" type="dt:ST_Pruefsumme" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Geldwert" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Das Objekt Geldwert dient der Beschreibung von Gegenstandswerten mit den Attributen Betrag und Waehrung.
+Bestehende Attribute zur Wertbeschreibung in Gebaeude und Fahrzeug bleiben erhalten (Abwärtskompatibilität). In diesen Fällen DARF Geldwert NICHT genutzt werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Betrag" type="dt:ST_Betrag" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Betrag gibt die Höhe des Geldwertes an.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Waehrung" type="dt:ST_Waehrungsschluessel" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Waehrung definiert den Währungsschlüssel für den angegeben Betrag an.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Stichtag" type="dt:ST_DatumZeit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zeitpunkt, zu dem der Wert gültig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Stichtagsbetrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Beschreibt einen Geldwert, der zu einem bestimmten Zeitpunkt gültig ist.
+
+Garantierte Leistungen verstehen sich ohne zukünftige Überschussbeteiligungen aber inklusive bereits verdienter Überschussanteile. Gesamte Leistungen verstehen sich inklusive bereits verdienter und noch zu erwartender Überschussanteile.
+Renten und Kapitalleistungen schließen sich wechselseitig aus, die gemeinsame Angabe ist nur bei Tarifen mit Renten-/Kapitalwahlrecht zulässig.
+Summenwerte gelten sofern nicht anders angegeben vom Vertragsbeginn bis zum angegebenen Stichtag.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Geldwert">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Stichtagswert" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Stichtagsbetrags.
+
+Garantierte Leistungen verstehen sich ohne zukünftige Überschussbeteiligungen aber inklusive bereits verdienter Überschussanteile. Gesamte Leistungen verstehen sich inklusive bereits verdienter und noch zu erwartender Überschussanteile.
+Renten und Kapitalleistungen schließen sich wechselseitig aus, die gemeinsame Angabe ist nur bei Tarifen mit Renten-/Kapitalwahlrecht zulässig.
+Summenwerte gelten sofern nicht anders angegeben vom Vertragsbeginn bis zum angegebenen Stichtag.
+an der Klasse
+
+Über das Objekt Berechnungsgrundlage können Angaben dazu erfolgen, ob bestimmte Faktoren in die Bestimmung des Werts eingeflossen sind. Erfolgt eine solche Angabe nicht, so gelten folgende Standardannahmen:
+(Letzte/Summe)ErhalteneZulagen:
+Zulagen berücksichtigt - ja
+GezahlteBeitragssumme: 
+Zulagen berücksichtigt - nein
+GarantierteRente/Erlebensfallleistung:
+Zulagen berücksichtigt - ja
+Steuern berücksichtigt - ja
+Gesamte/Beitragsfreie Rente/Erlebens-/Todesfallleistung:
+Zulagen berücksichtigt - ja
+Hochrechnungszins - Pflichtangabe (bei fondsgebundenen)
+Wertentwicklung gem. Hochrechnungszins nach Fondskosten - ja
+Steuern berücksichtigt - nein
+GarantierteTodesfallleistung:
+Zulagen berücksichtigt - ja
+Rückkaufswert:
+Zulagen berücksichtigt - ja
+Stornokosten berücksichtigt - ja
+Steuern berücksichtigt - ja
+Vertragswert:
+Zulagen berücksichtigt - ja
+Steuern berücksichtigt - ja</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Berechnungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum an dem die Berechnung des Wertes erfolgt ist. technisches Berechnungsdatum.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Berechnungsgrundlage" type="CT_Berechnungsgrundlage" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Berechnungsgrundlage">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Über das Objekt Berechnungsgrundlage können Angaben dazu erfolgen, ob bestimmte Faktoren in die Bestimmung des Werts eingeflossen sind. Erfolgt eine solche Angabe nicht, so gelten folgende Standardannahmen:
+(Letzte/Summe)ErhalteneZulagen:
+Zulagen berücksichtigt - ja
+GezahlteBeitragssumme: 
+Zulagen berücksichtigt - nein
+GarantierteRente/Erlebensfallleistung:
+Zulagen berücksichtigt - ja
+Steuern berücksichtigt - ja
+Gesamte/Beitragsfreie Rente/Erlebens-/Todesfallleistung:
+Zulagen berücksichtigt - ja
+Hochrechnungszins - Pflichtangabe (bei fondsgebundenen)
+Wertentwicklung gem. Hochrechnungszins nach Fondskosten - ja
+Steuern berücksichtigt - nein
+GarantierteTodesfallleistung:
+Zulagen berücksichtigt - ja
+Rückkaufswert:
+Zulagen berücksichtigt - ja
+Stornokosten berücksichtigt - ja
+Steuern berücksichtigt - ja
+Vertragswert:
+Zulagen berücksichtigt - ja
+Steuern berücksichtigt - ja</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Zulagen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Staatliche Zulagen wurden bei der Berechnung berücksichtigt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Stornokosten" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Stornokosten wurden bei der Berechnung berücksichtigt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Steuern" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Von der Gesellschaft abzuführende Steuern (z.B. Abgeltungssteuer) wurden bei der Berechnung berücksichtigt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="WertentwicklungNachFondskosten" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Wertentwicklung wurde anhand des unterstellten Hochrechnungszins nach Fondskosten (=ja) berechnet. (nein = Wertentwicklung gemäß Hochrechnungszins vor Fondskosten).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Hochrechnungszins" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Unterstellte Wertentwicklung nach oder vor Berücksichtigung von Fondskosten gemäß Angabe im Attribut "WertentwicklungNachFondskosten".</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gegenstand" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="GegenstandID" type="dt:ST_ID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Identifikationsnummer zur Referenzierung des Objektes innerhalb des Datenaustauschs.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vom Provider generierte, eindeutige Referenznummer zur Identifizierung des Objektes über Prozesse hinweg, insbesondere zwischen Auskunfts- und Änderungsprozessen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ZusaetzlicheGegenstandsdaten" type="CT_ZusaetzlicheGegenstandsdaten"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Beschreibung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Genaue Beschreibung des Gegenstandes. In Gewerbe auch eine Zusammenfassung von mehreren Objekten zu einem Komplex, bzw. Beschreibung der Zugehörigkeit eines Objektes bzw.
+genaue Bezeichnung einer Anlage. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Groesse" type="CT_Groesse" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Beinhaltet" type="CT_Beinhaltet" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Dienstleister">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Dienstleister, der einen Service erbringt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="PartnerID" type="dt:ST_ID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Referenz auf einen Partner in der Partnerliste.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SubDienstleister" type="CT_Dienstleister" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vertragsnummer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Identifizierende Nummer für einen  Vertrag (z.B. Versicherungsscheinnummer, Kontonummer, Depotnummer).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Versicherungsscheinnummer" type="dt:ST_Versicherungsscheinnummer"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ordnungsbegriff eines Versicherers zur Verwaltung von Versicherungsveträgen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vorgangsnummer" type="dt:ST_Vorgangsnummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ist noch keine Vertragsnummer zugewiesen worden, dient die Vorgangsnummer, die vom produktgebenden Unternehmen bei der Einreichung eines Antrags vergeben wurde, zur Identifizierung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kontonummer" type="dt:ST_Kontonummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Identifizierung eines Anlagekontos. Bei Investmentdepots auch die Nummer des Abwicklungskontos.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Depotnummer" type="dt:ST_Depotnummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Identifizierung eines Depots</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DruckaufbereiteteVertragsnummer" type="dt:ST_Text030" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Druckaufbereitete Vertragsnummer wie sie auf einem Dokument (z.B. Police) inklusive aller Alpha- und Sonderzeichen angegeben wird. Es ist zu empfehlen dieses Attribut zu füllen, wenn die systemtechnische Vertragsnummer von der druckaufbereiteten Vertragsnummer abweicht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VertragsverbindungsnummerGDV" type="dt:ST_Text035" minOccurs="0"
+                            maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ordnungsmerkmal zur Kennzeichnung fachlich zusammengehöriger Verträge (z.B. innerhalb eines Verkaufsproduktes). Entspricht der Vertragsverbindungsnummer beim GDV.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Datei">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Container-Objekt fuer zu uebertragende Dateien.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="DateiID" type="dt:ST_ID" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Dateiname" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Dateityp" type="dt:ST_Dateityp" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Daten" type="mime:base64Binary" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Datenlink" type="dt:ST_URL" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Komprimierungstyp" type="dt:ST_Komprimierungstyp" minOccurs="1"
+                            maxOccurs="1"/>
+               <xsd:element name="Erstelldatum" type="dt:ST_Zeitstempel" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zeitpunkt der Erstellung der Datei</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DokumentartID" type="dt:ST_DokumentartID" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Kurzbeschreibung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Attribut, um die Datei in wenigen Worten inhaltlich zu beschreiben. Sinnvoll nutzbar z. B. in Anwendungsfällen, bei denen die Datei in einem Dokumentenmanagement abgelegt wird. In diesen Fällen kann der Inhalt der Datei bzw. des Dokumentes über die Kurzbeschreibung und damit über die reine DokumentartID hinaus kurz beschrieben und beispielweise in Form eines Tooltipps oder einer Betreffzeile eingeblendet werden. Das Attribut DokumenartID alleine ist nicht geeignet für die Abbildung, da sich Dokumenteninhalte trotz übereinstimmender Dokumentenarten in einigen Szenarien inhaltlich unterscheiden können. Empfehlung formulieren, dass ein Service Provider die Beschreibung füllen soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bezeichnung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vollständiger Titel wie er auf dem Dokument erscheint</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Dateikennung" type="dt:ST_Text060" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Interne Refernz im Prozess beim Provider.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Pruefsumme" type="CT_Pruefsumme" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Vertraulich" type="dt:ST_Vertraulich" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status zur Vertraulichkeit der Datei. Das Attribut DARF NUR nur befüllt werden, wenn eine besondere Vereinbarung zwischen Consumer und Provider vorliegt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="IstEingangspost" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kennzeichnung, ob es sich bei diesem Dokument aus Sicht des Providers um Eingangs- oder Ausgangspost handelt.
+Ja=Eingangspost
+Nein=Ausgangspost</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Quelle" type="CT_Quelle" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

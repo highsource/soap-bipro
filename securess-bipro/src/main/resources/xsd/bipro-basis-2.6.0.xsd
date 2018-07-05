@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/basis"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/basis"
+            bipro:Name="bipro-basis-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:complexType name="CT_Objekt" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Master-Objekt. Von diesem Datentypen werden alle anderen komplexen Datentypen der BiPRO direkt oder indirekt abgeleitet.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="Erweiterung" type="CT_Erweiterung" minOccurs="0" maxOccurs="1"
+                      nillable="true"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Erweiterung" abstract="true">
+      <xsd:sequence/>
+   </xsd:complexType>
+</xsd:schema>

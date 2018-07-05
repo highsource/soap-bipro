@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/transfer"
+            xmlns:xf="http://www.bipro.net/namespace/transfer"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:nachr="http://www.bipro.net/namespace/nachrichten"
+            xmlns:gevo="http://www.bipro.net/namespace/gevo"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            targetNamespace="http://www.bipro.net/namespace/transfer"
+            bipro:Name="bipro-transfer-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/gevo"
+               schemaLocation="bipro-gevo-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/nachrichten"
+               schemaLocation="bipro-nachrichten-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_SetShipmentResponse">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Zuordnungsdaten">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Diese Klasse enthält Informationen zur Zuordnung des referenzierenden Geschäftsvorfalls.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Versicherungsscheinnummer" type="dt:ST_Versicherungsscheinnummer"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Versicherungsscheinnummer, auf die sich der übertragene Geschäftsvorfall bezieht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Partnernummer" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Nummer, über die der Vertragspartner (z.B. VN) beim Provider identifiziert wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SchadennummerVU" type="dt:ST_Schadennummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Schadennummer, auf die sich der übertragene Geschäftsvorfall bezieht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Antragsnummer" type="dt:ST_Vorgangsnummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Antragsnummer des Providers, auf die sich der übertragene Geschäftsvorfall bezieht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AntragsnummerVM" type="dt:ST_Vorgangsnummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Antragsnummer des Vermittlers, auf die sich der übertragene Geschäftsvorfall bezieht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unternehmensnummer" type="dt:ST_Unternehmensnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Nummer des Unternehmens, welches das Transferobjekt bereitgestellt hat.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unternehmensnummernart" type="dt:ST_Unternehmensnummernart" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Unternehmensnummer. Sofern das Attribut keinen Wert enthält handelt es sich bei der identifizierenden Nummer immer um die BaFin-Nummer des Unternehmens.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vertragsverbindungsnummer" type="dt:ST_Text017" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vertragsverbindungsnummer bzw. Gruppenvertragsnummer auf die sich der übertragene Geschäftsvorfall bezieht. Als Gruppenvertragsnummern gelten auch Rahmenverträge aus Kollektiven und andere Rahmenvertragsnummern.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VertragsverbindungsnummerGDV" type="dt:ST_Text035" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ordnungsmerkmal zur Kennzeichnung fachlich zusammengehöriger Verträge (z.B. innerhalb eines Verkaufsproduktes). Entspricht der Vertragsverbindungsnummer beim GDV.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="acknowledgeShipmentResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_AcknowledgeShipmentResponse" minOccurs="1"
+                         maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="listShipmentsResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_ListShipmentsResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_AcknowledgeShipment">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="ID" type="dt:ST_LieferungID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Id der zu besätigende Lieferung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_GetShipment">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="ID" type="dt:ST_LieferungID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">ID der zu liefernden Leiferung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Transfer" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Abstrakte Basisklasse, von der alle konkreten Transfer-Klassen abgeleitet werden MÜSSEN.
+Das Attribut 'ArtID' aus der Basisklasse gilt als Pflichtfeld für alle Transfer-Klassen und MUSS daher immer belegt werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="gevo:CT_Geschaeftsvorgang">
+            <xsd:sequence>
+               <xsd:element name="Sparte" type="dt:ST_Sparte" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, welcher Sparte der Transfer zuzuordnen ist. Wenn eine solche Zuordnung möglich ist, MUSS dieses Attribut gefüllt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VerfallsdatumDesGeschaeftsvorfalls" type="dt:ST_Datum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, bis wann auf den Geschäftsvorfall fachlich reagiert werden kann.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AusloeserDesGeschaeftsvorfalls"
+                            type="dt:ST_AusloeserDesGeschaeftsvorfalls"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Information, wer den Geschäftsvorgang ausgelöst hat.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ParalleleMeldungDesGeschaeftsvorfalls" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, ob der übertragene Geschäftsvorfall auch auf herkömmlichem Weg übertragen wird. Wird das Attribut nicht belegt, ist es als mit 'false' belegt zu interpretieren. Es gibt also keine Übertragung auf herkömmlichen Weg.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ansprechpartner" type="partner:CT_Person" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Zuordnungsdaten" type="CT_Zuordnungsdaten" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_GetShipmentResponse">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence>
+               <xsd:element name="Lieferung" type="CT_Lieferung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ListShipmentsResponse">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence>
+               <xsd:element name="Lieferung" type="CT_Lieferung" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AcknowledgeShipmentResponse">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="setShipmentResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_SetShipmentResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_SetShipment">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="Lieferung" type="CT_Lieferung" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ListShipments">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="KategorieDerLieferung" type="dt:ST_SuchGeVoArt" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Legt fest, welcher Kategorie die im Response aufgelisteten Lieferungen entsprechen MÜSSEN.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BestaetigeLieferungen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Steuert, ob im Response bereits bestaetigte Lieferungen aufgelistet werden MÜSSEN. Ist dieses Attribut nicht beleget, Dürfen keine bestaetigten Lieferungen aufgelistet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Lieferung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eine Lieferung ist eine Liste von zur Übertragung bereitgestellten Transfers.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ID" type="dt:ST_LieferungID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Identifikationsnummer der Lieferung. Die vergebene Nummer MUSS eineindeutig sein.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Einstellzeitpunkt" type="dt:ST_Zeitstempel" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zeitpunkt, an dem die Lieferung bereitgestellt wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bestaetigungszeitpunkt" type="dt:ST_Zeitstempel" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zeitpunkt, an dem die Lieferung bestätigt wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kategorie" type="dt:ST_SuchGeVoArt" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Übergeordnete Kategorie der Geschäftsvorfälle, die als Transfer-Objekte in dieser Lieferung enthalten sind. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VerfuegbarBis" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bis zu diesem Datum steht  die Lieferung zum Abruf zur Verfügung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Transfer" type="CT_Transfer" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="ArtDerLieferung" type="dt:ST_ArtDerLieferung" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Lieferung (UC-1-UC-6) gemäß Norm 430.4 und 430.5. Bei Lieferungen, die auf der Norm 430.4 oder 430.5 basieren, MUSS die ArtDerLieferung angegeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Stichtag" type="dt:ST_DatumZeit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Stichtag der Lieferung gemäß Use Cases der Normen 430.4 und 430.5.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AenderungenNachStichtagEnthalten" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Datenstand enthält bereits Änderungen, die bei Erstellung des Bestandes bereits erfasst, aber noch nicht wirksam sind.
+NEIN = Datenstand enthält ausschließlich Vertragsdaten, die bezogen auf den Stichtag gültig sind.
+Dieses Attrubut MUSS bei ArtDerLieferung = 1001 und 1002 angegeben werden. Bei allen anderen Werten in ArtDerLieferung oder, wenn ArtDerLieferung fehlt, DARF dieses Attribut NICHT angegeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EnthaeltNurDaten" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Die Lieferung enthält nur Daten, also keine Dokumente.
+NEIN = Die Lieferung enthält Daten und Dokumente.
+Bei Lieferungen, die auf der Norm 430.4 oder 430.5 basieren, MUSS dieses Attribut angegeben werden.
+Gibt bei den Use Cases UC-3, UC-4, UC-5 und UC-6 die ausgewählte Option an, ob die Änderungen mit oder ohne den zugehörigen Gevo-Dokumenten bereitgestellt werden. Bei den Use Cases UC-1 und UC-2 MUSS stets "nein" geliefert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="PeriodischeLieferung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Die Lieferung ist eine Lieferung gemäß einer Vereinbarung zur periodischen Übermittlung.
+NEIN = Die Lieferung ist eine einmalige Lieferung.
+Bei Lieferungen, die auf der Norm 430.4 oder 430.5 basieren, MUSS die dieses Attribut angegeben werden.
+
+Gibt bei den Use Cases UC-1 und UC-5 die ausgewählte Option an, ob die Lieferung einmalig oder periodisch erstellt wird. Bei den Use Cases UC-2, UC-4 und UC-6 MUSS stets JA geliefert werden. Bei dem Use Case UC-3 MUSS stets NEIN geliefert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Sparte" type="dt:ST_Sparte" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Sparte(n), die für die Lieferung selektiert wurde(n).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlTransfers" type="dt:ST_Ganzzahl" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Transfers in der Lieferung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Groesse" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Geschätzte Größe der Lieferung in MB.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zeitraum" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Ansprechpartner" type="partner:CT_Person" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Provider" type="partner:CT_JuristischePerson" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Unternehmen" type="allg:CT_Unternehmen" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="listShipments">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_ListShipments" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="acknowledgeShipment">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_AcknowledgeShipment" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="setShipment">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_SetShipment" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="getShipment">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_GetShipment" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="getShipmentResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_GetShipmentResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

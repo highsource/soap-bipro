@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/prozesse/vertrag"
+            xmlns:pz-vtrg="http://www.bipro.net/namespace/prozesse/vertrag"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:nachr="http://www.bipro.net/namespace/nachrichten"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:pm="http://www.bipro.net/namespace/produktmodell"
+            xmlns:fz="http://www.bipro.net/namespace/fahrzeug"
+            xmlns:gevo="http://www.bipro.net/namespace/gevo"
+            xmlns:vtrg="http://www.bipro.net/namespace/vertrag"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/prozesse/vertrag"
+            bipro:Name="bipro-prozesse-vertrag-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/vertrag"
+               schemaLocation="bipro-vertrag-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/gevo"
+               schemaLocation="bipro-gevo-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/fahrzeug"
+               schemaLocation="bipro-fahrzeug-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/produktmodell"
+               schemaLocation="bipro-produktmodell-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/nachrichten"
+               schemaLocation="bipro-nachrichten-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:element name="getDataResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_VertragsauskunftResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_Vertragsauskunft">
+      <xsd:complexContent>
+         <xsd:extension base="gevo:CT_Geschaeftsvorgang">
+            <xsd:sequence>
+               <xsd:element name="GueltigAm" type="dt:ST_Datum" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Spezifiziert, dass die im Response zu liefernden Daten den Zustand des Vertrags zu diesem Datum wiedergeben sollen. Das Datum kann in der Vergangenheit (Historie des Vertrags) oder in der Zukunft (zukünftige Zustände) liegen. Wird das Datum nicht spezifiziert, MÜSSEN die ermittelten Daten den zum Zeitpunkt des Requests gültigen Zustand  der beim Service Provider gespeicherten Daten des Vertrags wiedergeben (bereits bekannte zukünftige Zustände werden nicht berücksichtigt).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vertragsnummer" type="allg:CT_Vertragsnummer" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Vertrag" type="vtrg:CT_Vertrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Unternehmen" type="allg:CT_Unternehmen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Informationsart" type="dt:ST_Informationsart" minOccurs="0"
+                            maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Durch Informationsarten kategorisierter Vertragsdatenumfang, den der Consumer in der Response mindestens zurück erwartet.
+Ist Informationsart nicht belegt, MUSS es als mit GrunddatenVertrag belegt interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ChangeRequest">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="AenderungsantragVertrag" type="CT_AenderungsantragVertrag" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragSonderfall">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Aenderungstext" type="dt:ST_Text" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Freitext für die gewünschte Vertragsänderung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_DokumentanforderungZumVertrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Geschäftsvorgang zum Anfordern von einem vertragsbezogenen Dokument.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="gevo:CT_Geschaeftsvorgang">
+            <xsd:sequence>
+               <xsd:element name="Vertragsnummer" type="allg:CT_Vertragsnummer" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Empfaenger" type="partner:CT_Partner" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Unternehmen" type="allg:CT_Unternehmen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Stichtag" type="dt:ST_Datum" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum zur Vorgabe einer stichtäglichen Gültigkeit bzw. Aktualität des angeforderten Dokuments.
+Dieses Attribut DARF NICHT zusammen mit Stichjahr verwendet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Stichjahr" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Jahreszahl zur Vorgabe einer jährigen Gültigkeit bzw. Aktualität des angeforderten Dokuments.
+Dieses Attribut DARF NICHT zusammen mit Stichtag verwendet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kopie" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ja: Das angeforderte Dokument ist eine Kopie eines bereits in der Vergangenheit erzeugten Orginals, d.h. mit Werten die zum Zeitpunkt der Erstellung des Originals gültig waren.
+Nein: Das angeforderte Dokument ist neu zu erstellen, d.h. mit aktuellen Werten.
+
+Bei der Anforderung einer Kopie DARF das Attribut Stichtag NICHT verwendet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragInkassoart">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragZahltermin">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse, um den gewünschten Zahltermin eines Vertrags innerhalb eines Monats zu verlegen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="NeuerZahltermin" type="dt:ST_Kalendertag" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Neuer Zahltermin als Kalendertag. Zahlweise und Kalendermonat bleiben davon unberührt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VertragsauskunftResponse">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence>
+               <xsd:element name="Vertragsauskunft" type="CT_Vertragsauskunft" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VertragsauskunftRequest">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="Vertragsauskunft" type="CT_Vertragsauskunft" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="setChangeResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_ChangeResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_DocumentResponse">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence>
+               <xsd:element name="DokumentanforderungZumVertrag" type="CT_DokumentanforderungZumVertrag"
+                            minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="getChangeResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_ChangeResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_AenderungsantragVertrag">
+      <xsd:complexContent>
+         <xsd:extension base="gevo:CT_Geschaeftsvorgang">
+            <xsd:sequence>
+               <xsd:element name="GueltigAb" type="dt:ST_Datum" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, zu dem die Vertragsänderung wirksam wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unterschriftsverfahren" type="dt:ST_Unterschriftsverfahren" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Attribut zur Festlegung, wie die Willenserklärung erfolgt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vertragsnummer" type="allg:CT_Vertragsnummer" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Vertrag" type="vtrg:CT_Vertrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Unternehmen" type="allg:CT_Unternehmen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AenderungVertrag" type="CT_AenderungVertrag" minOccurs="1"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="ZusaetzlicheAenderungsantragVertragDaten"
+                            type="CT_ZusaetzlicheAenderungsantragVertragDaten"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragZahlungsweise">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Zahlungsweise" type="dt:ST_Zahlungsweise" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gewünschte neue Zahlungsweise.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="getDocument">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_DocumentRequest" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_AenderungVertrag" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_GeVoArt" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Vertragsänderung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="setChange">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_ChangeRequest" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_ZusaetzlicheAenderungsantragVertragDaten" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur kontextspezifischen Erweiterung des Änderungsantrags</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragNebenversicherung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Änderungen zur Nebenversicherung eines Vertrages</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="VorNebenVersicherung" type="vtrg:CT_VorNebenVertrag" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="getData">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_VertragsauskunftRequest" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_AenderungVertragPartner">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Änderung einer Vertrag-Partner-Beziehung</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="NeuerPartner" type="partner:CT_Partner" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragKuendigungsruecknahme">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung einer Kündigungsrücknahme eines Vertrags.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragKuendigung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Abgangsgrund" type="dt:ST_Abgangsgrund" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Abgangsgrund gemäß GDV-Standard Anlage 5, insbesondere die Werte:
+01 = Kündigung VN zum Ablauf
+02 = Kündigung VN im Schadenfall / allgemeine Differenzen
+03 = Kündigung VN bei Beitragserhöhung / Tarifaktion</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EingangsdatumBeiVermittler" type="dt:ST_Datum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eingangsdatum der Kündigung beim Vermittler.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kennzeichen" type="fz:CT_Kennzeichen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Verkaufsprodukt" type="pm:CT_Verkaufsprodukt" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragBeginn">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung einer Änderung des Vertragsbeginns.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="NeuerVertragsbeginn" type="dt:ST_Datum" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum des neuen Vertragsbeginns.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragHinweisPartner">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Übermittlung eines Hinweises zu einem Partner im Vertrag.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Partnernummer" type="dt:ST_Text030" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Partnernummer des im Hinweis betroffenen Partners.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="getDocumentResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_DocumentResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="getChange">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_ChangeRequest" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_ChangeResponse">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence>
+               <xsd:element name="AenderungsantragVertrag" type="CT_AenderungsantragVertrag" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_DocumentRequest">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="DokumentanforderungZumVertrag" type="CT_DokumentanforderungZumVertrag"
+                            minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

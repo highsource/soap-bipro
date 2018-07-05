@@ -1,0 +1,1403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/partner"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            targetNamespace="http://www.bipro.net/namespace/partner"
+            bipro:Name="bipro-partner-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Einkommen">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Information zum konkreten Einkommen der Einkommensart</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence>
+               <xsd:element name="Zahlungsweise" type="dt:ST_Zahlungsweise" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Angabe von Zahlungsweise dient zur Unterscheidung ob es sich z. B. um ein Monats- oder Jahresgehalt handelt (Zahlungsweise = 1 bzw 8)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Art" type="dt:ST_BruttoNetto" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des konkreten Einkommens (Brutto/Netto).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Berufstaetigkeit">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zur Berufstaetigkeit.
+
+Die Attribute Beteiligung (ST_Beteiligung) und Bundesland (ST_Bundesland) fehlen, da die entsprechenden einfachen Datentypen nicht definiert sind.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Beruf" type="dt:ST_Text255" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Name eines bestimmten Berufs. Werden die Attribute "Beruf" UND "Berufschluessel" gemeinsam verwendet, DUERFEN sich die Werte NICHT widersprechen. Der Beruf kann über die Norm 480.2 Berufssuche ermittelt werden. Werden Beruf und Berufsschlüssel geliefert, hat der Berufsschlüssel vorrang. Der Provider DARF im Response den Beruf aus dem Berufsschlüssel ermitteln ggf überschreiben, kenntlich machen und zurückgeben.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="StellungImBeruf" type="dt:STE_StellungImBeruf" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Mitarbeiteranzahl" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Besoldungsgruppe" type="dt:ST_Text006" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SelbststaendigSeit" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ArbeitsvertragBefristetBis" type="dt:ST_Datum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Betriebseintritt" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="KoerperlichTaetig" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Branche" type="dt:STE_BerufsBranche" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="OeffentlicherDienst" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ja, wenn der Partner im öffentlichen Dienst beschäftigt ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnteilAussendienst" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anteil der Tätigkeiten im Außendienst in Prozent.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Aufsichtsfuehrend" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob der Partner beruflich (auch teilweise) aufsichtsführend tätig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Mitarbeitend" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Feststellung, ob der Partner beruflich (auch teilweise) mitarbeitend tätig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Berufsschluessel" type="dt:ST_Berufsschluessel" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Identifikation eines bestimmten Berufs. Werden die Attribute "Berufschluessel" UND "Beruf" gemeinsam verwendet, DUERFEN sich die Werte NICHT widersprechen. Der Berufsschlüssel kann über die Norm 480.2 Berufssuche ermittelt werden. Werden Beruf und Berufsschlüssel geliefert, hat der Berufsschlüssel vorrang. Der Provider DARF im Response den Beruf aus dem Berufsschlüssel ermitteln ggf überschreiben, kenntlich machen und zurückgeben.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NichtKoerperlichTaetig" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zur Bestimmung der Risikogruppe wird zusätzlich zur Angabe der körperlichen Tätigkeit (partner:KoerperlichTaetig) auch die Angabe der Tätigkeit im Büro bzw. ob nicht körperlich Tätig, benötigt. Die Summe beider Werte muss nicht zwangsläufig 100% ergeben, um die Risikogruppe zu bestimmen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gewerbesteuerpflichtig" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zeigt an, ob sich um eine gewerbesteuerpflichtige Berufstätigkeit handelt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Praxisform" type="dt:ST_Praxisform" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Praxisform dient der Angabe, ob es sich hierbei um eine Einzelpraxis bzw. um welche Form der Berufsausübungsgemeinschaft es sich handelt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Einkommen" type="CT_Einkommensart" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="StellungImBerufSeit" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, seit wann die unter StellungImBeruf angegebene Stellung im Beruf eingenommen wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Berufsschluesselverzeichnis" type="dt:STE_Berufsschluesselverzeichnis"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Schlüsselverzeichnisses, das dem verwendeten Berufsschlüssel im Attribut Berufsschluessel zugrunde liegt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Arbeitgeber" type="CT_Arbeitgeber" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Teilzeit" type="CT_Teilzeit" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Besteuerung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Informationen zur Besteuerung einer natürlichen oder juristischen Person.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Steuerbefreiung" type="CT_Steuerbefreiung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Ausweis">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Legitimationsdaten (Ausweis, Reisepass, etc.)</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Ausweistyp" type="dt:ST_Ausweistyp" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="AusstellendeBehoerde" type="dt:ST_Text080" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Ausweisnummer" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="GueltigBis" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das Ablaufdatum eines Personaldokumentes ist für die Identifizierung einer Person relevant.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ausstellungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Arbeitgeberanteil">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Arbeitgeberanteil der vermoegenswirksamen Leistungen</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_HandeltAufRechnungVon">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Gibt an, dass ein Partner auf Rechnung eines anderen handelt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Arbeitgeber">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partnerrolle zur Referenzierung des Arbeitgebers</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Freistellungsbetrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Betrag des Freistellungsauftrages.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Haushalt">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zu weiteren im Haushalt lebenden Personen (insb. Kinder).
+
+Das Attribut KinderImHaushalt (ST_KinderImHaushalt) fehlt, da der entsprechende einfache Datentyp nicht definiert ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Haushaltsgroesse" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AnzahlKinder" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="GeburtsdatumJuengstesKind" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="GeburtsdatumAeltestesKind" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="KinderImHaushalt" type="dt:STE_KinderImHaushalt" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Haushaltsart" type="dt:STE_Haushaltsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Haushalt</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Partnerrolle" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die Rolle des Partners innerhalb eines konkreten Kontexts innerhalb der Nachricht. Alle Partner werden innerhalb einer Liste unterhalb des Wurzelelements der Nachricht (i.d.R. abgeleitet von Geschaeftsvorgang) uebertragen und aus dem jeweiligen Kontext, aus dem sie benoetigt werden, mit Hilfe einer von diesem Datentypen abgeleiteten Rolle referenziert.
+
+Hierfuer enthaelt Partnerrolle ein Attribut von Typ ST_PartnerID, dessen Wert mit dem Wert des Attributs PartnerID (ebenfalls vom Typ ST_PartnerID) eines in der oben angesprochenen Liste enthaltenen Partners uebereinstimmen muss.
+
+Wenn der Partner nicht übertragen werden kann bzw. darf, MUSS im referenzierten Partner-Objekt nur die PartnerID übertragen werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="PartnerID" type="dt:ST_ID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Referenz auf einen Partner in der Partnerliste.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gueltigkeit" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Kreditkarte">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Hinweis: Die Verarbeitung von Kreditkartendaten erfordert die Einhalltung bestimmter Regularien und Prozesse. Diese sind umfassend, aber ggf. nicht vollständig im PCIDSS: - Payment Card Industry Data Security Standard beschrieben.
+Unter anderem ist die Speicherung des CVC Codes nicht zulässig. Die Kreditkartennummer darf nur verschlüsselt gespeichert und nicht vollständig angezeigt werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Kreditkartenunternehmen" type="dt:ST_Text" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das Attribut gibt das ausstellende Kreditunternehmen der Kreditkarte an.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GueltigVon" type="dt:ST_MonatJahr" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt den Beginn der Gültigkeitsdauer der Kreditkarte an.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GueltigBis" type="dt:ST_MonatJahr" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt das Ende der Gültigkeitsdauer der Kreditkarte an.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Karteninhaber" type="dt:ST_Text080" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das Attribut gibt den vollständigen Namen (Vorname Nachname) des Kreditkarteninhabers an.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kreditkartennummer" type="dt:ST_Kreditkartennummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das Attribut gibt die Kreditkartennummer der Kreditkarte an.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="CVCode" type="dt:ST_CVCode" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das Attribut gibt den CV-Code der Kreditkarte an.
+Der Card Validation Code (CVC) ist ein Sicherheitsmerkmal auf Kreditkarten.Die Prüfnummer soll die Nutzung von gefälschten oder gestohlenen Kreditkartenangaben verhindern, da sich hiermit feststellen lässt, ob eine Kreditkarte tatsächlich physisch vorliegt</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ZurZahlungGenutzt" type="dt:ST_JaNein" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, ob die Kreditkarte zur Beitragszahlung genutzt wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Lohnsumme">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Stellt die Summe der zu zahlenden Löhne dar (jährlich, brutto).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Krankenhaus">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partnerinformationen zu einem Krankenhaus.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Partneranschrift">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Anschrift eines Partners.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Adresse">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Anschriftart" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Postfach" type="dt:ST_Postfach" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Adresszusatz" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Adresstyp" type="dt:ST_Adresstyp" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Typ der Partneranschrift (z.B. geschaeftlich, privat).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BevorzugteKorrespondenzanschrift" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Identifiziert die Anschrift, an welche die Korrespondenz gerichtet werden soll. Der Provider nutzt diese Anschrift zu 100% zur Kommunikation. Die bevorzugte Anschrift darf nur einmal vorkommen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Partner" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Basis-Objekt fuer Partnerdaten, das die Gemeinsamkeiten von natuerlichen und juristischen Personen abbildet. Unterklassen duerfen nicht projektspezifisch abgeleitet werden um die Kombination der Ergebnisse verschiedener Projekte der BiPRO innerhalb eines Services und insbesondere die spartenuebergreifende Produktbuendelung in Tarifierungsprojekten nicht zu gefaehrden. Fuer solche Erweiterungen steht - falls notwendig - der Datentyp ZusaetzlichePartnerdaten zur Verfuegung.
+
+Partner werden in einer Liste unterhalb des Wurzelelements (i.d.R. abgeleitet von Geschaeftsvorgang) jeder Nachricht uebertragen. Die Referenzierung aus dem jeweiligen lokalen Kontext erfolgt ueber die Partnerrolle in Kombination mit dem Attribut PartnerID dieses Datentyps.
+
+Die Attribute BezugZuVN (ST_BezugZuVN) und PartnerID (ST_PartnerID) fehlen, da die entsprechenden einfachen Datentypen nicht definiert sind.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Anrede" type="dt:ST_Anredeschluessel" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Name" type="dt:ST_Text050" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Nachname der Person bzw. Firmenname des Unternehmens.
+Hinweis: Es kann eine optionale Rückmeldung an die Datenquelle im Status erfolgen, wenn ein Abschneiden der Feldlänge des Attributes notwendig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Namenszusatz1" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Namenszusatz2" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="PartnernummerVM" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Identifizierung des Partners beim Vermittler.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Partnernummer" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Identifizierung des Partners beim produktgebenden Unternehmen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vorsteuerabzugsberechtigt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vorsteuerabzugsfähigkeit.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="PartnerID" type="dt:ST_ID" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige ID des Partners innerhalb eines Datenaustauschs. Diese ID dient zur Referenzierung aus einem fachlichen Kontext.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anschrift" type="CT_Partneranschrift" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="ZusaetzlichePartnerdaten" type="CT_ZusaetzlichePartnerdaten"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Kommunikationsverbindung" type="CT_Kommunikationsverbindung"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Bankverbindung" type="CT_BankverbindungBasis" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="HandeltAufRechnungVon" type="CT_HandeltAufRechnungVon" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Gruppenvertragspartner" type="CT_Gruppenvertragspartner" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Partnerbeziehung" type="CT_Partnerbeziehung" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Vertrauensperson" type="CT_Vertrauensperson" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Kreditkarte" type="CT_Kreditkarte" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="UmsatzsteuerIdentifikationsnummer"
+                            type="dt:ST_UmsatzsteuerIdentifikationsnummer"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Umsatzsteuer-Identifikationsnummer ist eine eindeutige EU-weite Kennzeichnung eines Steuerpflichtigen im umsatzsteuerlichen Sinne.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AltePartnernummer" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bei einer Änderung der Partnernummer beim produktgebenden Unternehmen (Attribut Partnernummer) MUSS die alte Partnernummer in diesem Attribut zumindest bei der ersten Lieferung nach der Nummernänderung übermittelt werden. Dabei MUSS die Gevo-Art 110000002 (Änderung der Partnernummer) verwendet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Besteuerung" type="CT_Besteuerung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Direktmarketing" type="CT_Werbeerlaubnis" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Finanzamt" type="dt:ST_Finanzamt" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zuständiges Finanzamt.
+Grundsätzlich ist das Finanzamt des Wohnorts/ Unternehmenssitzes zuständig, in dem der Steuerpflichtige zum Abgabezeitraum der Steuererklärung wohnt bzw. seinen Unternehmenssitz hat. Die BUFA-Nr. ist die eindeutige bundeseinheitliche  Finanzamtsnummer. Es wird damit ein Finanzamt sowohl einem Bundesland als auch einer vorgesetzten Finanzbehörde zugeordnet. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Partneranmerkung" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Spezifiziert eine Anmerkung zum Partner, z. B. Partner ist VIP.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Briefanrede" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Definition der Anrede in Briefen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kommunikationspartner" type="CT_Kommunikationspartner" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="PartnernummerExtern" type="allg:CT_Partnernummer" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Vollmachtgeber" type="CT_Vollmachtgeber" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Kirchensteuer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zu Kirchensteuerpflicht und -satz.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Kirchensteuer" type="dt:ST_JaNein" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Kirchensteuersatz" type="dt:ST_Faktor" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Arzt">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der als Arzt tätig ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_JuristischePerson">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Juristische Person. Darf nicht Projekt-spezifisch abgeleitet werden (vgl. Kommentar zu Partner). Kann eine natuerliche Person als Vertretungsberechtigten haben.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partner">
+            <xsd:sequence>
+               <xsd:element name="Rechtsform" type="dt:ST_Rechtsform" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Steuernummer" type="dt:ST_Steuernummer" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Gruendungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Branche" type="dt:STE_BerufsBranche" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AnzahlMitglieder" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieses Attribut gibt die Anzahl der Mitglieder einer juristischen Person an. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vertretungsberechtigter" type="CT_Vertretungsberechtigter" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der ueber die Rolle Vertretungsberechtigter referenzierte Partner muss eine natuerliche Person sein.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Umsatz" type="CT_Umsatz" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="AnzahlBeschaeftigte" type="CT_AnzahlBeschaeftigte" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Lohnsumme" type="CT_Lohnsumme" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Handelsregistergericht" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gericht, bei dem das Handelsregister bzw. bei Vereinen das Vereinsregister geführt wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Handelsregisteraktenzeichen" type="dt:ST_Text030" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Aktenzeichen des Handels- bzw. Vereinsregisters, z.B. HRB 8297</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gesundheitsdaten">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Biometrische Daten einer (natürlichen) versicherten Person</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Groesse" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Körpergröße der Person in cm.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gewicht" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das Gewicht der Person in Kg.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DioptrienLinks" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe zur Fehlsichtigkeit des linken Auges der Person Kurzsichtigkeit: negative Zahl; Weitsichtigkeit: positive Zahl. Angabe in Dioptrien gemaess DIN.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DioptrienRechts" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe zur Fehlsichtigkeit des rechten Auges der Person Kurzsichtigkeit: negative Zahl; Weitsichtigkeit: positive Zahl. Angabe in Dioptrien gemaess DIN.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="FehlendeZaehne" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der fehlenden echten Zähne ohne Weisheitszähne</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VoraussichtlicherEntbindungstermin" type="dt:ST_Datum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Hierüber kann auch festgestellt werden ob eine Schwangerschaft zum Zeitpunkt des Antrags vorliegt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Behinderungsgrad" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grad der Behinderung einer Person.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Berufsgenossenschaft">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partnerinformationen zu einer Berufsgenossenschaft.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Person">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Natuerliche Person. Darf nicht Projekt-spezifisch abgeleitet werden (vgl. Kommentar zu Partner). Kann Vertretungsberechtigter einer juristischen Person sein.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partner">
+            <xsd:sequence>
+               <xsd:element name="Vorname" type="dt:ST_Text050" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vorname der Person
+Hinweis: Es kann eine optionale Rückmeldung an die Datenquelle im Status erfolgen, wenn ein Abschneiden der Feldlänge des Attributes notwendig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Geburtsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Geschlecht" type="dt:ST_Geschlecht" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Titel" type="dt:ST_Text030" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Geburtsort" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Geburtsort der Person
+Hinweis: Es kann eine optionale Rückmeldung an die Datenquelle im Status erfolgen, wenn ein Abschneiden der Feldlänge des Attributes notwendig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Staatsangehoerigkeit" type="dt:ST_Laenderkennzeichen" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Familienstand" type="dt:ST_Familienstand" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Adelspraedikat" type="dt:ST_Text017" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Geburtsname" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Geburtsname der Person.
+Hinweis: Es kann eine optionale Rückmeldung an die Datenquelle im Status erfolgen, wenn ein Abschneiden der Feldlänge des Attributes notwendig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Geburtsland" type="dt:ST_Laenderkennzeichen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="InDeutschlandAnsaessigSeit" type="dt:ST_Datum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zeitpunkt, seit dem die Person in Deutschland ansaessig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Steueridentifikationsnummer" type="dt:ST_Steueridentifikationsnummer"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Steueridentifikationsnummer der Person</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ausweis" type="CT_Ausweis" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="GesetzlicheKrankenversicherung" type="CT_GesetzlicheKrankenversicherung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Einkommenssteuer" type="CT_Einkommenssteuer" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Berufstaetigkeit" type="CT_Berufstaetigkeit" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Einkommen" type="CT_Einkommensart" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Haushalt" type="CT_Haushalt" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Ausbildung" type="CT_Ausbildung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Gesundheitsdaten" type="CT_Gesundheitsdaten" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="KuenstlernameOrdensname" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kuenstlername bzw. Ordensname gemäß Personalausweis.
+Hinweis: Es kann eine optionale Rückmeldung an die Datenquelle im Status erfolgen, wenn ein Abschneiden der Feldlänge des Attributes notwendig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Sozialversicherungsnummer" type="dt:ST_Sozialversicherungsnummer"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Sozialversicherungsnummer gemäß Sozialversicherungsausweis.
+Die Sozialversicherungsnummer wird auch als Zulagenummer im Riester-Zulageverfahren verwendet.
+Der Aufbau der Nummer inkl. der Prüfziffernberechnung ist in der "Verordnung über die Versicherungsnummer " unter www.gesetze-im-internet.de (Bundesrepublik Deutschland,
+vertreten durch das Bundesministerium der Justiz und für Verbraucherschutz) beschrieben. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AlteSteuernummer" type="dt:ST_Steuernummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bisherige Steuernummer, die nur innerhalb des einzelnen Finanzamtes eindeutig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Fuehrerschein" type="CT_Fuehrerschein" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Fuehrerschein">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Fuehrerscheinklasse" type="dt:ST_Fuehrerscheinklasse" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="FuehrerscheinAusstellung" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="FuehrerscheinAusstellungsLand" type="dt:ST_Laenderkennzeichen"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="EUFuehrerschein" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Vorhanden" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Es gibt eine gültige Fahrerlaubnis.
+NEIN = Es gibt keine gültige Fahrerlaubnis</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EntzogenAm" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, an dem der Führerschein entzogen wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ZusaetzlichePartnerdaten" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Da Partner nicht projektspezifisch abgeleitet werden dürfen um die Kombination der Ergebnisse verschiedener Projekte der BiPRO innerhalb eines Services und insbesondere die spartenuebergreifende Produktbuendelung in Tarifierungsprojekten nicht zu gefaehrden, koennen Erweiterungen dieses Datentyps genutzt werden um Projekt-, Sparten- und Kontextspezifische Erweiterungen des Partners vorzunehmen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Kommunikationsverbindung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zu Telefon, Fax, Email etc.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Kommunikationstyp" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Kommunikationsadresse" type="dt:ST_Text060" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Hinweise, welcher Wert einzutragen ist, wenn der Kommunikationstyp Online-Dienst ist (Kommunikationsverbindung.ArtID ist 70, 71 oder 72), für jeden dann im Attribut Kommunikationsprovider anzugebenden Anbieter.
+Wert von Kommunikationsprovider: Inhalt von Kommunikationsadresse
+001: Username (mit @aim.com) oder registrierte E-Mail-Adresse oder Facebook-Anmelde-ID (Telefon oder bei Facebook registrierte E-Mail-Adresse);
+002: Facebook-Anmelde-ID bzw. angegebene Telefonnummer oder bei Facebook registrierte E-Mail-Adresse;
+003: im Profil festgelegte Konto-ID, d.i. die E-Mail-Adresse bei Google oder eine andere E-Mail-Adresse, ersatzweise der vergebene Alias-Name;
+004: (entfällt);
+005: die bei der Registrierung festgelegte ICQ-Nummer;
+006: die bei der Registrierung am XMPP-Server erhaltene Jabber-ID;
+007: die bei der Registrierung verwendete E-Mail-Adresse oder der angezeigte Alias-Name;
+008: die verwendete Hotmail-E-Mail-Adresse oder der Skype-Name (als Alias-Name);
+009: die Microsoft-Live-Messenger-ID oder der Skype-Name (als Alias-Name);
+010: die bei der Registrierung verwendete E-Mail-Adresse oder der angezeigte Alias-Name;
+011: die Yahoo-ID auf Basis der bei der Registrierung verwendeten E-Mail-Adresse mit einer der Endungen: @yahoo.de, @yahoo.com, @rocketmail.com, @ymail.com.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vom Provider generierte, eindeutige Referenznummer zur Identifizierung des Objektes über Prozesse hinweg, insbesondere zwischen Auskunfts- und Änderungsprozessen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kommunikationsprovider" type="dt:ST_Kommunikationsprovider" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kommunikationsprovider eines Online-Dienstes. 
+Dieses Attribut MUSS angegeben werden, wenn im Attribut ArtID 70, 71 oder 72 verwendet wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="KommunikationsadresseURI" type="dt:ST_KommunikationsadresseURI"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Optional anzugebende formale URI zur Kommunikationsadresse, wenn Kommunikationsverbindung.ArtID 70, 71 oder 72 (Online-Dienst) ist, und für den in Kommunikationsprovider angegeben Online-Dienst ein URI-Scheme definiert wurde (wie derzeit bei AIM, GoogleTalk, ICQ, Jabber, MSN, Skype, Yahoo). Wenn mehrere vom jeweiligen Online-Dienst unterstützte Aktionen angegeben werden sollen, MUSS für jede Aktion ein eigenes Element Kommunikationsverbindung vorhanden sein.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Erreichbarkeit" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anmerkungen zur Erreichbarkeit unter dieser Kommunikationsverbindung (z.B. zeitlich).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BevorzugteKommunikationsverbindung" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Kommunikation soll bevorzugt über diese Kommunikationsverbindung erfolgen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Ausbildung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Das Objekt kann nur einmal geliefert werden. Abgebildet wird hier deshalb der höchste erzielte Abschluss.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_Ausbildungsart" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Schul- oder Ausbildung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Fachrichtung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Freitext zur Ausbildungsart oder zum höchsten Abschluss</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Abschlussdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, an dem der Abschluss erzielt wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Firmeneintritt" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zeitpunkt des Firmeneintritts im Ausbildungsbetrieb bei einer betrieblichen Ausbildung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="HoechsterAbschluss" type="dt:STE_Bildungsabschluss" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Höchster Schul- oder Hochschulabschluss</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_PersonengruppenMitglied">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Mitglied einer Personengruppe</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Kommunikationspartner">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, an den die Kommunikation gerichtet ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Krankenkasse">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partnerinformationen zu einer Krankenkasse.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Personengruppe">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Gruppe von natürlichen und/oder juristischen Personen. Die Mitglieder der Personengruppe können individuell über die Klasse PersonengruppenMitglied identifiziert werden. Alternativ kann mit dem Attribut Bezeichnung eine Gruppe nicht namentlich genannter Personen beschrieben werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Bezeichnung" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bezeichnung der Personengruppe</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlPersonen" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Personen in der Personengruppe.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NamentlicheNennung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ja = Mit namentlicher Nennung der Mitglieder
+Nein = Keine namentliche Nennung der Mitglieder</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="PersonengruppenID" type="dt:ST_ID" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige ID der Personengruppe innerhalb eines Datenaustauschs. Diese ID dient zur Referenzierung aus einem fachlichen Kontext mit Hilfe der Klasse Personengruppenrolle.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Mitglied" type="CT_PersonengruppenMitglied" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Steuerbefreiung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Informationen zu einer Steuerbefreiung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Steuerbefreiungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Steuerbefreiung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gueltigkeitszeitraum" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Freistellungsbetrag" type="CT_Freistellungsbetrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Partnerbeziehung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="Art" type="dt:STE_Partnerbeziehung" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibt die Art der Beziehung der Partner untereinander. Im Falle von natürlichen Personen können hierüber z. B. Verwandtschaftsverhältnisse wie z. B. Eltern-Kind-Beziehungen innerhalb der Rolle abgebildet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beschreibung" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Partnerbeziehung, wenn sie durch die Art nicht ausreichend spezifiert werden kann (z.B. Neffe der Oma).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Teilzeit">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zur Abbildung der Teilzeit.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Anteil" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt das Verhältnis von Teilzeit zur Vollzeit in Prozent an. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Wochenstunden" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe der zu leistenden Wochenstunden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vollzeitstunden" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe der Wochenstunden einer Vollzeitstelle.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_GesetzlicheKrankenversicherung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Daten zum Versicherungsstatus einer natuerlichen Person in der gesetzlichen Krankenversicherung.
+
+Das Attribut Krankenkasse fehlt, da der entsprechende einfache Datentyp (ST_Krankenkasse) nicht definiert ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="GesetzlichVersichert" type="dt:ST_JaNein" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Pflichtig" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Beitragssatz" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VermoegenswirksameLeistung">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Arbeitgeberanteil" type="CT_Arbeitgeberanteil" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Arbeitnehmeranteil" type="CT_Arbeitnehmeranteil" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ArtID" type="dt:ST_ArtVermoegenswirksameLeistung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der vermögenswirksamen Leistung (VWL, AVWL).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vertragspartner">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zum Vertragspartner (z.B. Versicherungsnehmer, Kontoinhaber, Depotinhaber).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_BankverbindungBasis" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zur Bankverbindung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Bankverbindung" type="dt:ST_TypDerBankverbindung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BIC" type="dt:ST_BIC" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="IBAN" type="dt:ST_IBAN" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Institut" type="dt:ST_Text060" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Kontoinhaber" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Name des Kontoinhabers, falls abweichend vom Partner, von dem die Bankverbindung referenziert wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vom Provider generierte, eindeutige Referenznummer zur Identifizierung des Objektes über Prozesse hinweg, insbesondere zwischen Auskunfts- und Änderungsprozessen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AnzahlBeschaeftigte">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Anzahl der Beschäftigten einer juristischen Person. Dies wird  als Nominell Beschäftigte in MAK (Mitarbeiter-Kapazitäten) und/oder als Effektiv Beschäftigte (alle Mitarbeiter ohne Berücksichtigung des Beschäftigungstyps) angegeben.
+
+Mitarbeitende Familienangehörige sowie der Inhaber/Geschäftsführer sind selbst nicht mitzuzählen, sind aber trotzdem mitversichert.
+
+Bei einem Unternehmen ohne Beschäftigte darf diese Klasse nicht geliefert werden.
+
+Wenn es nur ein Objekt gibt, DARF auf die ArtID verzichtet werden, da von Vollzeitmitarbeitern ausgegangen wird. Werden mehrere Objekte übergeben, MUSS zur Anzahl der nominell Beschäftigten jeweils die ArtID angegeben werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Beschaeftigtentyp" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschäftigte, die im Betrieb des Versicherten tätig sind.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Nominell" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der nominell Beschäftigten ohne Berücksichtigung des Beschäftigungstyps.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Effektiv" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der effektiv Beschäftigten mit Berücksichtigung des Beschäftigungstyps.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Beitragszahler">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zum Beitragszahler. Der Beitragszahler ist der Empfänger der Beitragsrechnung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vertrauensperson">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Gibt an, dass ein Partner auf Rechnung eines anderen handelt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Arbeitnehmeranteil">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Arbeitnehmeranteil der vermoegenswirksamen Leistungen</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vertretungsberechtigter">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Natuerliche Person, die fuer eine juristische Person vertretungsberechtigt ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Werbeerlaubnis">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die Klasse spezifiziert Werbeerlaubnisse und Werbeverbote generell oder in Abhängigkeit von Kommunikationsverbindungen und Sparten, eventuell auch für bestimmte Zeiträume.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Erlaubnis" type="dt:ST_JaNeinKeineAntwort" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ja = Werbeerlaubnis erteilt
+Nein = Werbeerlaubnis nicht erteilt (Werbeverbot)
+Unbekannt = Information zur Werbeerlaubnis unbekannt</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Sparte" type="dt:ST_Sparte" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Sparte(n), für die Werbeerlaubnis bzw. -verbot gilt.
+Keine Angabe bedeutet: Gilt für alle Sparten.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Basis" type="dt:ST_BasisDerWerbeerlaubnis" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Basis für Werbeerlaubnis bzw. Werbeverbot.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bestaetigungsart" type="dt:ST_Versandart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Bestätigung für Werbeerlaubnis bzw. Werbeverbot.
+Wird keine Bestätigung versandt, MUSS der Wert 999 verwendet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bestaetigungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Bestätigung für Werbeerlaubnis bzw. Werbeverbot.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gueltigkeit" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Kommunikationsverbindung" type="CT_Kommunikationsverbindung"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="EinwilligungserklaerungErlaeutert" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob dem Partner die Werbeeinwilligungserklärung erläutert wurde.
+Ja = Die Werbeeinwilligungserklärung wurde dem Partner erläutert.
+Nein = sonst</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Bankverbindung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Bankverbindung, die zum SEPA-Bereich gehört. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_BankverbindungBasis">
+            <xsd:sequence>
+               <xsd:element name="Kontonummer" type="dt:ST_Kontonummer" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Bankleitzahl" type="dt:ST_Bankleitzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Einzugsermaechtigung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Einzugsermaechtigung  DARF NICHT die Zahlungsart in der Klasse TAA ersetzen. Sie stellt lediglich fest, ob zu dieser Bankverbindung eine Einzugsermächtigung vorliegt. Die Ausprägung sagt aber nichts über die Zahlungsart eines bestimmten Vertrages aus.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Umsatz">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Stellt die Summe des gezeichneten Umsatzes dar (jährlich)</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vollmachtgeber">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Identifiziert einen Partner, der eine Vollmacht erteilt hat.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Einkommensart">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Art des Einkommens.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="AnzahlGehaelterProJahr" type="dt:ST_Dezimalzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Einkommensart" type="dt:ST_Einkommensart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des EInkommens. Zu unterscheiden sind hierbei das allgemeine Einkommen (= Gesamteinkommen) und berufsbezogenes Einkommen (Unterscheidung selbstständige und angestellter Tätigkeit), wie es z.B. in der Rechtsschutzverischerung benötigt wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VermoegenswirksameLeistung" type="CT_VermoegenswirksameLeistung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Einkommen" type="CT_Einkommen" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_InternationaleBankverbindung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Internationale Bankverbindung, die nicht zum SEPA-Bereich gehört. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_BankverbindungBasis">
+            <xsd:sequence>
+               <xsd:element name="Kontonummer" type="dt:ST_IntKontonummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Identifikation des Kontos, falls keine IBAN vorhanden ist. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anschrift" type="CT_Partneranschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Personengruppenrolle" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die Rolle der Personengruppe innerhalb eines konkreten Kontexts innerhalb der Nachricht. Alle Personengruppen werden innerhalb einer Liste unterhalb des Wurzelelements der Nachricht (i.d.R. abgeleitet von Geschaeftsvorgang) uebertragen und aus dem jeweiligen Kontext, aus dem sie benoetigt werden, mit Hilfe einer von diesem Datentypen abgeleiteten Rolle referenziert.
+
+Hierfuer enthaelt Partnerrolle ein Attribut von Typ ST_ID, dessen Wert mit dem Wert des Attributs PersonengruppenID (ebenfalls vom Typ ST_ID) einer in der oben angesprochenen Liste enthaltenen Personengruppe uebereinstimmen muss.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="PersonengruppenID" type="dt:ST_ID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Referenz auf eine Personengruppe in der Personengruppenliste.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Sicherungsglaeubiger">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ein Sicherungsgläubiger ist ein Gläubiger, der seine Forderung besichert hat, etwa durch ein Pfand oder eine Bürgschaft. Sicherungsgläubiger erhalten deshalb ihre Forderungen vorrangig zurück („vorrangige Gläubiger“).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="Aktenzeichen" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Aktenzeichen, das der Sicherungsgläubiger zu diesem Vorgang hat (Jeder Vorgang hat ein eigenes Aktenzeichen)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gruppenvertragspartner">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ID" type="dt:STE_Gruppenvertragspartner" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Mitgliedsnummer" type="dt:ST_Text025" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de"> Identifikation des Partners beim Gruppenvertragspartner</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gruppenvertragsnummer" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Möglichkeit der Identifikation des Gruppenvertragspartners, wenn keine Identifizierung über ID erfolgt. Eine Identifikation ist demnach nicht nur über eine Werteliste (ID) möglich, sofern die Informationen über den Gruppenvertragspartner auf anderen Wegen übermittelt werden. Bei jeder Änderung (neuer Partner oder Wegfall eines Partners) müsste ein aktualisiertes Schema verteilt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Status" type="dt:ST_GruppenvertragspartnerStatus" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ermittlung, ob der gelieferte Partner bereits Mitglied ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Name" type="dt:ST_Text050" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Name des Gruppenvertragspartners</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Einkommenssteuer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zur Einkommenssteuer.
+
+Das Attribut Veranlagung (ST_Veranlagung) fehlt, da der entsprechende einfache Datentyp nicht definiert ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Grenzsteuersatz" type="dt:ST_Faktor" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Freibetrag" type="dt:ST_Betrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Kirchensteuer" type="CT_Kirchensteuer" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

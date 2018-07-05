@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/vertrag"
+            xmlns:vtrg="http://www.bipro.net/namespace/vertrag"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:pm="http://www.bipro.net/namespace/produktmodell"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            targetNamespace="http://www.bipro.net/namespace/vertrag"
+            bipro:Name="bipro-vertrag-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/produktmodell"
+               schemaLocation="bipro-produktmodell-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Vertrag">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Abgangsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Stornodatum des Vertrags.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Abgangsgrund" type="dt:ST_Abgangsgrund" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grund für den Abgang des Vertrags.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AktenzeichenVM" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zuordnungsmerkmal des Vermittlers, z. B. Niederlassung/Büro des Vermittlers, Sachbearbeiter des Vermittlers, Vertragsnummer des Vermittlers. Das im Antrag übermittelte AktenzeichenVM MUSS vom Versicherer bei der Policierung zum Vertrag gespeichert und bei vertragsbezogenen Geschäftsvorgängen im Objekt Vertrag ausgegeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Antragsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Antragsaufnahme des Vertrags.
+Gilt auch für Änderungsanträge.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Antragsstatus" type="dt:ST_Antragsstatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status des Antrags</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GueltigAbDatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, zu dem dieser Vertragsstand gültig wurde/wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GueltigBisDatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, zu bis zu dem dieser Vertragsstand gültig war/ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Hauptfaelligkeit" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das jeweils folgende Hauptfälligkeitsdatum des Vertrags.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Inkassoart" type="dt:ST_Inkassoart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Inkassoart des Vertrags.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kuendigungsklausel" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bei kurzfristigen Verträgen sowie bei Verträgen, die nicht automatisch verlängert werden: "Nein".
+Sonst: "Ja".</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vertragsbeginn" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Erstbeginn des Vertrags.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vertragsstatus" type="dt:ST_Vertragsstatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Status des Vertrags, z.B. lebend, storniert.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zahlungsart" type="dt:ST_Zahlungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zahlungsart bzw. -weg des Vertrags.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zahlungsweise" type="dt:ST_Zahlungsweise" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Zahlungsweise des Vertrags.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Verkaufsprodukt" type="pm:CT_Verkaufsprodukt" minOccurs="1"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Vermittler" type="allg:CT_Vermittler" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Gegenstand" type="allg:CT_Gegenstand" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Beitragszahler" type="partner:CT_Beitragszahler" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Vertragsnummer" type="allg:CT_Vertragsnummer" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Aktivitaet" type="allg:CT_Aktivitaet" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="AktenzeichenVertragspartner" type="dt:ST_Text030" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zuordnungsmerkmal des Vertragspartners (Versicherungsnehmers - VN), z. B. Niederlassung, Betriebsstätte, Abteilung, Kostenstelle des VN. Das im Antrag übermittelte AktenzeichenVertragspartner MUSS vom Provider bei der Policierung zum Vertrag gespeichert und bei vertragsbezogenen Geschäftsvorgängen im Objekt Vertrag ausgegeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Aenderungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Termin, zu dem der Vertragszustand wirksam wird/wurde (Gültig-ab- / Wirksam-ab-Datum).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Aenderungsgrund" type="dt:ST_GeVoArt" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grund der Änderung, die zu dem Vertragszustand geführt hat.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AntragsnummerVM" type="dt:ST_Vorgangsnummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Antragsnummer, die vom Vermittler vergeben wird. Gilt auch für Änderungsanträge.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Antragseingangsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eingangsdatum des Antrags beim Unternehmen. Gilt auch für Änderungsanträge.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Policierungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, an dem der Antrag dokumentiert wurde. Gilt auch für Änderungsanträge.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vertragsentstehung" type="dt:ST_Vertragsentstehung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, wie der Vertrag zu Stande gekommen ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ArtDerBeratung" type="dt:ST_ArtDerBeratung" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Kundenberatung vor dem Verkauf.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Antragsnummer" type="dt:ST_Vorgangsnummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Antragsnummer, die vom produktgebenden Unternehmen vergeben wird. Gilt auch für Änderungsanträge.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AlteVertragsnummer" type="allg:CT_Vertragsnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Personengruppe" type="partner:CT_Personengruppe" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="BearbeitendeStelle" type="CT_BearbeitendeStelle" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VertragsnummerVM" type="allg:CT_Vertragsnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Vertragsverbindungsnummer" type="allg:CT_Vertragsnummer" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Vertragspartner" type="partner:CT_Vertragspartner" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Leistungsstoerung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Die Leistungsgewährung zu diesem Vertrag ist gestört (z. B. Vertrag befindet sich im Mahnverfahren).
+NEIN = Die Leistungsgewährung zu diesem Vertrag ist nicht gestört.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zahltermin" type="dt:ST_Kalendertag" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kalendertag an dem die Zahlung des Beitrags fällig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VorNebenVertrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zu bestehenden oder beendeten Vor- bzw. Nebenverträgen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Vertrag">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Fremdversicherungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Ablehnungsgrund" type="dt:ST_Text1000" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grund/Ursache aus welchem ein Antrag von einem anderen Versicherer bereits abgelehnt wurde</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_BearbeitendeStelle">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Stelle, die den Vertrag bearbeitet (z.B. Zweigniederlassung, Assekuradeur).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

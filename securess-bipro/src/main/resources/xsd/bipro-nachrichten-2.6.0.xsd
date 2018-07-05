@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/nachrichten"
+            xmlns:nachr="http://www.bipro.net/namespace/nachrichten"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:mime="http://www.w3.org/2005/05/xmlmime"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            targetNamespace="http://www.bipro.net/namespace/nachrichten"
+            bipro:Name="bipro-nachrichten-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_ProzessFehler">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Prozess-Objekt. Dient der Uebermittlung von Prozessfehlern.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="BiPROVersion" type="dt:ST_Version" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Status" type="CT_Status" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Meldung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ermoeglicht die Erweiterung einer Statusmeldung um zusaetzliche Informationen (z.B. Fehlermeldungen oder Hinweise).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Meldungsart" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ermoeglicht die Erweiterung einer Statusmeldung um zusaetzliche Informationen (z.B. Fehlermeldungen oder Hinweise), insbesondere 
+dann, wenn eine synchrone Verarbeitung nicht mit einem Ergebnis 
+abgeschlossen werden konnte. In Anhängigkeit zu 
+Status.statusid MUSS oder KANN das Objekt übermittelt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="MeldungID" type="dt:ST_Meldung" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Identifizierung der Meldung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Text" type="dt:ST_Text" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Meldung als Klartext. Diese MUSS natürlichsprachlich und für einen Endanwender (Vermittler) fachlich verständlich formuliert sein. DIe Meldung DARF auf der Benutzeroberfläche angezeigt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Quelle" type="dt:ST_Text" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Referenz auf das fehlerhafte Objekt und die Objekt-Eigenschaft mittels XPath.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Identifikationsnummer" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Alphanummerische eindeutige Kennzeichnung der Meldung bzw. des Fehlers oder Hinweises. Anhand der Nummer wird insbesondere die nichttechnische Kommunikation zwischen Nutzer und Anbieter erleichtert.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Status">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Dient der Abfrage oder Uebermittlung des Status eines laufenden oder abgeschlossenen Prozesses.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ProzessID" type="dt:ST_ProzessID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Identifizierung des fachlichen Prozesses beim Provider.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zeitstempel" type="dt:ST_Zeitstempel" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Aktuelles Datum und Uhrzeit zum Bearbeitungszeitpunkt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="StatusID" type="dt:ST_Status" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Identifizierung der Statusmeldung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gueltigkeitsende" type="dt:ST_Zeitstempel" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zeitpunkt bis zu dem die zum Vorgang gehoerigen Daten beim Anbieter vorgehalten werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schwebe" type="dt:ST_JaNein" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ein Teilprozess wird regelmäßig technisch synchron durchlaufen. Nach einem Request des Service Consumers folgt ein Response des Service Providers. Damit ist dieser Prozess abgeschlossen. Ein technisch synchron übermittelter Geschäftsvorgang kann jedoch nicht immer fallabschließend bearbeitet werden. Das Ende der Bearbeitung stimmt entsprechend nicht immer mit dem Ende des Teilprozesses überein. In diesem Fall handelt es sich um einen schwebenden Vorgang. Zur Kennzeichnung, dass der Vorgang schwebend ist, MUSS das Atttribut Schwebe mit dem Wert true gefüllt werden. Dies ist für den Service Consumer zugleich ein Indikator, an dem er erkennen kann, dass möglicherweise ein Tracking des Vorgangs über einen dritten Business Service (z. B. N430) erfolgen kann.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Meldung" type="CT_Meldung" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ProzessAnfrage" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Prozess-Objekt. Alle Anfrage-Nachrichten innerhalb der von der BiPRO definierten Prozesse werden von diesem Datentypen abgeleitet.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="BiPROVersion" type="dt:ST_Version" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="ConsumerID" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige (providerspezifische) Identifizierung des anfragenden Systems (bzw. des Service Consumers).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="BiproException">
+      <xsd:complexType>
+         <xsd:complexContent>
+            <xsd:extension base="CT_ProzessFehler">
+               <xsd:sequence/>
+            </xsd:extension>
+         </xsd:complexContent>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_ProzessAntwort" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Prozess-Objekt. Alle Antwort-Nachrichten innerhalb der von der BiPRO definierten Prozesse werden von diesem Datentypen abgeleitet.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="BiPROVersion" type="dt:ST_Version" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="ConsumerID" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Status" type="CT_Status" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/sepa"
+            xmlns:sepa="http://www.bipro.net/namespace/sepa"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/sepa"
+            bipro:Name="bipro-sepa-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Abbuchung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die einmalige bzw. regelmäßige Abbuchung eines bestimmten Betrags zu bzw. ab einem konkreten Zeitpunkt.
+
+Die Angabe des Zeitpunkts MUSS mittels dem Attribut Stichtag erfolgen.
+Im Attribut Zahlweise MUSS angegeben werden, ob es sich um eine einmalige oder wiederkehrende Abbuchung handelt. Ist Zahlweise kontinuierlich (z.B. monatlich, jährlich) belegt, MUSS das Datum "Stichtag" als erster Abbuchungstag belegt bzw. interpretiert werden.
+
+Bsp.: Zahlweise = 8 (monatlich), Stichtag = 2013-04-01 bedeutet: Ab dem 1.4.2013 wird monatlich der angegebene Betrag abgebucht.
+
+Im Kontext SEPA sind nur Abbuchungen in Euro erlaubt. Die "Waehrung" MUSS also mit "EUR" (Euro) belegt werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence>
+               <xsd:element name="Zahlweise" type="dt:ST_Zahlungsweise" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe der Zahlweise und damit der Frequenz der Abbuchung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AbweichenderSchuldner">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, den abweichend vom Mandatgeber aus einem vertraglichen Schuldverhältnis eine Leistungspflicht trifft.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Mandat">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Diese Klasse bildet ein SEPA-Mandat ab und enthält alle im Kontext SEPA-Lastschrift relevanten Entitäten.
+
+Zur vollständigen Abbildung des Mandats MÜSSEN die Attribute IBAN und BIC der Basisklasse Bankverbindung belegt werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_BankverbindungBasis">
+            <xsd:sequence>
+               <xsd:element name="Art" type="dt:ST_MandatArt" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Mandats.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DatumUnterschrift" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, an dem das Mandat vom Mandatgeber unterzeichnet wurde.
+Liegt die Unterschrift zum abzubildenden Mandat vor, MUSS dieses Attribut gefüllt werden. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="OrtUnterschrift" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ort, an dem das Mandat vom Mandatgeber unterzeichnet wurde.
+Liegt die Unterschrift zum abzubildenden Mandat vor, MUSS dieses Attribut gefüllt werden. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Mandatsreferenz" type="dt:ST_Mandatsreferenz" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige, vom Gläubiger vergebene Identifikation des Mandats.
+Wurde die ID vergeben, MUSS dieses Attribut gefüllt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GlaeubigerID" type="dt:ST_GlaeubigerID" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Gläubiger-Identifikationsnummer dient zur kontounabhängigen und eindeutigen Identifizierung des Gläubigers. Sie wird in Deutschland von der Bundesbank erteilt und MUSS immer angegeben werden. Ist die GläubigerID im vorliegenden Prozessschritt noch nicht bekannt, DARF das Attribut leer bleiben.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Status" type="dt:ST_MandatStatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status des Mandats.
+Sobald bekannt DARF dieses Attribut gefüllt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NotifikationsFrist" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Tage, die die Pre-Notification vor Abbuchung versendet werden muss.
+Dieses Attribut MUSS vom Provider IMMER geliefert werden, auch wenn nicht vom Standard (derzeit 24 Tage) abgewichen wird.
+Der Consumer DARF dieses Attribut wiederholen, DARF es aber NICHT abweichend belegen. Eine Vorgabe von Consumerseite ist hierzu nicht möglich.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NotifikationsWeg" type="dt:ST_Versandart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zeigt die Versandart bei einem eigenständigen Pre-Notifikationsversand an.
+Bei postalischem Versand MUSS im Partnerobjekt des Mandatgläubiger genutzte Partneranschrift (mit BevorzugteKorrespondenzanschrift = true) übertragen werden.
+Falls der Notifikationsweg nicht postalisch ist, MUSS die Notifikationsverbindung der Auswahl entsprechen. 
+Bsp.: Ist Notifikationsweg = 003 (Email), muss die Notifikationsverbinung eine Mailadresse enthalten.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GewuenschterAbbuchungstag" type="dt:ST_Kalendertag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kalendertag der Abbuchung entsprechend Kundenwunsch.
+Falls der Kunde eine Abbuchung an einem bestimmten Abbuchungstag wünscht, MUSS dieses Attribut entsprechend belegt werden. Existiert kein solch ein Wunschtermin, DARF das Attribut NICHT belegt werden.
+Bsp.: Kunde wünscht die Abbuchung immer am 15. des Monats -&gt; GewuenschterAbbuchungstag = 15</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Sprache" type="dt:ST_Sprache" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ausfertigungssprache des Mandats und damit der Notifikationen.
+Request: Durch Angabe des Attributs im Request, DARF der Consumer die vom Kunden gewünschte Sprache mitteilen.
+Response: Der Provider MUSS dieses Attribut im Response grundsätzlich mit der/den tatsächlichen  Ausfertigungssprache(n) belegen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Mandatgeber" type="CT_Mandatgeber" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Glaeubiger" type="allg:CT_Unternehmen" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="ZugeordneterVertrag" type="allg:CT_Vertragsnummer" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Notifikationsverbindung" type="partner:CT_Kommunikationsverbindung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AbweichenderSchuldner" type="CT_AbweichenderSchuldner" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="MandatsAblageort" type="dt:ST_Mandatsablageort" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Legt fest wie das SEPA-Orginalmandat verwaltet wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Lastschriftart" type="dt:ST_Lastschriftart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ausprägung, ob es sich bei dieser Lastschrift um eine Basis- oder Firmenlastschrift handelt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gueltigkeit" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Mandatgeber">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Zahler, der dem Zahlungsempfänger mit dem Mandat die Zustimmung gibt, eine SEPA-Lastschrift auszuführen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Notifikation">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Versand" type="dt:ST_Datum" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum des Versands der Notifikation entsprechend Versandart des referenzierten Mandats.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BetroffenerVertrag" type="allg:CT_Vertragsnummer" minOccurs="1"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Mandat" type="CT_Mandat" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Abbuchung" type="CT_Abbuchung" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

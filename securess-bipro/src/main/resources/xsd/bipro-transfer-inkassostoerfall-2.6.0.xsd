@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/transfer/inkassostoerfall"
+            xmlns:xf-isf="http://www.bipro.net/namespace/transfer/inkassostoerfall"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:xf="http://www.bipro.net/namespace/transfer"
+            targetNamespace="http://www.bipro.net/namespace/transfer/inkassostoerfall"
+            bipro:Name="bipro-transfer-inkassostoerfall-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/transfer"
+               schemaLocation="bipro-transfer-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:complexType name="CT_InkassoStoerfallTransfer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Konkrete Transferklasse zur Übertragung von Inkasso-Störfällen. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="xf:CT_Transfer">
+            <xsd:sequence>
+               <xsd:element name="Mahndatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt das Datum der Mahnung an.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="UnbezahltSeit" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, seit wann keine Zahlungen mehr eingegangen sind.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ZahlungBeruecksichtigtBis" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, bis wann Zahlungen berücksichtigt wurden. Zahlungen, die nach diesen Zeitpunkt eingegangen sind, wurden nicht berücksichtigt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Mahnbetrag" type="allg:CT_Betrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Mahnkosten" type="allg:CT_Betrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Kontostand" type="allg:CT_Betrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="HaftungsendeDatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, zu welchem Datum die Haftung endet, wenn kein Zahlungseingang verzeichnet wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="RetouregrundBank" type="dt:ST_RetouregrundBank" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt den Grund für die Retoure der Bank an.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VersichertePerson" type="CT_VersichertePerson" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Bankverbindung" type="partner:CT_BankverbindungBasis" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ZusaetzlicheMahnbetraege" type="allg:CT_Betrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="GesamtbetragAusMahnungen" type="allg:CT_Betrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Vertragspartner" type="partner:CT_Vertragspartner" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VersichertePerson">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zur versicherten Person.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

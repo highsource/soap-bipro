@@ -1,0 +1,308 @@
+<xs:schema
+    targetNamespace='http://www.w3.org/2011/03/ws-enu'
+    xmlns:tns='http://www.w3.org/2011/03/ws-enu'
+    xmlns:wsa='http://www.w3.org/2005/08/addressing'
+    xmlns:xs='http://www.w3.org/2001/XMLSchema'
+    elementFormDefault='qualified'
+    blockDefault='#all'>
+
+  <xs:import namespace='http://www.w3.org/XML/1998/namespace'
+     schemaLocation='http://www.w3.org/2001/03/xml.xsd' />
+  <xs:import
+    namespace='http://www.w3.org/2005/08/addressing'
+    schemaLocation='http://www.w3.org/2005/08/addressing/ws-addr.xsd' />
+
+  <!-- Types and global elements -->
+  <xs:complexType name='FilterType' mixed='true'>
+    <xs:sequence>
+      <xs:any namespace='##other' processContents='lax'
+              minOccurs='0' maxOccurs='unbounded' />
+    </xs:sequence>
+    <xs:attribute name='Dialect' type='xs:anyURI' use='optional'
+                  default='http://www.w3.org/2002/ws/ra/edcopies/ws-enu/Dialects/XPath10'/>
+    <xs:anyAttribute namespace='##other' processContents='lax' />
+  </xs:complexType>
+
+  <xs:simpleType name='PositiveDurationType'>
+    <xs:restriction base='xs:duration'>
+      <xs:minExclusive value='P0Y0M0DT0H0M0S' />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='NonNegativeDurationType'>
+    <xs:restriction base='xs:duration'>
+      <xs:minInclusive value='P0Y0M0DT0H0M0S' />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='DurationDateTime'>
+      <xs:union memberTypes='xs:dateTime tns:NonNegativeDurationType' />
+  </xs:simpleType>
+
+  <xs:complexType name='MiniExpirationType'>
+    <xs:simpleContent>
+      <xs:extension base='tns:DurationDateTime'>
+        <xs:anyAttribute namespace='##other' processContents='lax'/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name='ExpirationType'>
+    <xs:simpleContent>
+      <xs:extension base='tns:MiniExpirationType'>
+        <xs:attribute name='BestEffort' type='xs:boolean' use='optional'/>
+        <xs:anyAttribute namespace='##other' processContents='lax'/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name='EnumerationContextType'>
+    <xs:complexContent mixed='true'>
+      <xs:restriction base='xs:anyType'>
+        <xs:sequence>
+          <xs:any namespace='##other' processContents='lax'
+                  minOccurs='0' maxOccurs='unbounded' />
+        </xs:sequence>
+        <xs:anyAttribute namespace='##other' processContents='lax' />
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name='ItemListType'>
+    <xs:sequence maxOccurs='unbounded'>
+      <xs:any namespace='##other' processContents='lax'
+              minOccurs='0' maxOccurs='unbounded' />
+    </xs:sequence>
+    <xs:attribute name='Reason' type='xs:anyURI' use='optional'/>
+  </xs:complexType>
+
+  <xs:complexType name='LanguageSpecificStringType'>
+    <xs:simpleContent>
+      <xs:extension base='xs:string'>
+        <xs:attribute ref='xml:lang' />
+        <xs:anyAttribute namespace='##other' processContents='lax' />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- Used for a fault response -->
+  <xs:element name='SupportedDialect' type='xs:anyURI' />
+
+  <!-- Enumerate request -->
+  <xs:element name='Enumerate'>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element name='NewContext'>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name='EndTo' type='wsa:EndpointReferenceType'
+                            minOccurs='0' />
+                <xs:element name='Expires' type='tns:ExpirationType'
+                            minOccurs='0' />
+                <xs:element name='Filter' type='tns:FilterType'
+                            minOccurs='0' />
+                <xs:any namespace='##other' processContents='lax'
+                        minOccurs='0' maxOccurs='unbounded' />
+              </xs:sequence>
+              <xs:anyAttribute namespace='##other' processContents='lax' />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name='EnumerationContext' 
+                      type='tns:EnumerationContextType' />
+        </xs:choice>
+        <xs:element name='MaxTime' type='tns:PositiveDurationType' 
+                    minOccurs='0' />
+        <xs:element name='MaxItems' type='xs:positiveInteger' 
+                    minOccurs='0' />
+        <xs:element name='MaxCharacters' type='xs:positiveInteger' 
+                    minOccurs='0' />
+        <xs:element name='EndToSupported' type='tns:Empty' minOccurs='0' />
+        <xs:any namespace='##other' processContents='lax' 
+                minOccurs='0' maxOccurs='unbounded' />
+      </xs:sequence>
+      <xs:anyAttribute namespace='##other' processContents='lax' />
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Enumerate response -->
+  <xs:element name='EnumerateResponse'>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name='GrantedExpires' type='tns:MiniExpirationType' />
+        <xs:element name='EnumerationContext' 
+                    type='tns:EnumerationContextType' 
+                    minOccurs='0' />
+        <xs:element name='Items' type='tns:ItemListType' 
+                    minOccurs='0' />
+        <xs:element name='EndOfSequence' minOccurs='0' />
+      </xs:sequence>
+      <xs:anyAttribute namespace='##other' processContents='lax' />
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Renew request -->
+  <xs:element name='Renew'>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name='EnumerationContext' 
+                    type='tns:EnumerationContextType' />
+        <xs:element name='Expires' type='tns:ExpirationType' 
+                    minOccurs='0' />
+        <xs:any namespace='##other' processContents='lax' 
+                minOccurs='0' maxOccurs='unbounded' />
+      </xs:sequence>
+      <xs:anyAttribute namespace='##other' processContents='lax' />
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Renew response -->
+  <xs:element name='RenewResponse'>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name='GrantedExpires' type='tns:MiniExpirationType' />
+        <xs:element name='EnumerationContext' 
+                    type='tns:EnumerationContextType' 
+                    minOccurs='0' />
+        <xs:any namespace='##other' processContents='lax' 
+                minOccurs='0' maxOccurs='unbounded' />
+      </xs:sequence>
+      <xs:anyAttribute namespace='##other' processContents='lax' />
+    </xs:complexType>
+  </xs:element>
+
+  <!-- GetStatus request -->
+  <xs:element name='GetStatus'>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name='EnumerationContext' 
+                    type='tns:EnumerationContextType' />
+        <xs:any namespace='##other' processContents='lax' 
+                minOccurs='0' maxOccurs='unbounded' />
+      </xs:sequence>
+      <xs:anyAttribute namespace='##other' processContents='lax' />
+    </xs:complexType>
+  </xs:element>
+
+  <!-- GetStatus response -->
+  <xs:element name='GetStatusResponse'>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name='GrantedExpires' type='tns:MiniExpirationType' />
+        <xs:any namespace='##other' processContents='lax' 
+                minOccurs='0' maxOccurs='unbounded' />
+      </xs:sequence>
+      <xs:anyAttribute namespace='##other' processContents='lax' />
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Release request -->
+  <xs:element name='Release'>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name='EnumerationContext' 
+                    type='tns:EnumerationContextType' />
+      </xs:sequence>
+      <xs:anyAttribute namespace='##other' processContents='lax' />
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Release response -->
+  <xs:element name='ReleaseResponse'>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any namespace='##other' processContents='lax'
+                minOccurs='0' maxOccurs='unbounded' />
+      </xs:sequence>
+      <xs:anyAttribute namespace='##other' processContents='lax' />
+    </xs:complexType>
+  </xs:element>
+
+  <!-- EnumerationEnd message -->
+  <xs:element name='EnumerationEnd'>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name='Code' type='tns:OpenEnumerationEndCodeType' />
+        <xs:element name='Reason' type='tns:LanguageSpecificStringType' 
+                    minOccurs='0' maxOccurs='unbounded' />
+        <xs:any namespace='##other' processContents='lax' 
+                minOccurs='0' maxOccurs='unbounded' />
+      </xs:sequence>
+      <xs:anyAttribute namespace='##other' processContents='lax' />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:simpleType name='EnumerationEndCodeType'>
+    <xs:restriction base='xs:anyURI'>
+      <xs:enumeration value=
+        'http://www.w3.org/2002/ws/ra/edcopies/ws-enu/SourceShuttingDown' />
+      <xs:enumeration value=
+        'http://www.w3.org/2002/ws/ra/edcopies/ws-enu/SourceCancelling' />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name='OpenEnumerationEndCodeType'>
+    <xs:union memberTypes='tns:EnumerationEndCodeType xs:anyURI' />
+  </xs:simpleType>
+
+  <!-- Policy -->
+  <xs:complexType name='Duration'>
+    <xs:simpleContent>
+      <xs:extension base='tns:NonNegativeDurationType'>
+       <xs:anyAttribute namespace='##other'/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name='URI'>
+    <xs:simpleContent>
+      <xs:extension base='xs:anyURI'>
+        <xs:anyAttribute namespace='##other'/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name='Long'>
+    <xs:simpleContent>
+      <xs:extension base='xs:long'>
+        <xs:anyAttribute namespace='##other'/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name='Empty'>
+    <xs:sequence/>
+    <xs:anyAttribute namespace='##other' processContents='lax'/>
+  </xs:complexType>
+
+  <xs:element name='DataSource'>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name='FilterDialect' minOccurs='0' maxOccurs='unbounded'>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:any namespace='##other' processContents='lax' minOccurs='0'
+                                          maxOccurs='0'/>
+            </xs:sequence>
+            <xs:attribute name='URI' type='xs:anyURI' use='required' />
+            <xs:anyAttribute namespace="##other" processContents='lax'/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name='DateTimeSupported' type='tns:Empty' minOccurs='0'/>
+        <xs:element name='Expires' minOccurs='0'>
+          <xs:complexType>
+            <xs:attribute name='min' type='xs:duration' use='optional'/>
+            <xs:attribute name='max' type='xs:duration' use='optional'/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name='MaxTime' type='tns:Duration' minOccurs='0'/>
+        <xs:element name='MaxItems' type='tns:Long' minOccurs='0'/>
+        <xs:element name='MaxCharacters' type='tns:Long' minOccurs='0'/>
+        <xs:any namespace='##other' processContents='lax' minOccurs='0'
+                                    maxOccurs='unbounded'/>
+      </xs:sequence>
+      <xs:anyAttribute namespace='##other' processContents='lax' />
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

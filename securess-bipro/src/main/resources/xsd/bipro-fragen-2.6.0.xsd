@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/fragen"
+            xmlns:fragen="http://www.bipro.net/namespace/fragen"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/fragen"
+            bipro:Name="bipro-fragen-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_FragePartner">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Frage, deren Antwort in Form einer Referenz auf einen Partner zu geben ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_EinfacheFrage">
+            <xsd:sequence>
+               <xsd:element name="AntwortPartner" type="CT_AntwortPartner" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Element" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Fragenkomplexe bestehen aus Elementen. Es gibt verschiedene Arten von Elementen, die sich in ihren Eigenschaften unterscheiden. Daher ist diese Klasse abstrakt modelliert. Die tatsächlich möglichen Arten von Elementen ergeben sich aus den abgeleiteten Klassen. Erläuterung siehe dort.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Ordnungsnummer" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bestimmt die Reihenfolge der Elemente innerhalb eines Fragenkomplexes. Die Elemente werden nach aufsteigender Sortierung angeordnet. Eine lückenlose Nummerierung ist NICHT erforderlich. Z.B. führt die Ordnungsnummerfolge 1, 2, 4 zur gleichen Anzeigereihenfolge wie die Ordnungsnummernfolge 5, 67, 144</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anzeigenummer" type="dt:ST_Text017" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Text mit der Anzeigenummer der Frage oder Überschrift innherhalb eine Gruppe von Elementen.
+z.B. "3." oder "b)" </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Nicht">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Mit der Klasse NICHT kann jeweils genau eine Bedingung negiert werden. Ist die negierte Bedingung true, so ist das Ergenis der Negation false und umgekehrt</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Bedingung">
+            <xsd:sequence>
+               <xsd:element name="Bedingung" type="CT_Bedingung" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AntwortZahl">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ableitung der Klasse Antwort zur typisierten Übertragung einer Dezimalzahl als Antwort.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Antwort">
+            <xsd:sequence>
+               <xsd:element name="Zahl" type="dt:ST_Dezimalzahl" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Antwort als Dezimalzahl</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_FrageJaNein">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Frage deren Antwort in Form eines JaNeins zu geben ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_EinfacheFrage">
+            <xsd:sequence>
+               <xsd:element name="AntwortJaNein" type="CT_AntwortJaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Bedingung" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Es kann sein, dass eine Frage A nur unter bestimmten Bedingungen &amp;ndash; abhängig von der Beantwortung anderer Fragen B &amp;ndash; zu stellen ist. Diese Bedingungen werden mithilfe der Klasse Bedingung abgebildet. Dabei ist die Bedingung in der Frage A enthalten. Die Fragen B werden über die spezielle Bedingung &amp;bdquo;Abhaengigkeit&amp;ldquo; referenziert. Es gibt mehrere Arten von Bedingungen, daher ist diese Klasse abstrakt modelliert. Die tatsächlich möglichen Arten von einfachen Fragen ergeben sich aus den abgeleiteten Klassen. Erläuterung siehe dort. Mit Hilfe der Subklassen von Bedingung lassen sich Entscheidungsbäume modellieren, deren Blätter stets Bedingungen vom Typ &amp;bdquo;Abhängigkeit&amp;ldquo; sind. Die inneren Knoten dienen der Verknüpfung der Abhängigkeiten zu logisch auswertbaren Bedingungen.
+
+Beispiel:
+Einfaches Beispiel: Frage 0815 muss beantwortet werden, falls die Antwort auf Frage 4711 &amp;bdquo;true&amp;ldquo; lautet:
+&lt;Element xsi:type=&amp;ldquo;FrageText&amp;ldquo;&gt;
+	[...]
+	&lt;TechnischeID&gt;0815&lt;/TechnischeID&gt;
+	&lt;Bedingung xsi:type=&amp;ldquo;Abhaengigkeit&amp;ldquo;&gt;
+		&lt;LinkerOperand&gt;4711&lt;/LinkerOperand&gt; Referenziert eine FrageJaNein
+		&lt;Operator&gt;gleich&lt;/Operator&gt;
+		&lt;RechterOperand xsi:type=&amp;ldquo;AntwortJaNein&amp;ldquo;&gt;
+			&lt;Entscheidung&gt;true&lt;/Entscheidung&gt;
+		&lt;/RechterOperand&gt;
+	&lt;/Bedingung&gt;
+&lt;/Element&gt;
+
+Komplexes Beispiel: Frage A muss beantwortet werden, wenn die Bedingung in Bezug auf Frage B nicht zutrifft oder aber wenn sowohl die Bedingung in Bezug auf Frage C als auch die Bedingung in Bezug auf Frage D zutreffen:
+&lt;Element xsi:type=&amp;ldquo;FrageDatum&amp;ldquo;&gt;
+	&lt;TechnischeID&gt;A&lt;/TechnischeID&gt;
+	&lt;Bedingung xsi:type=&amp;ldquo;Oder&amp;ldquo;&gt;
+		&lt;Bedingung xsi:type=&amp;ldquo;Nicht&amp;ldquo;&gt;
+			&lt;Bedingung xsi:type=&amp;ldquo;Abhaengigkeit&amp;ldquo;&gt;
+				&lt;LinkerOperand&gt;B&lt;/LinkerOperand&gt;
+[...]
+			&lt;/Bedingung&gt;
+		&lt;/Bedingung&gt;
+		&lt;Bedingung xsi:type=&amp;ldquo;Und&amp;ldquo;&gt;
+			&lt;Bedingung xsi:type=&amp;ldquo;Abhaengigkeit&amp;ldquo;&gt;
+				&lt;LinkerOperand&gt;C&lt;/LinkerOperand&gt;
+[...]
+			&lt;/Bedingung&gt;
+&lt;Bedingung xsi:type=&amp;ldquo;Abhaengigkeit&amp;ldquo;&gt;
+				&lt;LinkerOperand&gt;D&lt;/LinkerOperand&gt;
+[...]
+			&lt;/Bedingung&gt;
+		&lt;/Bedingung&gt;
+	&lt;/Bedingung&gt;
+&lt;/Element&gt;</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AntwortWerteliste">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Bei Verwendung zur Erfassung der Benutzerantwort auf eine bestimmte Frage wird hier ein oder kein Wert aus der Liste der in der zugehörigen Frage angegebenen möglichen Werte erfasst. Die Angabe von mehr als einem Wert ist in diesem Fall unzulässig.
+Bei Verwendung zur providerseitigen Vorgabe von Prüfwerten in Abhängigkeiten werden hier ein oder mehrere Werte aus der Liste der Antwortmöglichkeiten der in der Abhängigkeit referenzierten Frage angegebenen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Antwort">
+            <xsd:sequence>
+               <xsd:element name="Listeneintrag" type="dt:ST_Text" minOccurs="1" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Antwort Listeneintrag</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Oder">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Mit der Klasse ODER können logische ODER-Verknüpfungen von zwei oder mehr Bedingungen abgebildet werden. Das Ergebnis ist true, wenn eine oder mehrere der so verknüpften Bedingungen true sind. Ist keine der  verknüpften Bedingungen true, so ist das Ergebnis der Verknüpfung false.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Bedingung">
+            <xsd:sequence>
+               <xsd:element name="Bedingung" type="CT_Bedingung" minOccurs="2" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AntwortDatum">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ableitung der Klasse Antwort zur typisierten Übertragung eines Datums als Antwort.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Antwort">
+            <xsd:sequence>
+               <xsd:element name="Datum" type="dt:ST_Datum" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum als Antwort auf eine Datumsfrage</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AntwortPartner">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ableitung der Klasse Antwort zur typisierten Übertragung einer Partner Antwort.
+Das mittels dem Attribut PartnerID referenzierte Partnerobjekt MUSS in der Partnerliste der Nachricht enthalten sein.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Antwort">
+            <xsd:sequence>
+               <xsd:element name="PartnerID" type="dt:ST_ID" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Referenz auf einen Partner in der Partnerliste, der die Antwort auf die Frage ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_FrageZeitraum">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Frage deren Antwort in Form eines Zeitraums zu geben ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_EinfacheFrage">
+            <xsd:sequence>
+               <xsd:element name="AntwortZeitraum" type="CT_AntwortZeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Frage" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eine Frage ist ein zu beantwortendes Element. Es gibt mehrere Arten von Fragen, daher ist diese Klasse abstrakt modelliert. Die tatsächlich möglichen Arten von Fragen ergeben sich aus den abgeleiteten Klassen. Erläuterung siehe dort.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Element">
+            <xsd:sequence>
+               <xsd:element name="Erlaeuterung" type="dt:ST_Text" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Optionale Angabe eines Erläuterungstextes zur Frage. Erläuterungstexte liefern ergänzende Informationen, die den Consumer bei der korrekten und vollständigen Beantwortung der Fragen unterstützen sollen. Dies ist insbesondere dann sinnvoll, wenn die Fragen aus Gründen der juristischen eindeutigkeit so formuliert sind, dass ihre intuitive Erfassung möglicherweise schwer fällt. Beispiel: Frage: Üben Sie derzeit ein Hobby mit erhöhter Unfallgefährdung oder Verletzungsgefahr aus? Erläuterungstext: Dazu zählen insbesonderen Tauchen, Kampfsport, Flugsport, Motorsport, Fallschirmspringen und Bergsport.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Optional" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eine als optional markierte Frage MUSS NICHT beantwortet werden. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bedingung" type="CT_Bedingung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Wiederholbar" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kennzeichnet, ob eine Frage mehrfach beantwortet werden DARF. Ist das Attribut mit 'true' belegt, DARF der Consumer die Frage im Response mehrfach zurückliefern und so mehrfach beantworten. Beispiel: Die Frage nach Krankheiten in den vergangenen 5 Jahren muss vom Provider nur einmal gestellt werden, darf jedoch n-mal beantwortet werden.
+Ist das Feld nicht belegt, MUSS es als mit 'false' belegt interpretiert werden. Eine mehrfache Beantwortung ist dann also nicht erlaubt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="MaxAntworten" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieses Attribut DARF NUR belegt werden, WENN Wiederholbar = true. Es legt die maximal erlaubte Zahl der Wiederholungen fest.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_EinfacheFrage" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eine einfache Frage ist eine direkt zu beantwortende Frage. Es gibt mehrere Arten von einfachen Fragen, daher ist diese Klasse abstrakt modelliert. Die tatsächlich möglichen Arten von einfachen Fragen ergeben sich aus den abgeleiteten Klassen. Erläuterung siehe dort.
+Wichtig: Jede Art von Fragen erfordert eine eigene Implementierung im Client. Daher darf das Objekt Frage NICHT providerspezifisch erweitert werden. Erweiterungen sind nur im Rahmen eines Spartenspezifischen Datenmodells als Bestandteil der Norm zulässig!
+Fragen können auch bereits in der getQuestions-Response mit Antwortobjekten ausgeliefert werden. Dadurch kann der Provider Vorbelegungswerte für die Antworten mitliefern, die der Consumer verwenden darf aber nicht muss.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Frage">
+            <xsd:sequence>
+               <xsd:element name="FachlicheID" type="dt:ST_Text" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Mit dieser ID identifiziert der Provider die Semantik der Frage. Es ist KEINE technische ID, die zur Referenzierung innerhalb des Datenmodells verwendet wird, sondern sie dient zur Auswertung der Antworten beim Provider. Sie kann deshalb im Ermessen des Providers auch mehrfach vorkommen. Dies kann z.B. dann sinnvoll sein, wenn der Provider mehrere gleichartige komplexe Fragen liefert, um mehrere Vorerkrankungen abfragen zu können.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="TechnischeID" type="dt:ST_ID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">In diesem Attribut wird eine innerhalb der Metadaten eindeutige ID angegeben. Diese technische ID wird benötigt, um in der Klasse Abhängigkeit die Frage anzugeben, auf die sich die in der Abhängigkeit auszuwertende Antwort bezieht. Wichtig ist dabei, dass die technische ID für jede Frage innerhalb der BiPRO-Nachricht eindeutig sein MUSS.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Text" type="dt:ST_Text" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Text der Frage, ist vom Consumer wörtlich, ungekürzt und und unverändert im Frontend darzustellen, um die juristisch einwandfreie Beantwortung der Fragen durch den Benutzer sicherzustellen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="FreitextErlaubt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wenn dieses Attribut mit &amp;bdquo;Ja&amp;ldquo; gesetzt ist, kann die Antwort  durch einen untypisierten Freitext ergänzt werden. Bei Übermittlung einer Frage vom Typ FrageText ist dieses Attribut immer &amp;bdquo;true&amp;ldquo;.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_FrageWerteliste">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Frage, die mit der Auswahl EINES Wertes aus einer Werteliste beantwortet wird (Single-Selection-Listbox</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_EinfacheFrage">
+            <xsd:sequence>
+               <xsd:element name="MoeglicherWert" type="dt:ST_Text" minOccurs="1" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Übermittlung der Auswahlmöglichkeiten.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="MehrfachAntwortErlaubt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Steuert ob bei der Beantwortung der Frage mehrere Werte der Liste &amp;bdquo;MöglicherWert&amp;ldquo; gewählt werden dürfen oder nur ein Wert akzeptiert wird. Wird das Attribut nicht gefüllt, ist es als mit &amp;bdquo;false&amp;ldquo; belegt zu interpretieren.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AntwortWerteliste" type="CT_AntwortWerteliste" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KomplexeFrage">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eine komplexe Frage ist eine inhaltliche Klammer um mehrere einfache Fragen. Z.B. kann ein Provider zwei einfache Fragen &amp;bdquo;Art der Vorerkrankung&amp;ldquo; und &amp;bdquo;Behandelnder Arzt&amp;ldquo; in einer komplexen Frage zusammenfassen. Komplexe Fragen werden deshalb nicht direkt, sondern indirekt über die enthaltenen einfachen Fragen beantwortet.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Frage">
+            <xsd:sequence>
+               <xsd:element name="FachlicheID" type="dt:ST_Text" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Mit dieser ID identifiziert der Provider die Semantik der Frage. Es ist KEINE technische ID, die zur Referenzierung innerhalb des Datenmodells verwendet wird, sondern sie dient zur Auswertung der Antworten beim Provider. Sie kann deshalb im Ermessen des Providers auch mehrfach vorkommen. Dies kann z.B. dann sinnvoll sein, wenn der Provider mehrere gleichartige komplexe Fragen liefert, um mehrere Vorerkrankungen abfragen zu können.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Text" type="dt:ST_Text" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Text der Frage, ist vom Consumer wörtlich, ungekürzt und und unverändert im Frontend darzustellen, um die juristisch einwandfreie Beantwortung der Fragen durch den Benutzer sicherzustellen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EinfacheFrage" type="CT_EinfacheFrage" minOccurs="2"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Fragenkomplex">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Inhaltlich zusammenhängende Menge von Fragen und Gliederungselementen, z.B. &amp;bdquo;Fragen zum Beruf&amp;ldquo; oder &amp;bdquo;Gesundheitsfragen&amp;ldquo;. Welche Fragen wie zu Fragenkomplexen zusammengefasst werden, entscheidet der Provider in seiner Fragenmodellierung. Z.B. kann  ein Provider &amp;bdquo;Fragen zum Beruf&amp;ldquo; und &amp;bdquo;Fragen zur Gesundheit&amp;ldquo; in getrennten Fragenkomplexen liefern. Ein anderer Provider kann diese Fragen in einem Fragenkomplex &amp;bdquo;Fragen zum Antrag&amp;ldquo; liefern.
+Ein Fragenkomplex enthält immer alle für den jeweiligen Context relevanten Fragen. D.h. auch, wenn ein Provider sukzessive Folgefragen abhängig von den gegebenen Antworten nachliefert ("Ping Pong"), enthält der Fragenkomplex immer alle zu diesem Zeitpunkt als relevant erkannten Fragen, d.h. es erfolgt immer eine Volllieferung der Fragen, keine Delta-Lieferung zusätzlicher Fragen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_FragenkomplexArt" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Maschinell auswertbare Identifikation der Semantik des Fragenkomplexes. Der Consumer benötigt diese Information, um die gelieferten Fragenkomplexe den Controls im Frontend zuzuordnen, z.B. wenn &amp;bdquo;Fragen zum Beruf&amp;ldquo; und &amp;bdquo;Fragen zur Gesundheit&amp;ldquo; in verschiedenen Fragenkomplexen geliefert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bezeichnung" type="dt:ST_Text060" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Hier wird der Gegenstand des Fragenkomplexes in natürlicher Frage beschrieben, z.B. "Fragen zum Antrag" oder "Fragen zum Beruf". Der Consumer kann diese Information zur Anzeige im Frontend nutzen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Element" type="CT_Element" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AntwortText">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ableitung der Klasse Antwort zur typisierten Übertragung einer Text Antwort.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Antwort">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_FrageDatum">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Frage deren Antwort in Form eines Datums zu geben ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_EinfacheFrage">
+            <xsd:sequence>
+               <xsd:element name="AntwortDatum" type="CT_AntwortDatum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AntwortJaNein">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ableitung der Klasse Antwort zur typisierten Übertragung einer Ja-/Nein Antwort.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Antwort">
+            <xsd:sequence>
+               <xsd:element name="Entscheidung" type="dt:ST_JaNein" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eine Antwortenscheidung aus Ja oder Nein</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AntwortZeitraum">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ableitung der Klasse Antwort zur typisierten Übertragung eines Zeitraumes als Antwort.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Antwort">
+            <xsd:sequence>
+               <xsd:element name="Von" type="dt:ST_Datum" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Von Datum der Antwort Zeitraum</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bis" type="dt:ST_Datum" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bis Datum der Antwort Zeitraum</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Und">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Mit der Klasse UND können logische UND-Verknüpfungen von zwei oder mehr Bedingungen abgebildet werden. Das Ergebnis ist true, wenn alle so verknüpften Bedingungen true sind, ansonsten ist das Ergebnis false.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Bedingung">
+            <xsd:sequence>
+               <xsd:element name="Bedingung" type="CT_Bedingung" minOccurs="2" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_FrageText">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Frage deren Antwort in Form eines Textes zu geben ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_EinfacheFrage">
+            <xsd:sequence>
+               <xsd:element name="MaximaleTextlaenge" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Maximale Anzahl der Zeichen für die zu gebende Antwort.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AntwortText" type="CT_AntwortText" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_FrageZahl">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Frage deren Antwort in Form einer Zahl zu geben ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_EinfacheFrage">
+            <xsd:sequence>
+               <xsd:element name="AntwortZahl" type="CT_AntwortZahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Antwort" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Antwortobjekt</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Freitext" type="dt:ST_Text" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gliederungspunkt">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Gliederungspunke ermöglichen die inhaltliche Gliederung eines Fragenkomplexes durch Gruppierung der Elemente in (ggf. auch geschachtelte) Abschnitte mit natürlichsprachigen Überschriften, die der Consumer im Frontend anzeigen kann.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Element">
+            <xsd:sequence>
+               <xsd:element name="Text" type="dt:ST_Text" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Element" type="CT_Element" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Abhaengigkeit">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eine Frage wird relevant, wenn der durch die Bedingung gebildete logische Ausdruck mit &amp;bdquo;wahr&amp;ldquo; bewertet wird. In der Klasse Abhängigkeit wird angegeben, mit welchem Vergleichsoperator die vom Anwender erfasste Antwort auf eine bestimmte Frage mit einem vom Provider vorgebenen Antwortwert zu vergleichen ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Bedingung">
+            <xsd:sequence>
+               <xsd:element name="LinkerOperand" type="dt:ST_ID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz auf die Frage, deren Antwort mit der vom Provider in der Abhängigkeit vorgegebenen Antwort zu vergleichen ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Operator" type="dt:ST_Operator" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vergleichsoperator zur Verknüpfung von Wert der Antwort und dem kritischen Wert.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="RechterOperand" type="CT_Antwort" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

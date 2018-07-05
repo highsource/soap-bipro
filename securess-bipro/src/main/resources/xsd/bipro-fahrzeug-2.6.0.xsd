@@ -1,0 +1,1066 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/fahrzeug"
+            xmlns:fz="http://www.bipro.net/namespace/fahrzeug"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:tarif="http://www.bipro.net/namespace/versicherung/tarifierung"
+            targetNamespace="http://www.bipro.net/namespace/fahrzeug"
+            bipro:Name="bipro-fahrzeug-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_LKWNutzung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeugnutzung">
+            <xsd:sequence>
+               <xsd:element name="Gefahrgut" type="dt:ST_Gefahrgut" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Fahrgebiet" type="dt:ST_Fahrgebiet" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Fahrgebiet oder Nutzungsgebiet</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="TransportierteGueter" type="dt:ST_TransportierteGueter" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an ob eigene oder fremde Güter transportiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Bus">
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeug">
+            <xsd:sequence>
+               <xsd:element name="AnzahlPlaetze" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gesamtzahl der Sitz- und Stehplätze</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BusNutzung" type="CT_BusNutzung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VersicherungsbestaetigungKfz">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Versicherungsbestaetigungsnummer" type="dt:ST_VbNummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VbArt" type="dt:ST_VbArt" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="VbAbrufbarAb" type="dt:ST_Zeitstempel" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VbAbrufbarBis" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Zulassungsfahrten" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="MietfahrzeugFuerSelbstfahrer" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="DatumVersicherungsbeginn" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="HalterAbweichendVonVersicherungsnehmer" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VbAusgegebenDurch" type="dt:ST_VbAusgegebenDurch" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">VB ausgegeben durch Vermittler oder Versicherer</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ablaufdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ablaufdatum der Versicherungsbestätigung für eVB insbesondere im Kontingent</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="KFZFuerBehinderteSchuelerKindergartentraeger" type="dt:ST_JaNein"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieses KFZ wird für Behinderte, Schüler oder Kindergartenträger verwendet.
+Nach §6 FZV (Fahrzeugzulassungsverordnung) ist der Verwendungszweck eines Farzeuges bei der Erstellung einer eVB anzugeben.
+Wird dieses Attribut nicht geliefert, MUSS es als "Nein" interpretiert werden</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Krankenwagen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieses KFZ wird als Krankenwagen verwendet.
+Nach §6 FZV (Fahrzeugzulassungsverordnung) ist der Verwendungszweck eines Farzeuges bei der Erstellung einer eVB anzugeben.
+Wird dieses Attribut nicht geliefert, MUSS es als "Nein" interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Mietfahrzeug" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieses KFZ wird als Mietfahrzeug verwendet. Mietwagen sind im gesetzlichen Sinne Fahrzeuge, deren Einsatz gemietet wird einschließlich der Fahrer-Dienste.
+Nach §6 FZV (Fahrzeugzulassungsverordnung) ist der Verwendungszweck eines Fahrzeuges bei der Erstellung einer eVB anzugeben.
+Wird dieses Attribut nicht geliefert, MUSS es als "Nein" interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Linienbus" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieses KFZ wird als Linienbus verwendet.
+Nach §6 FZV (Fahrzeugzulassungsverordnung) ist der Verwendungszweck eines Farzeuges bei der Erstellung einer eVB anzugeben.
+Wird dieses Attribut nicht geliefert, MUSS es als "Nein" interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Taxi" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieses KFZ wird als Taxi verwendet.
+Nach §6 FZV (Fahrzeugzulassungsverordnung) ist der Verwendungszweck eines Fahrzeuges bei der Erstellung einer eVB anzugeben.
+Wird dieses Attribut nicht geliefert, MUSS es als "Nein" interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SonstigeBesondereVerwendung" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieses KFZ wird zur sonstiger besonderen Verwendung genutzt.
+Nach §6 FZV (Fahrzeugzulassungsverordnung) ist der Verwendungszweck eines Farzeuges bei der Erstellung einer eVB anzugeben.
+Wird dieses Attribut nicht geliefert, MUSS es als "Nein" interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="OhneBesondereVerwendung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieses KFZ wird ohne besonderen Verwendung genutzt.
+Nach §6 FZV (Fahrzeugzulassungsverordnung) ist der Verwendungszweck eines Farzeuges bei der Erstellung einer eVB anzugeben.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_PKWNutzung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_FahrzeugnutzungErweitert">
+            <xsd:sequence>
+               <xsd:element name="BegleitetesFahrenVN" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BegleitetesFahrenNutzer" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AnhaengerNutzung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeugnutzung">
+            <xsd:sequence>
+               <xsd:element name="Gefahrgut" type="dt:ST_Gefahrgut" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Leasinggeber">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Kennzeichenart">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="MerkmalKennzeichenart" type="dt:ST_Kennzeichenart" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Sonderausstattung">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_Sonderausstattung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Beschreibung" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Betrag" type="dt:ST_Betrag" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Fahrer">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="UeberwiegenderFahrer" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieser Fahrer ist der überwiegende Nutzer des Fahrzeugs</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BerechtigterNutzer" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Erlaubnis des Fahrzeughalters zur Nutzung des Fahrzeugs vorhanden.
+NEIN = Erlaubnis des Fahrzeughalters zur Nutzung des Fahrzeugs nicht vorhanden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BegleiteterFahrer" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zur eindeutigen Zuordnung begleiteter Fahrer.
+Ja = Fahrer ist begleiteter Fahrer.
+Nein = sonst</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Begleitperson" type="CT_Begleitperson" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Betriebsleistung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Messgröße für die Nutzung eines technischen Geräts, z. B. eines Fahrzeugs. Die Betriebsleistung kann z. B. die Fahrleistung (Kilometerstand) oder die Nutzungsdauer (Betriebsstunden) sein.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Wert" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wert der Betriebsleistung gemäß Werteinheit, z.B. Kilometerstand, Betriebsstunden.
+Fehlt die Werteinheit, MUSS der Wert in Kilometer angegeben werden (also der Kilometerstand).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Werteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Werteinheit der Betriebsleistung, in Kilometer, Meilen oder Stunden.
+Fehlt die Werteinheit, MUSS die Betriebsleistung in Kilometer angegeben werden (also der Kilometerstand).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ermittlungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Ermittlung der Betriebsleistung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ermittlungsart" type="dt:ST_Ermittlungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Ermittlung der Betriebsleistung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_LKWLeicht">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">WKZ 2xx</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeug">
+            <xsd:sequence>
+               <xsd:element name="ZulaessigesGesamtgewicht" type="dt:ST_Dezimalzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zulässiges Gesamtgewicht in kg.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Aufbauten" type="dt:STE_Aufbauten" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AufbautenText" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Aufbauten als Text, falls im Attribut Aufbauten der Wert "99" geschlüsselt ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnhaengerBetrieb" type="dt:ST_JaNeinKeineAntwort" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="LKWNutzung" type="CT_LKWNutzung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_CampingKfzNutzung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_FahrzeugnutzungErweitert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_CampingKfz">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">WKZ 127</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeug">
+            <xsd:sequence>
+               <xsd:element name="ZulaessigesGesamtgewicht" type="dt:ST_Dezimalzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zulässiges Gesamtgewicht in kg.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="CampingKfzNutzung" type="CT_CampingKfzNutzung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ArtDerZulassungBeimVorbesitzer" type="dt:ST_ArtDerZulassung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Zulassung beim direkten Vorbesitzer des aktuellen Besitzers.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_LeichtKradRoller">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">WKZ 003, 030, 031</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeug">
+            <xsd:sequence>
+               <xsd:element name="Hoechstgeschwindigkeit" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Höchstgeschwindigkeit in km/h</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Leasingnehmer">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Begleitperson">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Begleitperson des Fahrers zum begleiteten Fahren (Fahrerlaubnis ab 17 Jahre).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KradTrikeQuad">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">WKZ 003, 030, 031</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeug">
+            <xsd:sequence>
+               <xsd:element name="ABS" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="KradTrikeQuadNutzung" type="CT_KradTrikeQuadNutzung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ArtDerZulassungBeimVorbesitzer" type="dt:ST_ArtDerZulassung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Zulassung beim direkten Vorbesitzer des aktuellen Besitzers.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Fahrzeugnutzung" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Garage" type="dt:STE_Garage" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gemäß GDV-Schlüssel Satzart 0210.050/2 Feld 21</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Betriebsausgabe" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ja = Fahrzeug wird dem Finanzamt als Betriebsausgabe gemeldet.
+Nein = sonst</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_PKW">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">WKZ 112</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeug">
+            <xsd:sequence>
+               <xsd:element name="ManuelleTypklasse" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Typklassen werden nicht maschinell aus Hersteller und Typschluessel ermittelt, sondern manuell erfasst.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="PKWNutzung" type="CT_PKWNutzung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ArtDerZulassungBeimVorbesitzer" type="dt:ST_ArtDerZulassung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Zulassung beim direkten Vorbesitzer des aktuellen Besitzers.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_FahrzeugnutzungErweitert" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeugnutzung">
+            <xsd:sequence>
+               <xsd:element name="Nutzungsart" type="dt:ST_Nutzungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gemäß GDV-Schlüssel Satzart 0210.050/2 Feld 22</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Jahresfahrleistung" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">in km</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="JahresfahrleistungUnbegrenzt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Nutzerkreis" type="dt:ST_Nutzerkreis" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="AlterJuengsterMaennlicherNutzer" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bei Unisex-Tarifen DARF dieses Attribut NICHT mehr benutzt werden. Statt dessen MUSS das Attribut AlterJuengsterNutzer verwendt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GeburtsjahrJuengsterMaennlicherNutzer" type="dt:ST_Jahr" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bei Unisex-Tarifen DARF dieses Attribut NICHT mehr benutzt werden. Statt dessen MUSS das Attribut GeburtsjahrJuengsterNutzer verwendt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AlterJuengsterWeiblicherNutzer" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bei Unisex-Tarifen DARF dieses Attribut NICHT mehr benutzt werden. Statt dessen MUSS das Attribut AlterJuengsterNutzer verwendt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GeburtsjahrJuengsterWeiblicherNutzer" type="dt:ST_Jahr" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bei Unisex-Tarifen DARF dieses Attribut NICHT mehr benutzt werden. Statt dessen MUSS das Attribut GeburtsjahrJuengsterNutzer verwendt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AlterJuengsterNutzerUnbekannt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AlterAeltesterNutzer" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="GeburtsjahrAeltesterNutzer" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Geburtsjahr des ältesten Fahrzeugnutzers, unabhängig vom Geschlecht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AlterAeltesterNutzerUnbekannt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AlterJuengsterNutzer" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Alter des jüngsten Fahrzeugnutzers, unabhängig vom Geschlecht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GeburtsjahrJuengsterNutzer" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Geburtsjahr des jüngsten Fahrzeugnutzers, unabhängig vom Geschlecht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AlleFahrerHabenEUFuehrerschein" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob alle Fahrer einen in einem EU-Land ausgestellten Führerschein besitzen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GeburtsdatumJuengsterFahrer" type="dt:ST_Datum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Geburtsdatum des jüngsten Fahrers.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SFRBerechtigter">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_BusNutzung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeugnutzung">
+            <xsd:sequence>
+               <xsd:element name="Fahrgebiet" type="dt:ST_Fahrgebiet" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Fahrgebiet oder Nutzungsgebiet</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Verwendung" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Reifen">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Der äußere Teil eines Rades, auf dem es abrollt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Achse" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Achse, auf der das Rad montiert ist. Die Achsen werden von vorne nach hinten durchnummeriert. Bei einem PKW also:
+Achse 1 = Vorderachse
+Achse 2 = Hinterachse</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Position" type="dt:ST_Radposition" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Position des Rades auf der Achse bzw. als Reserverad.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Profiltiefe" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Profiltiefe des Reifens in Millimeter (mm).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Kennzeichen">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="AmtlichesKennzeichen" type="dt:ST_AmtlichesKennzeichen" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="DatumKennzeichenGueltigBis" type="dt:ST_Datum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AblauftageKurzzeitkennzeichen" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BetriebszeitraumVon" type="dt:ST_Monat" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Für Saison-Kennzeichen</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BetriebszeitraumBis" type="dt:ST_Monat" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Für Saison-Kennzeichen</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zulassungsbezirksnummer" type="dt:ST_Zulassungsbezirksnummer"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="RegioPostleitzahl" type="dt:ST_Postleitzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="RegioOrt" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Postleitzahl alleine ist aber nicht immer eindeutig. Als Beispiel dient hier die PLZ '21039', zu der es die Orte Börnsen, Fahrendorf, Hamburg und Escheburg gibt. Zur korrekten Regionalklassen-Ermittlung sind daher die Attribute RegioPostleitzahl und RegioOrt unerlässlich.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kennzeichenart" type="CT_Kennzeichenart" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Land" type="dt:ST_Laenderkennzeichen" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Land, in dem das Kennzeichen registriert ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GruenesKennzeichen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Kennzeichen ist ein grünes Kennzeichen
+NEIN = Kennzeichen ist kein grünes Kennzeichen
+Wird das Attribut nicht geliefert, MUSS es als mit 'NEIN' belegt interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Wechselkennzeichen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bei bereits zugelassenen Fahrzeugen enthält dieses Attribut die Information, ob das Kennzeichen ein Wechselkennzeichen ist:
+JA = Das Kennzeichen ist ein Wechselkennzeichen
+NEIN = Das Kennzeichen ist kein Wechselkennzeichen
+Beim eVB-Prozess hat das Attribut folgende Semantik:
+JA = Die eVB gilt nur für ein Wechselkennzeichen
+NEIN = Die Nutzung der eVB für Wechselkennzeichen ist ausgeschlossen
+Fehlt das Attribut = Die eVB hat keine Einschränkung bzgl. Wechselkennzeichen</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Fahrzeug">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="Eigentumsverhaeltnis" type="dt:ST_Eigentumsverhaeltnis" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Finanzierungsart gemäß GDV-Schlüssel Satzart 0210.050/2 Feld 23</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Erstzulassung" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="FahrzeugGesamtNeuwert" type="allg:CT_Neuwert" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="FahrzeugGesamtZeitwert" type="allg:CT_Zeitwert" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Fahrzeugidentifizierungsnummer" type="dt:ST_Text025" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Flottenkennzeichen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Fahrzeug ist Teil einer Flotte.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Herstellername" type="dt:ST_Text025" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Herstellerschluessel" type="dt:ST_Herstellerschluessel" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Hubraum" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Hubraum in ccm</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Modellname" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="MotorLeistung" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Motorleistung in KW. Wird bei Anhängern nicht verwendet.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Typschluessel" type="dt:ST_Typschluessel" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VarianteVersionSchluessel" type="dt:ST_VarianteVersionSchluessel"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Wagniskennziffer" type="dt:ST_Wagniskennziffer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="WagniskennzifferText" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Fahrzeugart" type="dt:ST_Fahrzeugart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Über die Fahrzeugart kann beim eVB-Abruf optional die Gültigkeit der eVB auf eine bestimmte Fahrzeugart (PKW, LKW, Anhänger etc.) eingeschränkt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kennzeichen" type="CT_Kennzeichen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Sicherungsglaeubiger" type="partner:CT_Sicherungsglaeubiger"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Sonderausstattung" type="CT_Sonderausstattung" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="VersicherungsbestaetigungKfz" type="CT_VersicherungsbestaetigungKfz"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Leasingnehmer" type="CT_Leasingnehmer" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Leasinggeber" type="CT_Leasinggeber" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SFRBerechtigter" type="CT_SFRBerechtigter" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Halter" type="CT_Halter" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Fahrer" type="CT_Fahrer" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Wegfahrsperre" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an ob das Fahrzeug über eine Wegfahrsperre verfügt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Staerke" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Stärke des Fahrzeugs gemäß Staerkeeinheit (je nach Wagniskennziffer in: KW, CCM, Tonnen, Plätze)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Staerkeeinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Einheit zur Staerke (KW, CCM, Tonnen, Plätze)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Finanzierungslaufzeit" type="allg:CT_Zeitraum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Fahrerassistenzsystem" type="CT_Fahrerassistenzsystem" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="FahrzeugGesamtKaufpreis" type="allg:CT_Kaufpreis" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Zulassungspflichtig" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ja = zulassungspflichtig
+Nein = nicht zulassungspflichtig
+Ist das Attribut nicht belegt, MUSS es als mit "Ja" belegt interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Baujahr" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Baujahr des Fahrzeugs.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Reimport" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Typschlüssel des Vergleichsfahrzeugs wird im Typschluessel übermittelt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlDerVorbesitzer" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Vorbesitzer gemäß Fahrzeugbrief.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NaechsteHauptuntersuchung" type="dt:ST_MonatJahr" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der nächsten Hauptuntersuchung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Dachart" type="dt:ST_Fahrzeugdachart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Dachs des Fahrzeugs</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Farbe" type="dt:ST_Text050" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Farbe des Fahrzeugs. Es kann u.a. die Farbe sein, die ein Schadenmelder in die Schadenmeldung eingibt (also eher grau als anthrazit-metallic) oder die werbliche Farbbezeichnung sein. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Sitzbezug" type="dt:ST_Sitzbezug" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Sitzbezüge.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Motorart" type="dt:ST_Motorart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Fahrzeugmotors.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Getriebeart" type="dt:ST_Getriebeart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Getriebes.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlGaenge" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Gänge, ohne Rückwärtsgänge.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Felgenart" type="dt:ST_Felgenart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Felgen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Reserveradart" type="dt:ST_Reserveradart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Reserverades.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlAchsen" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Achsen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlAngetriebeneAchsen" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der angetriebenen Achsen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlTueren" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Türen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlElektrischeFensterheber" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der elektrischen Fensterheber.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlSitzheizungen" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Sitzheizungen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlAirbags" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Airbags.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anhaengerkupplung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Das Fahrzeug hat eine Anhängerkupplung
+NEIN = Das Fahrzeug hat keine Anhängerkupplung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Frontscheibenreparaturen" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl Reparaturen an der aktuell eingebauten Frontscheibe.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ErsteZulassungAufDenVNOderHalter" type="dt:ST_Datum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Erste Zulassung dieses Fahrzeuges auf den aktuellen VN oder Halter.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Reifen" type="CT_Reifen" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Betriebsleistung" type="CT_Betriebsleistung" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Fahrerassistenzsystem">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Elektronische Zusatzeinrichtung in Kraftfahrzeugen zur Unterstützung des Fahrers in bestimmten Fahrsituationen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Fahrerassistenzsystem" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Fahrerassistenzsystems</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KradTrikeQuadNutzung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_FahrzeugnutzungErweitert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_LKWSchwer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">WKZ 3xx</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeug">
+            <xsd:sequence>
+               <xsd:element name="ZulaessigesGesamtgewicht" type="dt:ST_Dezimalzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zulässiges Gesamtgewicht in kg.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Nutzlast" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Nutzlast in kg.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Aufbauten" type="dt:STE_Aufbauten" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AufbautenText" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Aufbauten als Text, falls im Attribut Aufbauten der Wert "99" geschlüsselt ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnhaengerBetrieb" type="dt:ST_JaNeinKeineAntwort" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="LKWNutzung" type="CT_LKWNutzung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Zugmaschine">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">WKZ 4xx</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeug">
+            <xsd:sequence>
+               <xsd:element name="ZulaessigesGesamtgewicht" type="dt:ST_Dezimalzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zulässiges Gesamtgewicht in kg.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Nutzlast" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Nutzlast in kg.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Aufbauten" type="dt:STE_Aufbauten" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AufbautenText" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Aufbauten als Text, falls im Attribut Aufbauten der Wert "99" geschlüsselt ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnhaengerBetrieb" type="dt:ST_JaNeinKeineAntwort" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="LKWNutzung" type="CT_LKWNutzung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Anhaenger">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">WKZ 5xx</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Fahrzeug">
+            <xsd:sequence>
+               <xsd:element name="ZulaessigesGesamtgewicht" type="dt:ST_Dezimalzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zulässiges Gesamtgewicht in kg.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Nutzlast" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Nutzlast in kg.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Aufbauten" type="dt:STE_Aufbauten" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AufbautenText" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Aufbauten als Text, falls im Attribut Aufbauten der Wert "99" geschlüsselt ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ZiehendesKfzBeiVUVersichert" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das ziehende Fahrzeug ist beim selben Versicherer versichert.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnhaengerNutzung" type="CT_AnhaengerNutzung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Halter">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

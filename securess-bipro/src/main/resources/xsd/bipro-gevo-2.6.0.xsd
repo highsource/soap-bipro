@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/gevo"
+            xmlns:gevo="http://www.bipro.net/namespace/gevo"
+            xmlns:mime="http://www.w3.org/2005/05/xmlmime"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/gevo"
+            bipro:Name="bipro-gevo-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Dokumentanforderung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Dient der Anforderung von Druckstuecken und anderen Dokumenten.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_DokumentartID" minOccurs="1" maxOccurs="unbounded"/>
+               <xsd:element name="DateiID" type="dt:ST_ID" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Versandart" type="dt:ST_Versandart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Steuert, auf welche Art das Dokument versand werden soll. Soll das Dokument von Provider im Response geliefert werden, MUSS der Wert "999" genutzt werden. Alternativ DARF in diesem Fall auch auf das Attribut Versandart verzichtet werden (implizite Steuerung).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Empfaenger" type="dt:ST_ID" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">ID des Partners, der referenziert werden soll</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ReferenzEmpfaenger" type="dt:ST_Text080" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VermittleranschriftAufDokument" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VermittlerSpezifischeDokumentenergaenzung" type="allg:CT_Datei"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Dokumentversand">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Informationen zu einem Dokument, das alternativ - d.h. nicht innerhalb einer BiPRO-Nachricht - versand wird (z.B. postalischer Versand des beantworteten Risikofragebogens).
+Die Versandart des Dokuments MUSS entweder mittels des Attributs Versandart oder des Attributs SonstigeVersandart angegeben werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_DokumentartID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Dokumentes, das alternativ versandt wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Versandart" type="dt:ST_Versandart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, auf welche Art das Dokument versandt wird (z.B. Brief).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SonstigeVersandart" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, auf welche sonstige Art das Dokument versandt wird.
+DARF NUR verwendet werden,WENN im Attribut Versandart (ST_Versandart) keine passende Ausprägung definiert ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bezeichnung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kurze, menschenlesbare Bezeichnung des versandten Dokuments.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Erlaeuterung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kurze, menschenlesbare Erläuterung zum Inhalt des versandten Dokuments. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Dokumentinformation">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse, über die Informationen zu bereitgestellten und mittels TP42007 (N420) abrufbaren Dokumenten.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="DokumentartID" type="dt:ST_DokumentartID" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Dokumentes, das zum Download angeboten wird (z. B. Vorschlag)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DateiID" type="dt:ST_ID" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kennzeichen, über das die abrufbare Datei eindeutig identifiziert werden kann. Das Kennzeichen dient beim Abruf der Datei als Referenzierung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bezeichnung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kurze für den Endanwender (Vermittler) verständliche Bezeichnung für das abrufbare Dokument.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Erlaeuterung" type="dt:ST_Text" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eine für Endanwender (Vermittler) verständliche Erläuterung über den Inhalt des Dokumentes. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BereitstellungBis" type="dt:ST_Zeitstempel" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zeitpunkt, bis zu dem das Dokument unter Angabe der DateiID abgerufen werden kann.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Geschaeftsvorgang" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Basis-Objekt aller von der BiPRO definierten Geschaeftsvorgaenge.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Vorgangsnummer" type="dt:ST_Vorgangsnummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Identifizierung des Geschaeftsvorgangs beim produktgebenden Unternehmen. 
+Hinweis: In allen GDV-Releases bis einschließlich 2015 hat dieser Datentyp nur 17 Stellen; ab da erfolgt eine Anpassung auf 35 Stellen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VorgangsnummerVM" type="dt:ST_Vorgangsnummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Identifizierung des Geschaeftsvorgangs beim Vermittler. 
+Hinweis: In allen GDV-Releases bis einschließlich 2015 hat dieser Datentyp nur 17 Stellen; ab da erfolgt eine Anpassung auf 35 Stellen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Erstelldatum" type="dt:ST_Zeitstempel" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Aufgabe des Geschaeftsvorgangs.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Freitext" type="dt:ST_Text1000" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Möglichkeit zur Eingabe von Hinweisen zum Geschaeftsvorgang.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ArtID" type="dt:ST_GeVoArt" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Geschäftsvorganges</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vermittler" type="allg:CT_Vermittler" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Dokumentanforderung" type="CT_Dokumentanforderung" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Datei" type="allg:CT_Datei" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Dokumentinformation" type="CT_Dokumentinformation" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Dienstleister" type="allg:CT_Dienstleister" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Dokumentversand" type="CT_Dokumentversand" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

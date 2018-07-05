@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/prozesse/schaden"
+            xmlns:pz-schaden="http://www.bipro.net/namespace/prozesse/schaden"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:nachr="http://www.bipro.net/namespace/nachrichten"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:gevo="http://www.bipro.net/namespace/gevo"
+            xmlns:schdlstg="http://www.bipro.net/namespace/schaden-leistung"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/prozesse/schaden"
+            bipro:Name="bipro-prozesse-schaden-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/schaden-leistung"
+               schemaLocation="bipro-schaden-leistung-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/gevo"
+               schemaLocation="bipro-gevo-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/nachrichten"
+               schemaLocation="bipro-nachrichten-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:element name="setNotification">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_SchadenmeldungRequest" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_SchadenmeldungRequest">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="Schadenmeldung" type="CT_Schadenmeldung" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Schadenmeldung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eine Schadenmeldung ist ein Geschäftsvorgang, mit dem ein Schadenmelder (z.B. Vermittler) Information über einen Schaden an einen Empfänger (z.B. Versicherungsunternehmen) übermittelt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="gevo:CT_Geschaeftsvorgang">
+            <xsd:sequence>
+               <xsd:element name="EingangsdatumBeiSchadenmelder" type="dt:ST_Zeitpunkt" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum mit optionaler Zeitangabe des Eingangs der Schadenmeldung beim Schadenmelder, z.B. Eingang der Schadenmeldung (z.B. Anruf) des Versicherungsnehmers beim Vermittler.
+Es MUSS mindestens ein Datum übermittelt werden. Wird eine Zeitangabe übermittelt, MUSS diese mit Stunden und Minuten angegeben werden. Eine Zeitzone DARF übermittelt werden. Fehlt die Zeitzone, MUSS die am angegebenen Datum in Deutschland gültige Zeitzone angenommen werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="RegulierungsvollmachtWirdGenutzt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Hat der Schadenmelder eine Regulierungsvollmacht, MUSS dieses Attribut verwendet werden.
+JA = Schadenmelder nutzt seine Regulierungsvollmacht für diesen Schaden.
+NEIN = Regulierung soll durch Empfänger durchgeführt werden (z. B. wegen Überschreitung der Höhe der Vollmacht).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Parallelschaden" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Hinweis auf einen möglichen Parallelschaden z.B. dass es zu dem gemeldeten Gebäudeschaden auch noch eine Schadenmeldung zu einem Hausratschaden gibt. Freitext, z.B. "Habe auch einen Hausratschaden zu Vertrag 4711 gemeldet."</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnAndererStelleGemeldet" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Erläuterung, ob der Schaden an anderer Stelle gemeldet wurde (z.B. Hotel, Reiseleitung).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="KlageAnhaengig" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ja = Klage anhängig (daher bevorzugte Bearbeitung erforderlich).
+Nein = keine Klage anhängig. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VorgangsnummerSchadenmeldung" type="dt:ST_Vorgangsnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Vorgangsnummer einer Schadenmeldung. MUSS bei einer Nachmeldung mit der Vorgangsnummer belegt werden, die der Provider für die initiale Schadenmeldung vergeben hat.
+Dieses Attribut DARF NUR bei einer Nachmeldung gefüllt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VorgangsnummerRueckfrage" type="dt:ST_Vorgangsnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Vorgangsnummer der Rückfrage, auf die sich eine Antwort bezieht. MUSS bei einer Antwort auf eine Rückfrage zur Schadenmeldung mit der Vorgangsnummer belegt werden, die der Provider für die Rückfrage vergeben hat.
+Dieses Attribut DARF NUR bei einer Antwort auf eine Rückfrage gefüllt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AusschlussDunkelverarbeitung" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Attribut zur Beschreibung der Dunkelverarbeitung beim Provider. JA = Dunkelverarbeitung beim Provider MUSS ausgeschlossen sein.  Der Grund MUSS im Attribut Freitext der Klasse Schadenmeldung (Parent Geschäftsvorgang) spezifiziert werden. 
+Beispiele für den Ausschluss der Dunkelverarbeitung sind z. B. Person mit Sondervertrag, Mitarbeitervertrag (nur durch bestimmte Personen zu bearbeiten) oder der Vermittler ist sich fachlich unsicher und will keine finale Entscheidung treffen oder der Vertragsstand ist unklar</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schadenmelder" type="CT_Schadenmelder" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Ereignis" type="schdlstg:CT_Ereignis" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Kommentar" type="allg:CT_Freitext" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Gegenstand" type="allg:CT_Gegenstand" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="getDataResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_SchadenauskunftResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="getData">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Request" type="CT_SchadenauskunftRequest" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_Schadenauskunft">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die Klasse Schadenauskunft ist der Geschäftsvorgang zum Teilprozess TP50001 Auskunft gemäß Norm 503 Schadenservice.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Schadennummer" type="allg:CT_Schadennummer" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Unternehmen" type="allg:CT_Unternehmen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Ereignis" type="schdlstg:CT_Ereignis" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Gegenstand" type="allg:CT_Gegenstand" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SchadenauskunftRequest">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="Schadenauskunft" type="CT_Schadenauskunft" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SchadenauskunftResponse">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence>
+               <xsd:element name="Schadenauskunft" type="CT_Schadenauskunft" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SchadenmeldungResponse">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence>
+               <xsd:element name="Schadenmeldung" type="CT_Schadenmeldung" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Schadenmelder">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Der Schadenmelder ist der Sender der Schadenmeldung. Typische Schadenmelder sind: Kunde (Versicherungsnehmer, Anspruchsteller), Vermittler, Dienstleister, Versicherer.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="setNotificationResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Response" type="CT_SchadenmeldungResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>
