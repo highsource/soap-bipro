@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/kontext/betriebsart"
+            xmlns:kt-betrart="http://www.bipro.net/namespace/kontext/betriebsart"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:sachen="http://www.bipro.net/namespace/sachen"
+            xmlns:kt="http://www.bipro.net/namespace/kontext"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:mime="http://www.w3.org/2005/05/xmlmime"
+            targetNamespace="http://www.bipro.net/namespace/kontext/betriebsart"
+            bipro:Name="bipro-kontext-betriebsart-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/kontext"
+               schemaLocation="bipro-kontext-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/sachen"
+               schemaLocation="bipro-sachen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:element name="Ergebniseintrag" type="kt-betrart:CT_BetriebsartsucheErgebnis"/>
+   <xsd:complexType name="CT_BetriebsartsucheErgebnis">
+      <xsd:complexContent>
+         <xsd:extension base="kt:CT_Ergebniseintrag">
+            <xsd:sequence>
+               <xsd:element name="Betrieb" type="sachen:CT_Betrieb" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="Filter" type="kt-betrart:CT_Betriebsartsuche"/>
+   <xsd:complexType name="CT_Betriebsartsuche">
+      <xsd:complexContent>
+         <xsd:extension base="kt:CT_Filter">
+            <xsd:sequence>
+               <xsd:element name="Stichwort" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Soll die angeforderte Ergebnisliste auf eine bestimmte Betriebsart eingeschränkt werden, MUSS vom Consumer das Attribut Stichwort gefüllt werden. Der Service Provider MUSS bei der Selektion Groß- und Kleinschreibung ignorieren. Darüber hinaus MUSS er eine „Ausschnittssuche“ implementieren, d. h. auch die Stichwörter von Betriebsarten in das Ergebnis überführen, deren Name die Zeichenkette des Attributs  Stichwort enthält (z.B. Suche nach „KFZ“ liefert auch das Ergebnis „KFZ-Pflegebetrieb“ und „Abschleppdienst (ohne Reparatur, Verwertung und Kfz)“). Zusätzlich DARF der Provider eine semantische Suche implementieren, die beispielsweise auf die Suche nach „Konditorei“ auch das Ergebnis „Bäckerei“ liefert.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Sparte" type="dt:ST_Sparte" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Service Consumer MUSS das Attribut Sparte füllen, da die Berufslisten  i.A. Sparten-spezifisch sind.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Versicherungsunternehmen" type="allg:CT_Unternehmen" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

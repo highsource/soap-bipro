@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/prozesse/versicherung/vertrag/komposit"
+            xmlns:pz-komp="http://www.bipro.net/namespace/prozesse/versicherung/vertrag/komposit"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:sachen="http://www.bipro.net/namespace/sachen"
+            xmlns:pm-komp="http://www.bipro.net/namespace/versicherung/produktmodell/komposit"
+            xmlns:hpfl="http://www.bipro.net/namespace/versicherung/haftpflicht"
+            xmlns:pz-vtrg="http://www.bipro.net/namespace/prozesse/vertrag"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/prozesse/versicherung/vertrag/komposit"
+            bipro:Name="bipro-prozesse-vertrag-komposit-2.6.1.xsd"
+            bipro:Version="2.6.1"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6.1
+		(Build: 20160908-1036)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/prozesse/vertrag"
+               schemaLocation="bipro-prozesse-vertrag-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/haftpflicht"
+               schemaLocation="bipro-versicherung-haftpflicht-2.6.1.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/produktmodell/komposit"
+               schemaLocation="bipro-versicherung-komposit-2.6.1.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/sachen"
+               schemaLocation="bipro-sachen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:complexType name="CT_AenderungVertragHaftpflichtWagnisWSHV">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragHaftpflicht">
+            <xsd:sequence>
+               <xsd:element name="Sportboot" type="sachen:CT_Sportboot" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragUnfallDeckung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragUnfall">
+            <xsd:sequence>
+               <xsd:element name="Deckung" type="pm-komp:CT_Deckung" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragGlasDeckung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragGlas">
+            <xsd:sequence>
+               <xsd:element name="Deckung" type="pm-komp:CT_Deckung" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragGlasRisiko">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragGlas">
+            <xsd:sequence>
+               <xsd:element name="Deckung" type="pm-komp:CT_Deckung" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragUnfallVersichertePerson">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragUnfall">
+            <xsd:sequence>
+               <xsd:element name="Deckung" type="pm-komp:CT_Deckung" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragHaftpflicht" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="pz-vtrg:CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="SUHVersicherung" type="pm-komp:CT_SUHVersicherung" minOccurs="1"
+                            maxOccurs="1"/>
+               <xsd:element name="Haftpflichtwagnis" type="hpfl:CT_Haftpflichtwagnis" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragUnfallDynamik">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragUnfall">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragHaftpflichtWagnisTHV">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragHaftpflicht">
+            <xsd:sequence>
+               <xsd:element name="Tier" type="sachen:CT_Tier" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragHaftpflichtWagnisWHG">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragHaftpflicht">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragWohngebaeudeRisiko">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragWohngebaeude">
+            <xsd:sequence>
+               <xsd:element name="Deckung" type="pm-komp:CT_Deckung" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragUnfallBeruf">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragUnfall">
+            <xsd:sequence>
+               <xsd:element name="Berufstaetigkeit" type="partner:CT_Berufstaetigkeit" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragHausratDeckung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragHausrat">
+            <xsd:sequence>
+               <xsd:element name="Deckung" type="pm-komp:CT_Deckung" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragUnfall" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="pz-vtrg:CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="SUHVersicherung" type="pm-komp:CT_SUHVersicherung" minOccurs="1"
+                            maxOccurs="1"/>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragHaftpflichtWagnisHuGHV">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragHaftpflicht">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragGlas" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="pz-vtrg:CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Glas" type="sachen:CT_Glas" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="SUHVersicherung" type="pm-komp:CT_SUHVersicherung" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragHaftpflichtDeckung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragHaftpflicht">
+            <xsd:sequence>
+               <xsd:element name="Deckung" type="pm-komp:CT_Deckung" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragHaftpflichtWagnisPHV">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragHaftpflicht">
+            <xsd:sequence>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragHausratRisiko">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragHausrat">
+            <xsd:sequence>
+               <xsd:element name="Deckung" type="pm-komp:CT_Deckung" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragHausrat" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="pz-vtrg:CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="SUHVersicherung" type="pm-komp:CT_SUHVersicherung" minOccurs="1"
+                            maxOccurs="1"/>
+               <xsd:element name="Gebaeude" type="sachen:CT_Gebaeude" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragHaftpflichtWagnisBHHV">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragHaftpflicht">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragWohngebaeude" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="pz-vtrg:CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Gebaeude" type="sachen:CT_Gebaeude" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SUHVersicherung" type="pm-komp:CT_SUHVersicherung" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragWohngebaeudeEigentuemer">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragWohngebaeude">
+            <xsd:sequence>
+               <xsd:element name="NeuerEigentuemer" type="partner:CT_Partner" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragWohngebaeudeDeckung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragWohngebaeude">
+            <xsd:sequence>
+               <xsd:element name="Deckung" type="pm-komp:CT_Deckung" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

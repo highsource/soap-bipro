@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/versicherung/produktmodell/kraftfahrt"
+            xmlns:pm-kf="http://www.bipro.net/namespace/versicherung/produktmodell/kraftfahrt"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:fragen="http://www.bipro.net/namespace/fragen"
+            xmlns:vs-pm="http://www.bipro.net/namespace/versicherung/produktmodell"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:tarif="http://www.bipro.net/namespace/versicherung/tarifierung"
+            targetNamespace="http://www.bipro.net/namespace/versicherung/produktmodell/kraftfahrt"
+            bipro:Name="bipro-versicherung-kraftfahrt-2.6.1.xsd"
+            bipro:Version="2.6.1"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6.1
+		(Build: 20160908-1036)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/tarifierung"
+               schemaLocation="bipro-versicherung-tarifierung-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/produktmodell"
+               schemaLocation="bipro-versicherung-produktmodell-2.6.1.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/fragen"
+               schemaLocation="bipro-fragen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:complexType name="CT_VersichertesFahrzeug">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstandsrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AntragsdatenKfz">
+      <xsd:complexContent>
+         <xsd:extension base="tarif:CT_ZusaetzlicheAntragsdaten">
+            <xsd:sequence>
+               <xsd:element name="Flottennummer" type="dt:ST_Text017" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das Fahrzeug soll im Rahmen dieser Flottenvertragsnummer versichert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="IVKErwuenscht" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Ausstellung einer Internationalen Versicherungskarte (IVK) ist vom Versicherungsnehmer gewünscht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VorlaeufigeDeckungKfz">
+      <xsd:complexContent>
+         <xsd:extension base="tarif:CT_ZusaetzlicheAntragsdaten">
+            <xsd:sequence>
+               <xsd:element name="VorlaeufigeDeckungGewaehrt" type="dt:ST_JaNein" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Versicherer gewährt einen vorläufigen Deckungsschutz für die im Attribut Sparte bezeichnete Deckung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Sparte" type="dt:ST_Sparte" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Sparte gemäß GDV-Satz Anlage 1.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AbTagDerZulassung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Beginn" type="dt:ST_DatumZeit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beginn der vorläufigen Deckung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KfzHaftpflichtVersicherung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="Deckungsart" type="dt:STE_DeckungsartKH" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gemäß GDV-Schlüssel Satzart 0220.051/1 Feld 12</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SFKlasse" type="dt:STE_SFKlasseKH" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SFEinstufungsgrund" type="dt:STE_SFEinstufungsgrund" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Rabattgrundjahr" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SchadenfreieJahre" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Beitragssatz" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Typklasse" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Regionalklasse" type="dt:ST_Text005" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SchaedenAusRueckstufung" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Schäden aus Vorjahr relevant für die Rückstufung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SFKlasseIntern" type="dt:STE_SFKlasseKH" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Abweichende SF-Klasse / SFR intern geführt, relevant für den Versicherungsschein und die Beitragsrechnung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SelbstgenutztesWohneigentum">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_ZusaetzlichePartnerdaten">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Wohneigentum" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wohneigentum gemäß GDV-Schlüssel Satzart 0210.050/2 Feld 24</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VersichertBeiEigenemVU" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="WohngebaeudeVU" type="allg:CT_Unternehmen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vorfahrzeug">
+      <xsd:complexContent>
+         <xsd:extension base="tarif:CT_ZusaetzlicheAntragsdaten">
+            <xsd:sequence>
+               <xsd:element name="AmtlichesKennzeichen" type="dt:ST_AmtlichesKennzeichen" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Verbleib" type="dt:ST_Verbleib" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VerkauftAm" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VorfahrzeugVersichertFuer" type="dt:ST_VorfahrzeugVersichertFuer"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Versicherungsnehmer des Vorfahrzeugs</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_PartnerdatenKfz">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_ZusaetzlichePartnerdaten">
+            <xsd:sequence>
+               <xsd:element name="Tarifgruppe" type="dt:STE_Tarifgruppe" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="EintragVerkehrszentralregister" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Sicherheitstraining" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ErsterVersicherungsbeginnVN" type="dt:ST_Jahr" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Erster Versicherungsbeginn des Versicherungsnehmers bei dem Versicherer (Treuezeit)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Fragen" type="fragen:CT_Fragenkomplex" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Elementarprodukt" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="KfzZusatzVersicherung" type="CT_KfzZusatzVersicherung" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Geltungsbereich" type="dt:ST_Geltungsbereich" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Geltungsbereich, für den das Elementarprodukt Deckung gewährt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KfzVersicherung">
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Produkt">
+            <xsd:sequence>
+               <xsd:element name="VersichertesFahrzeug" type="CT_VersichertesFahrzeug" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Fahrzeugteilversicherung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="SelbstbeteiligungKFT" type="dt:STE_SelbstbeteiligungKfz" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Typklasse" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Regionalklasse" type="dt:ST_Text005" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Fahrzeugvollversicherung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="SelbstbeteiligungKFV" type="dt:STE_SelbstbeteiligungKfz" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SelbstbeteiligungKFT" type="dt:STE_SelbstbeteiligungKfz" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SFKlasse" type="dt:STE_SFKlasseKFV" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SFEinstufungsgrund" type="dt:STE_SFEinstufungsgrund" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Rabattgrundjahr" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SchadenfreieJahre" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Beitragssatz" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Typklasse" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Regionalklasse" type="dt:ST_Text005" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SchaedenAusRueckstufung" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Schäden aus Vorjahr relevant für die Rückstufung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SFKlasseIntern" type="dt:STE_SFKlasseKFV" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Abweichende SF-Klasse / SFR intern geführt, relevant für den Versicherungsschein und die Beitragsrechnung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vorschaeden">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_ZusaetzlichePartnerdaten">
+            <xsd:sequence>
+               <xsd:element name="Sparte" type="dt:ST_Sparte" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Sparte gemäß GDV-Satz Anlage 1.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzSchaedenLaufendesJahr" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AnzSchaedenVorjahr" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Fragen" type="fragen:CT_Fragenkomplex" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KfzUnfallVersicherung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="Deckungsart" type="dt:ST_DeckungsartKU" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gemäß GDV-Schlüssel Satzart 0220.054/1 Feld 11</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Verkehrsservice">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse für das Produkt Verkehrsservice</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Produkt">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Nachweis">
+      <xsd:complexContent>
+         <xsd:extension base="tarif:CT_ZusaetzlicheAntragsdaten">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_Nachweisart" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Status" type="dt:ST_Nachweisstatus" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KfzZusatzVersicherung">
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_KfzZusatzVersicherung" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">VU- spezifische Zusatzprodukte oder Deckungserweiterungen zu KH, KFV, KFT, KU wie z.B.: Schutzbrief, Auslandsschadenschutz, Fahrerunfallschutz, GAP-Deckung, Reparaturservice</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Tarifierungsmerkmal" type="dt:ST_Text012" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Tarifierungsmerkmal, z. B. Tarifgruppe / Regionalklasse</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Rabattgrundjahr" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grundjahr für die SF-Einstufung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SFKlasse" type="dt:STE_SFKlasseKZusatz" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die für die KfzZusatzVersicherung gültige
+Schadenfreiheitsklasse oder Schadenklasse</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beitragssatz" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">SF-Beitragssatz in Prozent</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SchaedenAusRueckstufung" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Schäden aus Vorjahr relevant für die Rückstufung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Typklasse" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Typklasse für die KfzZusatzVersicherung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ReduzierteSelbstbeteiligungKFV" type="dt:ST_Betrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Betrag, auf den der SB in KFV durch die KfzZusatzVersicherung reduziert wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ReduzierteSelbstbeteiligungKFT" type="dt:ST_Betrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Betrag, auf den der SB in KFT durch die KfzZusatzVersicherung reduziert wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KfzVerkehrsservice">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse für die Kfz-Verkehrrservice-Deckungen</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="AnzahlVersicherteFahrzeuge" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der versicherten Fahrzeuge, wenn die Fahrzeuge nicht explizit genannt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VersichertesFahrzeug" type="CT_VersichertesFahrzeug" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

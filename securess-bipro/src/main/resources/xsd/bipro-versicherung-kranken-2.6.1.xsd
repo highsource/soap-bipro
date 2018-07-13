@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/versicherung/produktmodell/kranken"
+            xmlns:pm-kranken="http://www.bipro.net/namespace/versicherung/produktmodell/kranken"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:fragen="http://www.bipro.net/namespace/fragen"
+            xmlns:vtrg="http://www.bipro.net/namespace/vertrag"
+            xmlns:vs-pm="http://www.bipro.net/namespace/versicherung/produktmodell"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:tarif="http://www.bipro.net/namespace/versicherung/tarifierung"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/versicherung/produktmodell/kranken"
+            bipro:Name="bipro-versicherung-kranken-2.6.1.xsd"
+            bipro:Version="2.6.1"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6.1
+		(Build: 20160908-1036)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/tarifierung"
+               schemaLocation="bipro-versicherung-tarifierung-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/produktmodell"
+               schemaLocation="bipro-versicherung-produktmodell-2.6.1.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/vertrag"
+               schemaLocation="bipro-vertrag-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/fragen"
+               schemaLocation="bipro-fragen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_VersichertePerson">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_UebertragungswertKranken">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Kranken-Daten bei der Übermittlung des Übertragungswertes im Wechselgeschäft.
+
+Die Attribute entsprechen dem Abschnitt
+
+- Übertragungswert für die substitutive Krankenversicherung
+
+des Dokumentes "Mitteilung zur Höhe des Übertragungswertes" des PKV-Verbandes.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Datum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Übertragungswert zum TT.MM.JJJJ</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Hoehe" type="allg:CT_Betrag" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="SubstitutiveKVAusNeubestand" type="allg:CT_Betrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="MittelAusGZNeubestand" type="allg:CT_Betrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BeitragsstabilisierendEingesetztNeubestand" type="allg:CT_Betrag"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SubstitutiveKVAusAltbestand" type="allg:CT_Betrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="MittelAusGZAltbestand" type="allg:CT_Betrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BeitragsstabilisierendEingesetztAltbestand" type="allg:CT_Betrag"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="HistorischerVerlauf" type="dt:ST_HistorischerVerlauf" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Historischer Verlauf</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeginndatumSBStufe" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beginndatum der SB-Stufe im BT TT.MM.JJJJ</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="HoeheSBStufe" type="allg:CT_Betrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Uebertragungswerte">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Allgemeine Daten bei der Übermittlung des Übertragungswertes im Wechselgeschäft.Die Attribute entsprechen den Abschnitten Daten des/der Versicherten und Prüfcode des Dokumentes "Mitteilung zur Höhe des Übertragungswertes" des PKV-Verbandes. Die Daten des Abschnittes Daten des/der Versicherten entsprechen den Partnerdaten. Im Objekt Versicherungsunternehmen MUSS die Nummer des Versicherers gesetzt werden. Hierbei handelt es sich immer um die BaFin-Nummer. Das Attribut Nummernart MUSS entsprechend gesetzt werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="PersonNummer" type="dt:ST_KVPersonNummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ordnungsbegriff des alten Versicherungsunternehmens; Nummer der versicherten Person im Vertrag</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Pruefcode" type="dt:ST_KVPruefcode" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Prüfcode</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Pflege" type="CT_UebertragungswertPflege" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Kranken" type="CT_UebertragungswertKranken" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Versicherungsscheinnummer" type="allg:CT_Vertragsnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Versicherungsunternehmen" type="allg:CT_Unternehmen" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KrankenProdukt">
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Produkt">
+            <xsd:sequence>
+               <xsd:element name="VersichertePerson" type="CT_VersichertePerson" minOccurs="1"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Versicherungsschutz" type="dt:ST_KrankenVersicherungsschutz"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Versicherungsschutzes</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vom Provider generierte, eindeutige Referenznummer zur Identifizierung des Objektes über Prozesse hinweg, insbesondere zwischen Auskunfts- und Änderungsprozessen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Leistungsempfaenger" type="CT_Leistungsempfaenger" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VorNebenVertrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zu bestehenden oder beendeten Vor- bzw. Nebenverträgen in der Krankenversicherung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="vtrg:CT_VorNebenVertrag">
+            <xsd:sequence>
+               <xsd:element name="Vorversicherungsschutz" type="dt:ST_KrankenVorversicherungsschutz"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angaben zur Art des Vorversicherungsschutz. "Keine Vorversicherung" zur Angabe, dass kein Vorversicherungsschutz bestand, z.B. kein unmittelbarer Vorversicherungsschutz bei Zuzug aus dem Ausland oder wenn Eltern nicht versichert sind.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Behandler">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partnerrolle Behandler zur Übertragung von Daten von z.B. Arzt, Krankenhaus, Heilpraktiker.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="Hausarzt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ist der Behandler zeitgleich Hausarzt?</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Fachrichtung" type="dt:ST_Text060" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_FrageBehandler">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Kranken-spezifischer Fragetyp für die Übertragung eines Behandlers einer Diagnose, Krankheit etc. Behandler kann Arzt, Krankenhaus, Heilpraktiker usw. sein.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="fragen:CT_EinfacheFrage">
+            <xsd:sequence>
+               <xsd:element name="AntwortBehandler" type="CT_AntwortBehandler" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Nachweis">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse, um die Art und den Status von Nachweisen für die Krankenversicherung abzubilden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tarif:CT_ZusaetzlicheAntragsdaten">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_Nachweisart" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Status" type="dt:ST_Nachweisstatus" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_PPV">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Übertragung der Daten zur Pflegepflichtversicherung.  </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Beitragsbegrenzung" type="dt:ST_PPVHoechstbeitrag" minOccurs="1"
+                            maxOccurs="1"/>
+               <xsd:element name="Beginn" type="dt:ST_Datum" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beginn der PPV untehmensübergreifend</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EinkommenEinesEhegattenKleinerGrenze" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kennzeichnet, ob das Einkommen eines der beiden Ehegatten unter der Geringfügikeitsgrenze liegt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EhegatteVersichertSeit" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beginn der Versicherung des Ehegatten.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EinkommenKindKleinerGrenze" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kennzeichnet, ob das Einkommen eines der beiden Ehegatten unter der Geringfügikeitsgrenze liegt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EinkommenBehinderterKleinerGrenze" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kennzeichnet, ob das Einkommen des Behinderten unter der Geringfügigkeitsgrenze liegt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ZeitraumWehrZivildienst" type="allg:CT_Zeitraum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VUEhegatte" type="allg:CT_Unternehmen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VUErziehungsberechtigter" type="allg:CT_Unternehmen" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AntwortBehandler">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Kranken-spezifischer Antworttyp für die Übertragung eines Behandlers einer Diagnose, Krankheit etc. Behandler kann Arzt, Krankenhaus, Heilpraktiker usw. sein.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="fragen:CT_Antwort">
+            <xsd:sequence>
+               <xsd:element name="Behandler" type="CT_Behandler" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Partnerdaten">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zur versicherten Person. In dieser Klasse wird u.a. die Daten für beihilfeberechtigte Personen hinterlegt. 
+Ausserdem werden hier referenziert:
+- die Kranken-sprezifischen Vor- und Nebenversicherungen
+- Pflegepflichtversicherung (PPV)
+- Übertragungswerte</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_ZusaetzlichePartnerdaten">
+            <xsd:sequence>
+               <xsd:element name="BeruecksichtigtAls" type="dt:ST_ArtVPBeruecksichtigung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Beihilfetraeger" type="dt:ST_Beihilfetraeger" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Versichertennummer" type="dt:ST_KVNummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Unveränderbarer Teil der Krankenversichertennummer gem. SGB V § 290.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeihilfesatzAmbulant" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BeihilfesatzStationaer" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BeihilfesatzZahn" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AnzahlBeruecksichtigungsfaehigerKinder" type="dt:ST_Ganzzahl"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zahl der berücksichtigungsfähigen Kinder, die dieser VP zugeordnet werden .</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EndeAktiverDienst" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ende der aktiven Dienstzeit (bei Soldaten, BGS, Polizisten, ohne Übergangzeit). </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ErgaenzungWahlleistungen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Mehrbeitrag zur Ergänzung der Wahlleistungen (nur Bundesländer: Baden Württemberg, Rheinland Pfalz).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="WiderspruchAbfrageFinanzbehoerden" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dient zur Feststellung, ob der Übermittlung von personenbezogenen Daten (Namen, Vertragsdaten, Steueridentifikationsnummer, geleistete Beiträge und ggf. Informationen zu erstatteten Beiträgen) an das Bundeszentralamt für Steuern widersprochen wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Uebertragungswerte" type="CT_Uebertragungswerte" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="PPV" type="CT_PPV" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="WiderspruchVorsorgezuschlag" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Widerspruch gegen Vorsorgezuschlag gem Gesundheitsreformgesetz 2000</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Personenstatus" type="dt:ST_Vertragsstatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Personenstatus gem. GDV-Anlage 24</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beihilfestatus" type="dt:ST_Beihilfestatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beihilfestatus bei beihilfeberechtigten Personen gem. GDV-Anlage 17 (1. Teil)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ReferenzVertragsnummerTrennung" type="allg:CT_Vertragsnummer"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ReferenzVertragsnummerZusammenlegung" type="allg:CT_Vertragsnummer"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KrankentagegeldPruefung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Erweiterung der Partnerdaten, die die  Fragen und Antworten der Prüfung des Krankentagegeldes Vp-bezogen referenziert.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_ZusaetzlichePartnerdaten">
+            <xsd:sequence>
+               <xsd:element name="Fragenkomplex" type="fragen:CT_Fragenkomplex" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_UebertragungswertPflege">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Pflege-Daten bei der Übermittlung des Übertragungswertes im Wechselgeschäft.
+
+Die Attribute entsprechen dem Abschnitt
+
+- Übertragungswert für die Pflegepflichtversicherung
+
+des Dokumentes "Mitteilung zur Höhe des Übertragungswertes" des PKV-Verbandes.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Datum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Übertragungswert zum TT.MM.JJJJ</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Hoehe" type="allg:CT_Betrag" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Referenzwert" type="allg:CT_Betrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Beginn" type="dt:ST_Datum" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beginn PPV</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Tarif">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angabe der berechnungsrelevanten Informationen zum Tarif als kleinste Tarifierungseinheit. Der Tarif wird über die TarifID identifiziert. 
+
+Angaben, die sich im Beratungsprozess sich auf die Ebene der VP beziehen können (z.B. Anwartschaft, Berechnungsgrundlage) sind Tarif-bezogen zu übermitteln, da sie auch auf Ebene des Tarifes berechnet werden.
+
+Die Pflegeversicherung wird wie ein Tarif der Krankenversicherung behandelt.  </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="AnwartschaftID" type="dt:ST_Anwartschaft" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob der Tarif als Anwartschaft berechnet wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Berechnungsgrundlage" type="dt:ST_Berechnungsgrundlage" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob der Tarif als Einzeltarif oder als Gruppen-oder Mitarbeitertarif berechnet werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Einzeltarif" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ja = Tarif wurde als Einzeltarif gerechnet.
+Nein = Tarif wurde gem. Berechnungsgrundlage gerechnet.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Prozentstufe" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe der Prozentstufe, wenn der Tarif unterschiedliche Prozentstufen hat.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Wartezeiterlass" type="dt:ST_Wartezeiterlass" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kennzeichen für den Wartezeitenerlass.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="UrsprungsbeginnTarifart" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ursprungsbeginn der Tarifart</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlSchadenfreierJahre" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der schadensfreien Jahre des Tarifes</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ErstatteteMonatsSollBeitraege" type="dt:ST_Dezimalzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der ausgeschütteten Monats-Soll-Beiträge in der Beitragsrückerstattung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anwartschaftsgrund" type="dt:ST_Anwartschaftsgrund" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grund, wenn sich der Tarif in einer Anwartschaft befindet</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="LetzteBeitragsanpassung" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der letzten Beitragsanpassung des Tarifes</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AGZuschussfaehig" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ja = der Tarif ist zuschussfähig durch den Arbeitgeber
+Nein = der Tarif ist nicht zuschussfähig durch den Arbeitgeber
+Wird das Attribut nicht geliefert, MUSS es als mit "Nein" belegt interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Option" type="dt:STE_KrankenTarifOption" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Option bei Optionstarifen</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Optionsende" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, bis zu dem die Option eingelöst werden kann</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Tarifart" type="dt:ST_KrankenTarifart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Tarifart</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Eintrittsalter" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Versicherungstechnisches Eintrittsalter der VP bei Abschluss des Tarifes</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anwartschaftszeitraum" type="allg:CT_Zeitraum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Abgangsdatum" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="MaterielleVersicherungsdauer" type="allg:CT_Zeitraum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vom Provider generierte, eindeutige Referenznummer zur Identifizierung des Objektes über Prozesse hinweg, insbesondere zwischen Auskunfts- und Änderungsprozessen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Risikopruefung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Übertragung von Fragen und Antworten der Risikoprüfung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_ZusaetzlichePartnerdaten">
+            <xsd:sequence>
+               <xsd:element name="Fragenkomplex" type="fragen:CT_Fragenkomplex" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Leistungsempfaenger">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Referenzierung des Leistungsempfängers.
+Soll das Leistungszahlungskonto abgebildet werden, MUSS das referenzierte Partnerobjekt eine Bankverbindung mit Bankverbindung.Bankverbindung = 02 (Auszahlungskonto) referenzieren.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

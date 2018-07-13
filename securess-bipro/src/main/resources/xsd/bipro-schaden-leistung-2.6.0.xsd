@@ -1,0 +1,1235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/schaden-leistung"
+            xmlns:schdlstg="http://www.bipro.net/namespace/schaden-leistung"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:btvh="http://www.bipro.net/namespace/beteiligungsverhaeltnis"
+            xmlns:vtrg="http://www.bipro.net/namespace/vertrag"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/schaden-leistung"
+            bipro:Name="bipro-schaden-leistung-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/vertrag"
+               schemaLocation="bipro-vertrag-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/beteiligungsverhaeltnis"
+               schemaLocation="bipro-beteiligungsverhaeltnis-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Polizeidienststelle">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eine Dienststelle der Polizei.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Polizeibericht">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Informationen zu einem polizeilich erfassten Sachverhalt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Tagebuchnummer" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Identifizierende Tagebuchnummer des Polizeiberichts.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="RauschmitteluntersuchungDurchgefuehrt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Es wurde eine Rauschmitteluntersuchung (Alkohol, Drogen) durchgeführt.
+NEIN = Es wurde keine Rauschmitteluntersuchung durchgeführt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BussgeldVerwarnungVerhaengt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Es wurde ein Bußgeld und/oder eine Verwarnung verhängt.
+NEIN = Es wurde kein Bußgeld und keine Verwarnung verhängt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unfallflucht" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Es wurde eine Unfallflucht festgestellt.
+NEIN = Es wurde keine Unfallflucht festgestellt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Polizeidienststelle" type="CT_Polizeidienststelle" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Schadenobjekt">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Gegenstand, der in einen Schaden involviert ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstandsrolle">
+            <xsd:sequence>
+               <xsd:element name="Identifikation" type="dt:ST_Text017" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Identifikation des Schadenobjekts, z. B. laufende Nummer im Schadenverzeichnis.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bezeichnung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bezeichnung des Schadenobjekts.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlGleichartigerObjekte" type="dt:ST_Dezimalzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der gleichartigen Objekte, die in ihrer Gesamtheit das Schadenobjekt darstellen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vertragsposition" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Schadensobjekts auf die Position dieses Objekts im Versicherungsvertrag. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anschaffungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Anschaffung des Schadenobjekts.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BelegeVorhanden" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Über den Wert des Schadenobjekts sind Belege vorhanden.
+NEIN = Über den Wert des Schadenobjekts sind keine Belege vorhanden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Entschaedigungsrelevant" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Dieses Schadenobjekt ist relevant für die Entschädigungsberechnung.
+NEIN = Dieses Schadenobjekt ist nicht relevant für die Entschädigungsberechnung.
+Falls das Attribut nicht belegt ist, MUSS es als mit "Ja" belegt interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zustand" type="dt:ST_ZustandSchadenobjekt" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zustand des Schadenobjekts.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beschaedigung" type="dt:ST_Text1000" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung von Art und Umfang der Beschädigung des Schadenobjekts</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Reparaturmoeglichkeit" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Reparaturmöglichkeit oder Begründung, warum Reparatur nicht möglich.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VorschaedenVorhanden" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Das Schadenobjekt hatte mindestens einen Vorschaden.
+NEIN = Das Schadenobjekt hatte keinen Vorschaden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VorschaedenBeschreibung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de"> Beschreibung der Vorschäden zu diesem Schadenobjekt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VorschaedenRepariert" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Alle Vorschäden wurden repariert.
+NEIN = Ein oder mehrere Vorschäden wurden nicht repariert.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BesitzverhaeltnisVP" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Die beschädigte Sache wurde geliehen, gemietet, gepachtet, verwahrt, geleast oder ohne Erlaubnis erlangt.
+NEIN = sonst</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ArtBesitzverhaeltnisVP" type="dt:ST_Besitzverhaeltnis" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Besitzverhältnisses von der versicherten Person an der beschädigten Sache.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Sicherungsabtretung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Für das Schadenobjekt liegt eine Sicherungsabtretung vor.
+NEIN = Für das Schadenobjekt liegt keine Sicherungsabtretung vor.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Leistung" type="CT_Leistung" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="VoraussichtlicheReparaturdauer" type="allg:CT_Zeitraum2" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SchadenZuObjekt" type="CT_SchadenZuObjekt" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="TatsaechlicheReparaturdauer" type="allg:CT_Zeitraum2" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Schadenhoehe" type="CT_Schadenhoehe" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Schadenmanagement" type="CT_Schadenmanagement" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Alter" type="allg:CT_Zeitraum2" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Besichtigung" type="CT_Besichtigung" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Taeter">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der eine rechtswidrige Tat begangen hat. z.B. Diebstahl, Einbruch, Beraubung, Brandstifung. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Reserve">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Aktuelle, laufende Reserve.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SchadenZuObjekt" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Abstrakte Klasse zur Ableitung weiterer Klassen mit Detailinformationen zu einem Schadenobjekt in Abhängigkeit von der Art des Schadens.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Ereignis">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ereignis, das einem oder mehreren Schäden vorausgeht.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Schadendatum" type="dt:ST_Zeitpunkt" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum mit optionaler Zeitangabe des Schadenereignisses. Das Schadendatum MUSS immer ein korrektes Datum sein. Dieses Datum DARF fiktiv sein, falls das Schadendatum (noch) nicht bekannt ist. In diesem Fall MUSS das Attribut FiktivesSchadendatum = JA sein.
+Bei Rechtsschutz: z.B. Datum der Antragstellung, Rechtslageänderung, Ordnungswidrigkeit, Tat, des Versicherungsfalls, angefochtenen Bescheids, schädigenden Ereignisses.
+Alternativ DARF ein Schadenzeitraum angegeben werden.
+Es MUSS mindestens ein Datum übermittelt werden. Wird eine Zeitangabe übermittelt, MUSS diese mit Stunden und Minuten angegeben werden. Eine Zeitzone DARF übermittelt werden. Fehlt die Zeitzone, MUSS die am angegebenen Datum in Deutschland gültige Zeitzone angenommen werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kumulschadennummer" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Identifikation eines Kumulschadenereignisses (z.B. die Kumulschadennummer des Orkans Kyrill).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="FiktivesSchadendatum" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Schadendatum ist fiktiv
+NEIN = Schadendatum ist konkret
+Wird das Attribut nicht geliefert, MUSS es als mit Nein belegt interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="KenntniserlangungVN" type="dt:ST_Zeitpunkt" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum mit optionaler Zeitangabe, wann der Versicherungsnehmer oder eine von ihm bevollmächtigte Person Kenntnis von dem Ereignis erlangt hat.
+Es MUSS mindestens ein Datum übermittelt werden. Wird eine Zeitangabe übermittelt, MUSS diese mit Stunden und Minuten angegeben werden. Eine Zeitzone DARF übermittelt werden. Fehlt die Zeitzone, MUSS die am angegebenen Datum in Deutschland gültige Zeitzone angenommen werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VNAnwesend" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = VN und/oder bevollmächtigte Personen waren beim Ereignis anwesend.
+NEIN = VN und/oder bevollmächtigte Personen waren beim Ereignis nicht anwesend.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schadenverursacher" type="dt:ST_Schadenverursacher" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Verursacher des Schadenereignisses gemäß GDV-Anlage 147.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="TaeterPolizeilichErmittelt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Der Täter für das Ereignis wurde polizeilich/staatsanwaltlich ermittelt.
+NEIN = Der Täter für das Ereignis wurde nicht polizeilich/staatsanwaltlich ermittelt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="PolizeilichGemeldet" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Das Ereignis wurde polizeilich gemeldet.
+NEIN = Das Ereignis wurde nicht polizeilich gemeldet.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ZeugenVorhanden" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Für das Ereignis gibt es Zeugen.
+NEIN = Für das Ereignis gibt es keine Zeugen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlZeugen" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Zeugen für das Ereignis.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Personenschaden" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Das Ereignis verursachte einen Personenschaden.
+NEIN = Das Ereignis verursachte keinen Personenschaden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlVerletzteErkranktePersonen" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Personen, die aufgrund des Ereignisses verletzt wurden oder erkrankt sind.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlVerstorbenePersonen" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Personen, die aufgrund des Ereignisses verstorben sind.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VNVerstorben" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Der Versicherungsnehmer ist aufgrund des Ereignisses verstorben.
+NEIN = Der Versicherungsnehmer ist aufgrund des Ereignisses nicht verstorben.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SchadenminderungsmassnahmenGetroffen" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Es wurden Schadenminderungsmaßnahmen getroffen.
+NEIN = Es wurden keine Schadenminderungsmaßnahmen getroffen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schadenminderungsmassnahmen" type="dt:ST_Text255" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung, welche Schadenminderungsmassnahmen getroffen wurden oder warum keine getroffen wurden (konnten). </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Entdecker" type="CT_Entdecker" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Verursacher" type="CT_Verursacher" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Zeuge" type="CT_Zeuge" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Schadenzeitraum" type="allg:CT_Zeitraum2" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Schadenhergang" type="CT_Schadenhergang" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Schaden" type="CT_Schaden" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Schadenanschrift" type="CT_Schadenanschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Taeter" type="CT_Taeter" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Polizeibericht" type="CT_Polizeibericht" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Beteiligter">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der an einem Schaden bzw. einer Leistung beteiligt ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="Rolle" type="dt:ST_RolleBeteiligter" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Rolle des Beteiligten (z.B. Versicherungsnehmer, Anspruchsteller, Reparaturfirma, Sachverständiger, Zeuge, Rechtsanwalt, Sicherungsgläubiger, versicherte Person).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Besichtigungsanschrift">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Anschrift, an der etwas besichtigt wird (evtl. auch als Geoposition).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Adresse">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Entdecker">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der etwas entdeckt hat.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Besichtigung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Tätigkeit, bei der jemand etwas genau betrachtet.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Status" type="dt:ST_Leistungsstatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status der Besichtigung (z.B. gewünscht, erforderlich, vereinbart, erfolgt)
+Beispiel: Status = 3 bedeutet Besichtigung ist erforderlich</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beauftragungsdatum" type="dt:ST_Zeitpunkt" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum mit optionaler Zeitangabe, an dem die Besichtigung beauftragt wurde.
+Es MUSS mindestens ein Datum übermittelt werden. Wird eine Zeitangabe übermittelt, MUSS diese mit Stunden und Minuten angegeben werden. Eine Zeitzone DARF übermittelt werden. Fehlt die Zeitzone, MUSS die am angegebenen Datum in Deutschland gültige Zeitzone angenommen werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Besichtigungsdatum" type="dt:ST_Zeitpunkt" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum mit optionaler Zeitangabe, an dem die Besichtigung gewünscht ist oder geplant ist oder durchgeführt wurde (entsprechend dem Status = 2 gewünscht = gewünschter Termin, etc.).
+Es MUSS mindestens ein Datum übermittelt werden. Wird eine Zeitangabe übermittelt, MUSS diese mit Stunden und Minuten angegeben werden. Eine Zeitzone DARF übermittelt werden. Fehlt die Zeitzone, MUSS die am angegebenen Datum in Deutschland gültige Zeitzone angenommen werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BesichtigungszeitZusatz" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Klartext zur Besichtigungszeit (z. B. "nachmittags").</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Hinweis" type="dt:ST_Text080" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ergänzender Hinweis zur Besichtigung (z.B. "Fahrzeug steht in der Garage").</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Besichtiger" type="CT_Besichtiger" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BesichtigungBei" type="CT_BesichtigungBei" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Besichtigungsanschrift" type="CT_Besichtigungsanschrift" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Selbstbehaltsbetrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Geldwert, der im Rahmen eines Selbstbehalts berücksichtigt wird.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_GeschaedigtePerson">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der geschädigt wurde.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="SchadenZuPerson" type="CT_SchadenZuPerson" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Schadenanschrift">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Anschrift eines Schadenereignisses.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Adresse">
+            <xsd:sequence>
+               <xsd:element name="Schadenort" type="dt:ST_Text080" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ergänzende Beschreibung zum Schadenort. Z. B. "Auf der A7 im Elbtunnel Fahrtrichtung Norden", "in der Küche des ersten Stockwerks", "in der Garage".</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Flurstueck" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Identifikation des Flurstücks.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gemarkung" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Identifikation der Gemarkung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Schadenhergang">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Hergang eines Schadenereignisses.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Hergang" type="dt:STE_Schadenhergang" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Hergang des Schadenereignisses gemäß GDV-Anlage 114, aber VU-spezifisch erweiterbar.
+DARF bei Ereignissen zu Unfallversicherungen NICHT verwendet werden (siehe UrsacheUnfallversicherung).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="HergangBeiUnfallversicherung" type="dt:ST_Unfallursache" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Hergang bei einem Unfall gemäß GDV-Anlage 158. DARF NUR für Ereignisse zur Unfallversicherung verwendet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beschreibung" type="dt:ST_Text1000" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung des Hergangs des Schadenereignisses.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Quelle" type="allg:CT_Quelle" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SchadenZuPerson" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Abstrakte Klasse zur Ableitung weiterer Klassen mit Detailinformationen zu einer geschädigten Person in Abhängigkeit von der Art des Schadens.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Schadenmanagement" type="CT_Schadenmanagement" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Regulierung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Informationen zu einer Regulierung zu einem Schaden oder einer Leistung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Aufwandsart" type="dt:ST_Aufwandsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Schaden- bzw. Leistungsaufwandes.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zahlungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Regulierungszahlung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zahlungsempfaenger" type="CT_Beteiligter" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Entschaedigungsbetrag" type="CT_Entschaedigungsbetrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Selbstbehaltsbetrag" type="CT_Selbstbehaltsbetrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Regulierungsart" type="dt:ST_Regulierungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ausführender der Regulierung (Versicherungsunternehmen, Vermittler oder bevollmächtigter Dienstleister).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SelbstbehaltBeruecksichtigt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Es wurde bei der Regulierung ein Selbstbehalt berücksichtigt.
+NEIN = Es wurde bei der Regulierung kein Selbstbehalt berücksichtigt.
+Ist das Feld nicht belegt, MUSS es als mit 'NEIN' belegt interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Status" type="dt:ST_Regulierungsstatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status der Regulierung (z.B. bereits erfolgt, gewünscht).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Abrechnungsform" type="dt:ST_Schadenabrechnungsform" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Abrechnungsform der Regulierung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zahlungsart" type="dt:ST_Zahlungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Regulierungszahlung (z.B. Überweisung, Scheck, Barzahlung).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SteuerEnthalten" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Im Regulierungsbetrag ist die Steuer enthalten (Bruttobetrag)
+NEIN = Im Regulierungsbetrag ist die Steuer nicht enthalten
+(Nettobetrag)
+Der Regulierungsbetrag ergibt sich aus dem Entschaedigungsbetrag und/oder den Bearbeitungskosten.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ExterneBearbeitungskosten" type="CT_ExterneBearbeitungskosten"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Zahlungsfreigebender" type="CT_Zahlungsfreigebender" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SchadenfallLeistungsfall">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ein Schadenfall bzw. Leistungsfall beschreibt einen durch ein Versicherungsunternehmen oder einen Dritten zu bearbeitenden Schaden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Schadenstatus" type="dt:ST_Schadenstatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status des Schadenfalls bzw. des Leistungsfalls (offen oder geschlossen).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bearbeitungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der aktuellsten Bearbeitung des Schadenfalls bzw. des Leistungsfalls.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schadenmeldedatum" type="dt:ST_Zeitpunkt" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum mit optionaler Zeitangabe, an dem das Schadenereignis dem Unternehmen, das den Schadenfall bzw. Leistungsfall bearbeitet, bekannt wurde.
+Es MUSS mindestens ein Datum übermittelt werden. Wird eine Zeitangabe übermittelt, MUSS diese mit Stunden und Minuten angegeben werden. Eine Zeitzone DARF übermittelt werden. Fehlt die Zeitzone, MUSS die am angegebenen Datum in Deutschland gültige Zeitzone angenommen werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schliessungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Schließung des Schadenfalls bzw. des Leistungsfalls.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schliessungsart" type="dt:ST_Schliessungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Schließung des Schadenfalls oder des Leistungsfalls (z.B. Schließung mit Zahlung, Ablehnung, Schließung ohne Zahlung (z.B. unterhalb Selbstbehalt)).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeginnZeichnungsjahr" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beginndatum desjenigen Zeichnungsjahres des Versicherungsvertrages, in dem sich der Schaden ereignete bzw. dem der Schaden statistisch zugeordnet wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vertragssparte" type="dt:ST_Sparte" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Sparte des Produktes, zu dem der Schadenfall angelegt wurde (z. B. 130 = Hausrat, wenn es sich um einen Feuerschaden zum Hausratvertrag handelt).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schadensparte" type="dt:ST_Sparte" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Sparte der Gefahr/Deckung, zu der der Schadenfall angelegt wurde (z. B. 080 = Feuer, wenn es sich um einen Feuerschaden zum Hausratvertrag handelt).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schadenursache" type="dt:ST_Schadenursache" minOccurs="0"
+                            maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ursache des Schadens. Verwendet wird das Schlüsselverzeichnis gemäß GDV-Anlage 132.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Teilungsabkommen" type="dt:ST_Teilungsabkommen" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Teilungsabkommen mit Sozialversicherungsträgern, relevant für Schadenquotenermittlung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beschreibung" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kurze Beschreibung des Schadenfalls z.B. "verlorene Container".</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schadenart" type="dt:ST_Schadenart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Schadenart gemäß GDV-Anlage 115. Dieses Attribut DARF für Schädenfälle zu Unfallversicherungen NICHT verwendet werden (siehe SchadenartUnfall).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SchadenartUnfall" type="dt:ST_SchadenartUnfall" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Schadenart-Unfall gemäß GDV-Anlage 157. Dieses Attribut DARF NUR für Schäden zu Unfallversicherungen verwendet.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="RegulierungAlsSammelschaden" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Dieser Schadenfall wird als Sammelschaden reguliert.
+NEIN = Dieser Schadenfall wird als Einzelschaden reguliert.
+Fehlt das Attribut MUSS der Schadenfall als ein Einzelschaden interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnspruecheErhoben" type="dt:ST_AnspruchErhoben" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Antwort auf die Frage:
+Wurden Schadenersatzansprüche erhoben?</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VNEinverstandenMitZahlungAnAST" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Der Versicherungsnehmer (VN) ist mit Zahlung an Anspruchsteller (AST) einverstanden.
+NEIN = Der Versicherungsnehmer (VN) ist mit Zahlung an Anspruchsteller (AST) nicht einverstanden. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VNNichtEinverstandenMitZahlungAnASTBegruendung" type="dt:ST_Text255"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Begründung, wenn kein Einverständnis zur Zahlung an den Anspruchsteller (AST) vorliegt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Aktenzeichen" type="allg:CT_Schadennummer" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Beteiligungsverhaeltnis" type="btvh:CT_Beteiligungsverhaeltnis"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AltesVersicherungsunternehmen" type="allg:CT_Unternehmen" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BearbeitendeStelle" type="CT_BearbeitendeStelle" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ExterneBearbeitungskosten" type="CT_ExterneBearbeitungskosten"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Anspruchsteller" type="CT_Anspruchsteller" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Versicherungsunternehmen" type="allg:CT_Unternehmen" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AlteSchadennummer" type="allg:CT_Schadennummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AnderweitigerVersicherungsschutz"
+                            type="CT_AnderweitigerVersicherungsschutz"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Entschaedigungsbetrag" type="CT_Entschaedigungsbetrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Schadennummer" type="allg:CT_Schadennummer" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Vertrag" type="vtrg:CT_Vertrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Regulierung" type="CT_Regulierung" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Selbstbehaltsbetrag" type="CT_Selbstbehaltsbetrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Schadenmelder" type="CT_Beteiligter" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Reserve" type="CT_Reserve" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Verursacher">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der etwas verursacht hat. Z.B. Kfz-Unfall, Haftpflichtschaden. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="InErstausbildung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Schadenverursacher befindet sich in Erstausbildung
+NEIN = Schadenverursacher befindet sich nicht in Erstausbildung
+Ist vorwiegend bei Haftpflichtschadenereignissen relevant.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="InHaeuslicherGemeinschaft" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Schadenverursacher lebt in häuslicher Gemeinschaft mit Versicherungsnehmer
+NEIN = Schadenverursacher lebt nicht in häuslicher Gemeinschaft mit Versicherungsnehmer
+Ist vorwiegend bei Haftpflichtschadenereignissen relevant.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_BearbeitendeStelle">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Stelle, die einen Schadenfall bzw. Leistungsfall bearbeitet (z.B. Zweigniederlassung des Versicherers, Assekuradeur, bevollmächtigter Dienstleister).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Leistungserbringer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der eine Leistung erbringt (z.B. Werkstatt, Handwerker, Mietwagenfirma, Assistance-Dienstleister).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="SchadenmanagementPartner" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Leistungserbringer ist Partner im Schadenmanagement
+NEIN = Leistungserbringer ist kein Partner im Schadenmanagement</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BewertungFuerNPS" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Antwort des Leistungsempfängers zur Frage der Weiterempfehlung des Leistungserbringers im Rahmen des Net Promoter Scores (NPS) auf der Skala von 0 (unwahrscheinlich) - 10 (wahrscheinlich).
+98 = keine Angabe vom Kunden
+99 = unbekannt</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ExterneBearbeitungskosten">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Externe Kosten zur Bearbeitung eines Schadens bzw. einer Leistung, z. B. Sachverständigerkosten, Bankspesen etc.
+Betrag positiv = Schaden-belastend (z.B. Regulierung)
+Betrag negativ = Schaden-entlastend (z.B. Regress)</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Leistung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Verrichtung, die zumeist durch einen Dritten erbracht wird (durch einen Leistungserbringer), z.B. Reparatur, Mietwagen bereitstellen, Abschleppen, Bergen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_Schadenleistungsart" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Leistung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Leistungsart" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Leistungsart, wenn die ArtID = 99 (Sonstige Leistung).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Status" type="dt:ST_Leistungsstatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status zur Durchführung der Leistung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Abtretungserklaerung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Definition: Die Abtretungserklärung ist ein Anspruchsübergang von dem Geschädigten oder Versicherungsnehmer an den Leistungserbringer.
+JA = Für den Leistungserbringer liegt eine Abtretungserklärung vom Geschädigten bzw. Versicherungsnehmer vor.
+NEIN = Für den Leistungserbringer liegt eine Abtretungserklärung vom Geschädigten bzw. Versicherungsnehmer nicht vor.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kostenuebernahmeerklaerung" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Definition: Mit einer Kostenübernahmeerklärung erklärt sich das Versicherungsunternehmen bereit, im Rahmen seiner Eintrittspflicht die Aufwände der Werkstatt oder des Leistungserbringers zu übernehmen.
+JA = Kostenübernahmeerklärung liegt vor.
+NEIN = Kostenübernahmeerklärung liegt nicht vor.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Leistungserbringer" type="CT_Leistungserbringer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Zahlungsfreigebender">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Person, die eine Zahlung freigegeben hat.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Schadenhoehe">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Informationen zur Höhe eines Schadens dargestellt als Geldwert.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_ArtDerSchadenhoehe" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Schadenhöhe.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SteuerEnthalten" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Im Betrag ist die Steuer enthalten (Bruttobetrag)
+NEIN = Im Betrag ist die Steuer nicht enthalten (Nettobetrag)
+Fehlt das Attribut MUSS der Betrag als Nettobetrag interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kalkulationsart" type="dt:ST_Kalkulationsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grundlage der Kalkulation der Schadenhöhe.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ermittler" type="dt:ST_ErmittlerSchadenkalkulation" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ermittler der Schadenhöhe</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bewertungsschluessel" type="dt:ST_Text025" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bewertungsschlüssel gemäß Art des Bewertungsschlüssels.  Ist dieses Attribut belegt, MUSS das Attribut Bewertungsschluesselart entsprechend belegt werden. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bewertungsschluesselart" type="dt:ST_Bewertungsschluessel" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Bewertungsschlüssels.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zeitwertprozent" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Schadenhöhe als Prozentsatz vom Neuwert des Schadenobjekts. Dieses Attribut DARF NUR verwendet werden, wenn Schadenhoehe.ArtID = 04 (Zeitwert) ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Besteuerungsart" type="dt:ST_ArtDerUmsatzbesteuerung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Besteuerungsart des Wiederbeschaffungswerts.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Quelle" type="allg:CT_Quelle" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Steuer" type="allg:CT_Steuer" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Schadenmanagement">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Informationen zum Management des Schadens an einer geschädigten Person oder an einem geschädigten Objekt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="SchadenmanagementGewuenscht" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Versicherungsnehmer oder Geschädigter wünscht Schadenmanagement (z.B. Werkstattsteuerung, Handwerkerservice)
+NEIN = Versicherungsnehmer oder Geschädigter wünscht kein Schadenmanagement</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ablehnungsgrund" type="dt:STE_AblehnungsgrundSchadenmanagement"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grund für die Ablehnung des Schadenmanagements durch den Versicherungnehmer oder Geschädigten.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vereinbarungen" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vereinbarungen, die zum Schadenmanagement getroffen wurden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ausfallvereinbarung" type="dt:ST_Ausfallvereinbarung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vereinbarung zur Kompensation des Ausfalls.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Reparaturstatus" type="dt:ST_Leistungsstatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status der Reparatur.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GewuenschterRegulierungsempfaenger" type="CT_Regulierungsempfaenger"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Leistungserbringer" type="CT_Leistungserbringer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_BesichtigungBei">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, bei dem etwas besichtigt wird.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Entschaedigungsbetrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Geldwert, der zur Entschädigung aufgewendet wird.
+Betrag positiv = Schaden-belastend (z.B. Regulierung)
+Betrag negativ = Schaden-entlastend (z.B. Regress)</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AnderweitigerVersicherungsschutz">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Informationen zu einem Versicherungsschutz für den Schaden, der durch einen anderen Versicherungvertrag besteht als der Vertrag, gegen den der Anspruch geltend gemacht wird.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_AnderweitigerVersicherungsschutz" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des anderweitigen Versicherungsschutzes.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beschreibung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Erläuterung zum anderweitigen Versicherungsschutz.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SchadenAngezeigt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Schaden beim Versicherer des anderweitigen Versicherungsschutzes angezeigt</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unternehmen" type="allg:CT_Unternehmen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Vertragsnummer" type="allg:CT_Vertragsnummer" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Regulierungsempfaenger">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, an den die Schadenregulierung erfolgen soll.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Anspruchsteller">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der einen Anspruch stellt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="VerwandschaftVPAST" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Zwischen Versicherungnehmer (VN) oder versicherter Person (VP) und dem Anspruchsteller (AST) besteht ein Familien- oder Verwandtschaftsverhältnis
+NEIN = Zwischen VN / VP und AST besteht kein Familien- oder Verwandtschaftsverhältnis</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="HaeuslicheGemeinschaftVPAST" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Versicherungnehmer (VN) oder versicherter Person (VP) und Anspruchsteller (AST) leben in häuslicher Gemeinschaft
+NEIN = VN / VP und AST leben nicht in häuslicher Gemeinschaft</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ArbeitsVertragsverhaeltnisVPAST" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Zwischen Versicherungnehmer (VN) oder versicherter Person (VP) und Anspruchsteller (AST) besteht ein Arbeits- oder Vertragsverhältnis
+NEIN = Zwischen VN / VP und AST besteht kein Arbeits- oder Vertragsverhältnis</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ArtVertragsverhaeltnis" type="dt:ST_Vertragsart" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Vertragsverhältnisses zwischen Versicherungnehmer oder versicherter Person und Anspruchsteller.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeschreibungVertragsverhaeltnis" type="dt:ST_Text100" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung des Vertragsverhältnisses zwischen Versicherungnehmer oder versicherter Person und Anspruchsteller.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anspruchsanteil" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anteil, den dieser Anspruchsteller am Gesamtgegenstandswert geltend macht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Schaden">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ein Schaden beinhaltet einen oder mehrere materielle oder immaterielle Nachteile, die natürliche oder juristische Personen oder Sachen durch ein Schadenereignis erleiden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Schaden" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Schadens</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Quelle" type="allg:CT_Quelle" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Schadenhoehe" type="CT_Schadenhoehe" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="SchadenfallLeistungsfall" type="CT_SchadenfallLeistungsfall"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="GeschaedigtePerson" type="CT_GeschaedigtePerson" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Schadenobjekt" type="CT_Schadenobjekt" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Besichtiger">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der etwas besichtigt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Zeuge">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der bei einem Ereignis zugegen war und darüber aus eigener Anschauung etwas sagen kann.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

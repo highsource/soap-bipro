@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/transfer/schadenrueckfrage"
+            xmlns:xf-schdrf="http://www.bipro.net/namespace/transfer/schadenrueckfrage"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:xf="http://www.bipro.net/namespace/transfer"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/transfer/schadenrueckfrage"
+            bipro:Name="bipro-transfer-schadenrueckfrage-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/transfer"
+               schemaLocation="bipro-transfer-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_SchadenrueckfrageTransfer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eine Rückfrage zur Schadenmeldung ist eine Nachricht mit einer oder mehrerer Fragen zu einer bestimmten Schadenmeldung, die der Empfänger der Schadenmeldung an den Schadenmelder richtet.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="xf:CT_Transfer">
+            <xsd:sequence>
+               <xsd:element name="VorgangsnummerSchadenmeldung" type="dt:ST_Vorgangsnummer" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">MUSS mit der Vorgangsnummer belegt werden, die der Provider für die Schadenmeldung vergeben hat, auf die sich die Rückfrage bezieht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ErinnerungRueckfragenummer" type="dt:ST_Vorgangsnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Soll an eine ausstehende Rückfrage erinnert werden, MUSS in diesem Attribut die Vorgangsnummer der ausstehenden Rückfrage übermittelt werden.
+Bei einer neuen Rückfrage MUSS dieses Attribut leer bleiben.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="StornoRueckfragenummer" type="dt:ST_Vorgangsnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Soll eine noch ausstehende Rückfrage storniert werden, MUSS in diesem Attribut die Vorgangsnummer der zu stornierenden Rückfrage übermittelt werden.
+Bei einer neuen Rückfrage MUSS dieses Attribut leer bleiben.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schadenrueckfrage" type="CT_Schadenrueckfrage" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Schadennummer" type="allg:CT_Schadennummer" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Schadenrueckfrage">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Frage zu einer Schadenmeldung, die der Empfänger der Schadenmeldung an den Schadenmelder richtet.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Frage" type="dt:ST_Text1000" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Klartext der Frage.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Objektreferenz" type="dt:ST_Text" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Referenz auf das Objekt und die Objekt-Eigenschaft mittels XPath in der Schadenmeldung, auf das sich die Frage bezieht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DateiID" type="dt:ST_ID" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz auf eine Datei, die für diese Frage relevant ist.
+Dabei MUSS die entsprechende Datei innerhalb dieser Nachricht ([Geschaeftsvorgang].Datei) übertragen werden und Schadenrueckfrage.DateiID MUSS der ID der Datei (Datei.DateiID) entsprechen. 
+Es können mehrere Dateien zu einer Schadenrueckfrage übermittelt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/prozesse/versicherung/vertrag/leben"
+            xmlns:pz-leben="http://www.bipro.net/namespace/prozesse/versicherung/vertrag/leben"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:pm="http://www.bipro.net/namespace/produktmodell"
+            xmlns:vs-pm="http://www.bipro.net/namespace/versicherung/produktmodell"
+            xmlns:pm-leben="http://www.bipro.net/namespace/versicherung/produktmodell/leben"
+            xmlns:pz-vtrg="http://www.bipro.net/namespace/prozesse/vertrag"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/prozesse/versicherung/vertrag/leben"
+            bipro:Name="bipro-prozesse-vertrag-leben-2.6.1.xsd"
+            bipro:Version="2.6.1"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6.1
+		(Build: 20160908-1036)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/prozesse/vertrag"
+               schemaLocation="bipro-prozesse-vertrag-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/produktmodell/leben"
+               schemaLocation="bipro-versicherung-leben-2.6.1.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/produktmodell"
+               schemaLocation="bipro-versicherung-produktmodell-2.6.1.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/produktmodell"
+               schemaLocation="bipro-produktmodell-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:complexType name="CT_AenderungVertragLeistung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung einer Leistungsänderung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Produktbausteins, der Gegenstand der Änderung ist. Es MUSS sich hierbei um ein Produkt oder Elementarprodukt handeln.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VersicherungssummeOderLeistung"
+                            type="vs-pm:CT_VersicherungssummeOderLeistung"
+                            minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragZuzahlung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse, um eine einmalige Zuzahlung zu beantragen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Produkts bzw. Elementarprodukts, dem die Zuzahlung zugeteilt werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zuzahlungsbetrag" type="pm:CT_Beitrag" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragBeitrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung einer Beitragsänderung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz auf das Produkt bzw. das Elementarprodukt, dessen Beitrag geändert werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Rueckzahlungsart" type="dt:ST_Rueckzahlungsart" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der beabsichtigten Rückzahlung eines durch die Beitragsänderung ggf. entstehenden Beitragsrückstands.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beitrag" type="pm:CT_Beitrag" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertrag" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Basisklasse für alle Vertragsänderungen der Sparte Leben.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="pz-vtrg:CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Grund" type="dt:STE_GrundAenderungsantrag" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grund der Änderung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Optionsausuebung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob es sich bei der Änderung um die Ausübung einer vertraglich vereinbarten Option handelt.
+Ja = Es handelt sich um die Ausübung einer entsprechenden Option
+Nein = Es handelt sich nicht um die Ausübung einer entsprechenden Option</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bearbeitungsposition" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Position dieser Änderung innerhalb der vorgegebenen Bearbeitungsreihenfolge eines Request-Response-Zyklus.
+Hierfür MUSS für jede Änderung eine unterschiedliche, positive Ganzzahl – beginnend mit 1 für die Änderung, die zuerst bearbeitet werden soll – vergeben werden. Die weiteren Änderungen MÜSSEN mit fortlaufenden, aufsteigenden Ganzzahlen versehen werden.
+Der Provider MUSS diese Reihenfolge einhalten.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragBeitragsrueckgewaehr">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung einer Änderung der Beitragsrückgewähr (bei Tod).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Elementarprodukts, das Gegenstand der Änderung ist.
+Das Elementarprodukt MUSS vom Typ Rente oder eine von Rente abgeleitete Klasse sein.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeitragsRueckgewaehrBeiTod" type="dt:ST_Beitragsrueckgewaehr"
+                            minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Neuer Wert der Beitragsrückgewähr.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_EntnahmeBetrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Zu entnehmender Betrag.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz auf das Produkt bzw. das Elementarprodukt, dessen Beitrag geändert werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Rueckzahlungsart" type="dt:ST_Rueckzahlungsart" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der beabsichtigten Rückzahlung eines durch die Beitragsänderung ggf. entstehenden Beitragsrückstands.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragDynamikLeistung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung der Änderung einer Leistungsdynamik.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Elementarprodukts, das geändert werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Leistungsart" type="dt:STE_VersicherungssummeOderLeistung" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Leistungsart deren Dynamik angepasst werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Dynamik" type="pm:CT_Dynamik" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragRueckzahlung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung von Änderungen zur Begleichung von Beitragsrückständen (Rückstandsverrechnung mit Deckungskapital oder Überschussanteilen, Vereinbaren eines Rückstand-Zahlungsplans).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz auf das Produkt bzw. das Elementarprodukt, dessen Beitragsrückstand Gegenstand der Änderung ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Rueckzahlungsart" type="dt:ST_Rueckzahlungsart" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Rückzahlungsart des Beitragsrückstands.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beitrag" type="pm:CT_Beitrag" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragWiederinkraftsetzung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung einer Wiederinkraftsetzung eines ruhenden oder beitragsfreien Vertrags.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragTeilrueckkauf">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung eines Rückkaufs aus dem Deckungskapital bei klassischen und hybriden Produkten.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Elementarprodukts, dessen Deckungskapital Gegenstand der Änderung ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="MaximaleEntnahme" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ja: Es soll der maximal mögliche Betrag entnommen werden.
+DARF NICHT verwendet werden, WENN ein EntnahmeBetrag angegeben wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EntnahmeBetrag" type="CT_EntnahmeBetrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragKapitalanlage">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung von Änderungen der Kapitalanlage.
+(Fondswechsel, Änderung der Garantie bei einer Fonds-Versicherung, ...)</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz auf das Produkt bzw. das Elementarprodukt, das geändert werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="FondsPortfolio" type="vs-pm:CT_FondsPortfolio" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragAusschlussPartner">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung eines Ausschlusses eines Partners aus einem Elementarprodukt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Elementarprodukts, aus dem der Partner ausgeschlossen werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Partnernummer" type="dt:ST_Text030" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Partnernummer des auszuschließenden Partners.
+Der Partner MUSS die VersichertePerson oder die MitversichertePerson sein.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragRenteGarantiezeit">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Änderung der Rentengarantiezeit.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Elementarprodukts, dessen Garantiezeit geändert werden soll. 
+Das Elementarprodukt MUSS vom Typ Rente oder eine von Rente abgeleitete Klasse sein</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NeueGarantiezeitArt" type="dt:ST_GarantiezeitArt" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Abstrakte Angabe der Garantiezeit, auf die geändert werden soll.
+DARF NICHT zusammen mit dem Zeitraum NeueGarantiezeit geliefert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NeueGarantiezeit" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragDynamikAblehnung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung der Ablehnung einer Beitragsdynamik.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Produkts bzw. Elementarprodukts, dessen Dynamik abgelehnt werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlWidersprueche" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gewünschte Anzahl der Aussetzungen einer Beitragsdynamik.
+DARF NUR im Kontext einer proaktiven Aussetzung durch den Kunden verwendet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragVersicherungsdauer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung einer Änderung der Versicherungsdauer.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz auf das Produkt bzw. das Elementarprodukt, dessen Versicherungsdauer geändert werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NeueVersicherungsdauer" type="allg:CT_Zeitraum" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragZusatzversicherungKuendigung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung der Kündigung einer Zusatzversicherung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Elementarprodukts, welches der zu kündigenden Zusatzversicherung entspricht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragDynamisierungHVImLeistungsfall">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung einer Änderung der Dynamisierung der Hauptversicherung im Leistungsfall.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Elementarprodukts, das Gegenstand der Änderung ist.
+Das Elementarprodukt MUSS vom Typ Arbeitskraftabsicherung sein und fachlich eine Zusatzversicherung darstellen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DynamisierungDerHauptversicherungImLeistungsfall" type="dt:ST_JaNein"
+                            minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Legt fest, ob zukünftig auf die Beiträge zur Hauptversicherung im Leistungsfall die vereinbarte Dynamik angewendet werden soll.
+JA = Die vereinbarte Dynamik soll angewendet werden
+NEIN = Die vereinbarte Dynamik soll nicht angewendet werden</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragDynamikBeitrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung der Änderung einer Beitragsdynamik.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Produkts bzw. Elementarprodukts, das Gegenstand der Änderung ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Dynamik" type="pm:CT_Dynamik" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragEntnahmeFondsvermoegen">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Entnahme von Fondsvermögen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Elementarprodukts, dessen Fondsvermögen Gegenstand der Änderung ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="FondsPortfolio" type="vs-pm:CT_FondsPortfolio" minOccurs="1"
+                            maxOccurs="1"/>
+               <xsd:element name="EntnahmeBetrag" type="CT_EntnahmeBetrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragRisiko">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung einer Änderung des Risikos einer versicherten Person.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Partnernummer" type="dt:ST_Text030" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Partnernummer der versicherten Person, dessen Risikodaten geändert werden sollen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Risiko" type="pm-leben:CT_Risiko" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragZusatzversicherungEinschluss">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung eines Einschlusses einer Zusatzversicherung in einen bestehenden Vertrag.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz des Produkts, in das die Zusatzversicherung eingeschlossen werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EinzuschliessendeZusatzversicherung" type="pm-leben:CT_Elementarprodukt"
+                            minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ZusaetzlicheAenderungsantragVertragDaten">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Zusätzliche leben-spezifische Daten zum Änderungsantrag.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="pz-vtrg:CT_ZusaetzlicheAenderungsantragVertragDaten">
+            <xsd:sequence>
+               <xsd:element name="Aktionskennzeichen" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Internes Kennzeichen einer (z. B. vertrieblichen) Aktion.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Antragsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, an dem der Änderungsantrag gestellt wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BedingungenZurKenntnisGenommen" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ja = VN hat Bedingungen zur Kenntnis genommen (gemäß Antragsmodell).
+Nein = sonst</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BesondereVereinbarungen" type="dt:ST_Text1000" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Besondere Vereinbarungen mit dem Kunden zum Antrag.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EinwilligungInformationsanfrage" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Einwilligung zur Informationseinholung bei Dritten.
+Ja = Einwilligung liegt vor
+Nein = sonst</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VVGBeratungsverzicht" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Erklärung des Kunden, auf eine Beratung durch den Vermittler zu verzichten.
+Ja = Kunde hat Entsprechendes erklärt
+Nein = Sonst</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AntragUnterschrieben" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob ein unterschriebener Antrag (elektronisch oder materiell) vorliegt.
+Ja = Ein entsprechender Antrag liegt vor
+Nein = sonst</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DatenschutzerklaerungUnterschrieben" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob die Datenschurzerklärung vom Kunden unterschrieben wurde.
+Ja = Datenschurzerklärung wurde vom Kunden unterschrieben
+Nein = sonst</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Abschlussmodell" type="dt:ST_Abschlussmodell" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Abschlussmodells (z.B. Antragsmodell, Invitatiomodell).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ArtDerBeratung" type="dt:ST_ArtDerBeratung" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art, wie der Kunde vom Vermittler beraten wurde (z.B. durch persönliches Gespräch).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BedingungUebergabeform" type="dt:ST_BedingungUebergabeform" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art, wie dem Kunden die VVG-konformen Versicherungsbedingungen ausgehändigt wurden (z.B. durch E-Mail).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DatenschutzerklaerungKenntnisnahme"
+                            type="dt:ST_DatenschutzerklaerungKenntnisnahme"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art, wie der Kunde über die Datenschutzerklärung aufgeklärt wurde (z.B. durch Aushändigung).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragBezugsrecht">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung einer Änderung des Bezugsrechts.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz auf das Produkt bzw. das Elementarprodukt, dessen Bezugsrecht geändert werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NeuesBezugsrecht" type="vs-pm:CT_Bezugsrecht" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

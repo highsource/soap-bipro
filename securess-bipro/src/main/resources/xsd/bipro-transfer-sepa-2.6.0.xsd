@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/transfer/sepa"
+            xmlns:xf-sepa="http://www.bipro.net/namespace/transfer/sepa"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:sepa="http://www.bipro.net/namespace/sepa"
+            xmlns:xf="http://www.bipro.net/namespace/transfer"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/transfer/sepa"
+            bipro:Name="bipro-transfer-sepa-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/transfer"
+               schemaLocation="bipro-transfer-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/sepa"
+               schemaLocation="bipro-sepa-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:complexType name="CT_SepaNotifikationTransfer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Transferklasse zur Übermittlung von SEPA-Notifikationen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="xf:CT_Transfer">
+            <xsd:sequence>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Notifikation" type="sepa:CT_Notifikation" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

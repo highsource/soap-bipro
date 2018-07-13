@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/transfer/schaden-leistung"
+            xmlns:xf-schdlstg="http://www.bipro.net/namespace/transfer/schaden-leistung"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:schdlstg="http://www.bipro.net/namespace/schaden-leistung"
+            xmlns:xf="http://www.bipro.net/namespace/transfer"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/transfer/schaden-leistung"
+            bipro:Name="bipro-transfer-schaden-leistung-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/transfer"
+               schemaLocation="bipro-transfer-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/schaden-leistung"
+               schemaLocation="bipro-schaden-leistung-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:complexType name="CT_SchadenLeistungTransfer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ableitung der Klasse Transfer zur Übertragung von Geschäftsvorfällen zu Schäden und Leistungen</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="xf:CT_Transfer">
+            <xsd:sequence>
+               <xsd:element name="VorgangsnummerSchadenmeldung" type="dt:ST_Vorgangsnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wurde die Schadenmeldung zu diesem Schadenfall elektronisch übermittelt, MUSS dieses Attribut mit der Vorgangsnummer der Schadenmeldung belegt werden, die der Provider für die initiale Schadenmeldung vergeben hat.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ereignis" type="schdlstg:CT_Ereignis" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Gegenstand" type="allg:CT_Gegenstand" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

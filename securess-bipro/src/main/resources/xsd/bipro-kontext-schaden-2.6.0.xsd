@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/kontext/schaden"
+            xmlns:kt-schaden="http://www.bipro.net/namespace/kontext/schaden"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:schdlstg="http://www.bipro.net/namespace/schaden-leistung"
+            xmlns:kt="http://www.bipro.net/namespace/kontext"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/kontext/schaden"
+            bipro:Name="bipro-kontext-schaden-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/kontext"
+               schemaLocation="bipro-kontext-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/schaden-leistung"
+               schemaLocation="bipro-schaden-leistung-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:complexType name="CT_SchadensucheErgebnis">
+      <xsd:complexContent>
+         <xsd:extension base="kt:CT_Ergebniseintrag">
+            <xsd:sequence>
+               <xsd:element name="Ereignis" type="schdlstg:CT_Ereignis" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Schadensuche">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Als Suchparameter MUSS mindestens ein Attribut gefüllt werden. Werden mehrere Attribute gefüllt, gelten die Suchparameter als mit UND verknüpft.
+Ein Service Provider KANN Vorgaben machen, welche Attribute oder Attribut-Kombinationen mindestens belegt sein müssen. Sind diese nicht erfüllt, MUSS er mit einem SOAP-Fault und MeldungID=01402 reagieren (siehe Norm 480.0).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="kt:CT_Filter">
+            <xsd:sequence>
+               <xsd:element name="Versicherungsscheinnummer" type="dt:ST_Text017" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Verkürzte Suche mit Wildcard-Stern am Ende ist als KANN-Option zulässig (z. B. 4711* findet 4711001, 4711002 etc). Andere Wildcards („?" etc.) werden nicht unterstützt.
+Daher wird der Datentyp ST_Text017 anstelle das Datentyps ST_Versicherungsscheinnummer verwendet, der Sonderzeichen nicht zulässt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vertragssparte" type="dt:ST_Sparte" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Suche MUSS auf Identität zum gelieferten Spartenschlüssel erfolgen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schadensparte" type="dt:ST_Sparte" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Suche MUSS auf Identität zum gelieferten Spartenschlüssel erfolgen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Partnernummer" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Suche MUSS auf vollständige Identität zur gesamten gelieferten Zeichenkette erfolgen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="PartnernummerVM" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Suche MUSS auf vollständige Identität zur gesamten gelieferten Zeichenkette erfolgen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schadendatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum des Schadenereignisses.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schadenstatus" type="dt:ST_Schadenstatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status des gesuchten Schadens (offen oder geschlossen).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unternehmen" type="allg:CT_Unternehmen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="Ergebniseintrag" type="kt-schaden:CT_SchadensucheErgebnis"/>
+   <xsd:element name="Filter" type="kt-schaden:CT_Schadensuche"/>
+</xsd:schema>

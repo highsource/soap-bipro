@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/kontext/beruf"
+            xmlns:kt-beruf="http://www.bipro.net/namespace/kontext/beruf"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:kt="http://www.bipro.net/namespace/kontext"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/kontext/beruf"
+            bipro:Name="bipro-kontext-beruf-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/kontext"
+               schemaLocation="bipro-kontext-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Berufssuche">
+      <xsd:complexContent>
+         <xsd:extension base="kt:CT_Filter">
+            <xsd:sequence>
+               <xsd:element name="Beruf" type="dt:ST_Text255" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Soll die angeforderte Ergebnisliste auf einen bestimmten Beruf eingeschränkt werden, MUSS vom Consumer das Attribut Beruf gefüllt werden. Der Service Provider MUSS bei der Selektion Groß- und Kleinschreibung ignorieren. Darüber hinaus MUSS er eine „Ausschnittssuche" implementieren, d. h. auch die Berufe in das Ergebnis überführen, deren Name die Zeichenkette des Attributs  Beruf enthält (z.B. Suche nach „Arzt" liefert auch das Ergebnis „Tierarzt"). Zusätzlich KANN der Provider eine semantische Suche implementieren, die beispielsweise auf die Suche nach „Arzt" auch das Ergebnis „Chirurg" liefert.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Sparte" type="dt:ST_Sparte" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Service Consumer MUSS das Attribut Sparte füllen, da die Berufslisten  i.A. Sparten-spezifisch sind.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unternehmen" type="allg:CT_Unternehmen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="Ergebniseintrag" type="kt-beruf:CT_BerufssucheErgebnis"/>
+   <xsd:complexType name="CT_BerufssucheErgebnis">
+      <xsd:complexContent>
+         <xsd:extension base="kt:CT_Ergebniseintrag">
+            <xsd:sequence>
+               <xsd:element name="Berufstaetigkeit" type="partner:CT_Berufstaetigkeit" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="Filter" type="kt-beruf:CT_Berufssuche"/>
+</xsd:schema>

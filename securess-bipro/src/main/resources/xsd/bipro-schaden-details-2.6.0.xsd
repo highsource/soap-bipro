@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/schaden-details"
+            xmlns:schddet="http://www.bipro.net/namespace/schaden-details"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:schdlstg="http://www.bipro.net/namespace/schaden-leistung"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/schaden-details"
+            bipro:Name="bipro-schaden-details-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/schaden-leistung"
+               schemaLocation="bipro-schaden-leistung-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:complexType name="CT_SturmElementarSchaden">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Schaden durch Sturm oder ein Elementarereignis.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="schdlstg:CT_SchadenZuObjekt">
+            <xsd:sequence>
+               <xsd:element name="FensterTuerenVerschlossen" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Fenster und Türen waren verschlossen.
+NEIN = Fenster und Türen waren nicht verschlossen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="RegenSchmutzEingedrungen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">
+JA = Regen und/oder Schmutz eingedrungen.
+NEIN = Kein Regen und/oder Schmutz eingedrungen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Eindringungsoeffnung" type="dt:ST_Gebaeudeoeffnung" minOccurs="0"
+                            maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Öffnung, durch die Regen und/oder Schmutz eingedrungen sind.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Diebstahlschaden">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Informationen, die im Kontext eines Diebstahlschadens relevant sind. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="schdlstg:CT_SchadenZuObjekt">
+            <xsd:sequence>
+               <xsd:element name="RaumOderBehaeltnisAufgebrochen" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Räume / Behältnisse, in denen sich das Schadenobjekt zum Schadenzeitpunkt befand, wurden aufgebrochen.
+NEIN = Räume / Behältnisse, in denen sich das Schadenobjekt zum Schadenzeitpunkt befand, wurden nicht aufgebrochen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Einbruchmeldeanlage" type="dt:ST_EinbruchmeldeanlageStatus" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status der Einbruchmeldeanlage zum Schadenzeitpunkt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Fensterstellung" type="dt:ST_Fensterstellung" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Stellung der Fenster zum Schadenzeitpunkt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Fenstergriffe" type="dt:ST_Fenstergriffe" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status der abschließbaren Fenstergriffe zum Schadenzeitpunkt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Rollladen" type="dt:ST_RollladenStatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status der Rollläden zum Schadenzeitpunkt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Tuerschlossart" type="dt:ST_TuerschlossArt" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Schlossart der Tür.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="TuerschlossartBeschreibung" type="dt:ST_Text255" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Schlossart der Tür.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="TuerschlossUmgeschlossen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Türschloss war zum Schadenzeitpunkt umgeschlossen (abgeschlossen)..
+NEIN = Türschloss war zum Schadenzeitpunkt nicht umgeschlossen (abgeschlossen).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SacheVerschlossen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Das Schadenobjekt war zum Schadenzeitpunkt verschlossen.
+NEIN = Das Schadenobjekt war zum Schadenzeitpunkt nicht verschlossen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlSchluessel" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Schlüssel für die Tür.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NachschluesselSelbstGefertigt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Nachschlüssel selbst gefertigt.
+NEIN = Keine Nachschlüssel selbst gefertigt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NachschluesselSelbstGefertigtBeschreibung" type="dt:ST_Text255"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung, von wem der Nachschlüssel angefertigt wurde</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SchluesselAufbewahrungsort" type="dt:ST_Text255" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Aufbewahrungsorte aller Schlüssel.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SchluesselverlustDatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum des Schlüsselverlustes.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="FremdeInRaeumen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Seit Verlust der Schlüssel haben sich Fremde in den versicherten Räumen aufgehalten.
+NEIN = Seit Verlust der Schlüssel haben sich keine Fremden in den versicherten Räumen aufgehalten.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="FremdeAlleingelassen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Fremde, die sich in den versicherten Räumen aufgehalten haben, wurden alleingelassen.
+NEIN = Fremde, die sich in den versicherten Räumen aufgehalten haben, wurden nicht alleingelassen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Nachschluesseldiebstahl" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Indikatoren für einen Nachschlüsseldiebstahl.
+Es geht darum, dass jemand die Gelegenheit hatte, unbefugt einen Nachschlüssel zu fertigen, z.B. jemand, dem man den eigenen Schlüssel geliehen hat.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SachenAusserhalbVersicherungsort" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Sachen befanden sich zum Schadenzeitpunkt außerhalb des Versicherungsortes.
+NEIN = Sachen befanden sich zum Schadenzeitpunkt nicht außerhalb des Versicherungsortes.
+
+Bsp.: Ein Notebook wurde aus dem Auto gestohlen und war damit ausserhalb des Versicherungsortes.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Abstellort" type="dt:ST_Abstellort" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Abstellort des Schadenobjekts zum Schadenzeitpunkt. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="LetzteSichtung" type="dt:ST_Zeitpunkt" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum mit optionaler Zeitangabe, wann das Schadenobjekt zuletzt gesehen wurde.
+Es MUSS mindestens ein Datum übermittelt werden. Wird eine Zeitangabe übermittelt, MUSS diese mit Stunden und Minuten angegeben werden. Eine Zeitzone DARF übermittelt werden. Fehlt die Zeitzone, MUSS die am angegebenen Datum in Deutschland gültige Zeitzone angenommen werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ArtDerSicherung" type="dt:ST_ArtDerSicherung" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Sicherung des Schadenobjekts zum Schadenzeitpunkt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GebrauchBeendet" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Der Gebrauch des Schadenobjekts war beendet.
+NEIN = Der Gebrauch des Schadenobjekts war nicht beendet.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="StehlgutlisteEingereicht" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wurde eine Stehlgutliste (Liste der gestohlenen Gegenstände) bei der Polizei eingereicht?
+JA = Komplette Stehlgutliste (Liste der gestohlenen Gegenstände) bei Polizei eingereicht.
+NEIN = Keine komplette Stehlgutliste bei Polizei eingereicht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="StehlgutlisteEingereichtDatum" type="dt:ST_Datum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, wann die Stehlgutliste bei der Polizei eingereicht wurde</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ZeitraumAusserhalbVersicherungsort" type="allg:CT_Zeitraum2"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Abstellzeitraum" type="allg:CT_Zeitraum2" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="RaumBehaeltnis" type="CT_RaumBehaeltnis" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Glasschaden">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Bruch oder Beschädigung einer Glasscheibe oder eines Objekts aus Glas.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="schdlstg:CT_SchadenZuObjekt">
+            <xsd:sequence>
+               <xsd:element name="NotverglasungErforderlich" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Notverglasung erforderlich.
+NEIN = Notverglasung nicht erforderlich.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Rechtsschutzschaden">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Schaden, der durch eine Rechtsschutzversicherung reguliert werden soll oder wurde.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="schdlstg:CT_SchadenZuPerson">
+            <xsd:sequence>
+               <xsd:element name="LeistungsartBereich" type="dt:ST_LeistungsartBereich" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Leistungsart-Bereich, dem der Schaden zuzuordnen ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Leistungsart" type="dt:STE_Leistungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Leistungsart, der der Schaden zuzuordnen ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EigenschaftVN" type="dt:ST_EigenschaftVN" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eigenschaft des Versicherungsnehmers in Bezug auf das versicherte Interesse.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlWohnungen" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Wohnungen im versicherten Gebäude.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BereitsVorGericht" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Rechtsstreit ist bereits vor Gericht.
+NEIN = Rechtsstreit ist noch nicht vor Gericht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="MitErstberatungAbgeschlossen" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Vorgang mit Erstberatung abgeschlossen.
+NEIN = Vorgang mit Erstberatung nicht abgeschlossen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Rechtslageaenderung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Versicherungsfall im familien- und erbrechtlichen Beratungs-Rechtsschutz aufgrund einer Rechtslageänderung
+NEIN = sonst</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VerhaltensbedingteKuendigung" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Rechtsstreit aufgrund verhaltensbedingter Kündigung im Arbeitsrechtsschutz. 
+NEIN = sonst</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vorsatzvorwurf" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Es besteht der Vorwurf auf Vorsatz.
+NEIN = Es besteht kein Vorwurf auf Vorsatz.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ArtDesVorwurfs" type="dt:ST_ArtDesVorwurfs" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Vorwurfs.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vorwurf" type="dt:ST_Text255" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Erläuterung zum Vorwurf.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Verfahrensstadium" type="dt:ST_Verfahrensstadium" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Stadium des Verfahrens gemäß GDV-Anlage 155.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Klagefaehig" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Der Rechtsstreit ist klagefähig.
+NEIN = Der Rechtsstreit ist nicht klagefähig.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BetroffeneSteuer" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Betroffene Steuer bei einem Steuerrechtsfall.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gerichtstyp" type="dt:ST_Gerichtstyp" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Typ des Gerichts für den Steuerrechtsfall.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zuordnung" type="dt:ST_GewerblichPrivat" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zuordnung des Schadens zum gewerblichen oder privaten Bereich</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gebuehrengrundlage" type="dt:ST_Gebuehrengrundlage" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grundlage der Gebühren für diesen Rechtsschutzschaden (z.B. RVG2004, RVG2013).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Rechtsstreitgegner" type="CT_Rechtsstreitgegner" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Schadenhoehe" type="schdlstg:CT_Schadenhoehe" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Veranlagungszeitraum" type="allg:CT_Zeitraum2" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Blitzschaden">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Durch Blitzschlag entstandener Schaden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="schdlstg:CT_SchadenZuObjekt">
+            <xsd:sequence>
+               <xsd:element name="Blitzeinschlagstelle" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Blitzeinschlagstelle.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Entfernung" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Entfernung der Blitzeinschlagstelle in Metern</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Blitzeinschlagspuren" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Blitzeinschlagspuren.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anschlussleitung" type="dt:ST_Leitungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anschlussleitung der beschädigten Sache.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anlageart" type="dt:ST_ArtTechnischeAnlage" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de"> Art der vom Blitzschaden betroffenen Anlage.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="LetzterBetrieb" type="dt:ST_Zeitpunkt" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum und optional Zeit, wann die geschädigte Sache zuletzt in Betrieb war.
+Es MUSS mindestens ein Datum übermittelt werden. Wird eine Zeitangabe übermittelt, MUSS diese mit Stunden und Minuten angegeben werden. Eine Zeitzone DARF übermittelt werden. Fehlt die Zeitzone, MUSS die am angegebenen Datum in Deutschland gültige Zeitzone angenommen werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Feuerschaden">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Schaden durch Feuer.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="schdlstg:CT_SchadenZuObjekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Feuerschaden" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Feuerschadens.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Loeschart" type="dt:ST_Brandloeschart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Löschung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Loeschvorgang" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Schilderung des Löschvorgangs.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BetroffeneFlaeche" type="allg:CT_Groesse" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Leitungswasserschaden">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ein Schaden durch bestimmungswidrig ausgetretenes Leitungswasser.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="schdlstg:CT_SchadenZuObjekt">
+            <xsd:sequence>
+               <xsd:element name="ArtDesWassers" type="dt:ST_Wasserart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Leitungswassers.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ArtDesWassersBeschreibung" type="dt:ST_Text255" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung des Leitungswassers.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Schadenstelle" type="dt:ST_Schadenstelle" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Lage der Schadenstelle.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GebaeudeBenutzt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, ob das Gebäude zum Schadenzeitpunkt genutzt wurde.
+JA = Das Gebäude wurde benutzt.
+NEIN = Das Gebäude war unbenutzt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GebaeudeBeaufsichtigt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Das Gebäude wurde beaufsichtigt.
+NEIN = Das Gebäude wurde nicht beaufsichtigt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="RaeumeBeheizt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Gebäude / Räume waren beheizt.
+NEIN = Gebäude / Räume waren nicht beheizt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ZeitraumUnbenutzt" type="allg:CT_Zeitraum2" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Rechtsstreitgegner">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner in einem Rechtsstreit.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_RaumBehaeltnis">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Beschreibung eines Raums und/oder Behältnisses (Gebäude, Wohnung, Raum, Safe, Kfz, Hotelzimmer etc.).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstandsrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Personenschaden">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Schaden, der bei einer Person eine Verletzung, eine Gesundheitsschädigung oder den Tod zur Folge hat.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="schdlstg:CT_SchadenZuPerson">
+            <xsd:sequence>
+               <xsd:element name="Aufenthaltsort" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Aufenthaltsort der geschädigten Person zum Schadenzeitpunkt. Beliebiger Text, wie "in der Küche".</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EWSEEGeprueft" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">EW/SEE = Einzelfall-Einwilligungs-/Schweigepflichtentbindungserklärung
+JA = Die Erforderlichkeit einer EW/SEE des Betroffenen in die Übermittlung an den Adressaten wurde geprüft. Ggf. liegt die EW/SEE (entsprechend den datenschurtzrechtlichen Anforderungen) vor.
+NEIN = Es wurde nicht geprüft.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EinwilligungenBeigefuegt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Einwilligungen des Betroffenen sind als Datei beigefügt.
+NEIN = Einwilligungen des Betroffenen sind nicht beigefügt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Verletzung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Verletzung der geschädigten Person.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnspruchAnDritte" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Freitext zum Anspruch der geschädigten Person an Dritte.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AUBescheinigungVorhanden" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Arbeitsunfähigkeitsbescheinigung (AU) vorhanden.
+NEIN = Arbeitsunfähigkeitsbescheinigung (AU) nicht vorhanden</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="StationaereBehandlung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Geschädigte Person musste sich in stationäre Behandlung begeben.
+NEIN = Geschädigte Person musste sich nicht in stationäre Behandlung begeben.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ICDCode" type="dt:ST_ICDCode" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Diagnose der geschädigten Person gemäß ICD-Code der Weltgesundheitsorganisation (WHO) zur Klassifikation medizinischer Diagnosen (International Statistical Classification of Diseases and Related Health Problems).
+Attribut DARF mehrfach verwendet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Arbeitsunfaehig" type="allg:CT_Zeitraum2" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Krankenkasse" type="partner:CT_Krankenkasse" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Krankenhaus" type="partner:CT_Krankenhaus" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="BehandelnderArzt" type="partner:CT_Arzt" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Berufsgenossenschaft" type="partner:CT_Berufsgenossenschaft"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>
