@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/abrechnung"
+            xmlns:abrg="http://www.bipro.net/namespace/abrechnung"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:vtrg="http://www.bipro.net/namespace/vertrag"
+            xmlns:schdlstg="http://www.bipro.net/namespace/schaden-leistung"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:pm="http://www.bipro.net/namespace/produktmodell"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            targetNamespace="http://www.bipro.net/namespace/abrechnung"
+            bipro:Name="bipro-abrechnung-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/schaden-leistung"
+               schemaLocation="bipro-schaden-leistung-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/vertrag"
+               schemaLocation="bipro-vertrag-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_AbrechnungspostenVertrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Vertragsbezogener Abrechnungsposten. Der Vertrag MUSS durch die Angabe der Vertragsnummer referenziert werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Abrechnungsposten">
+            <xsd:sequence>
+               <xsd:element name="Vertrag" type="vtrg:CT_Vertrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Postengruppe">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Gruppe von logisch zusammengehörigen Abrechnungsposten bzw. Postengruppen in der Abrechnung, z.B. Beitrag und Courtage einer Fälligkeit an einem Vertrag oder Beitragsbestandteile einer Fälligkeit.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Nummer" type="dt:ST_Text017" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zwischen Abrechnendem und Abrechnungsempfänger eineindeutige Kennzeichnung der Postengruppe.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Name" type="dt:ST_Text100" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Postengruppenname, z.B. Versicherungsscheinnummer, Risikobeschreibung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Postengruppe" type="CT_Postengruppe" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Gruppenposten" type="CT_Abrechnungsposten" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AbrechnungspostenPartner">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partnerbezogener Abrechnungsposten, eine Partnerrolle MUSS beigefügt sein.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Abrechnungsposten">
+            <xsd:sequence>
+               <xsd:element name="Beitragszahler" type="partner:CT_Beitragszahler" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Vertragspartner" type="partner:CT_Vertragspartner" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Saldo">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Saldo einer bestimmten Postenart, stellt einen Saldo über Abrechnunsposten dar. Wenn Abrechnungsposten in dem Transfer geliefert werden, MUSS der Saldo rechnerisch mit der Lieferung übereinstimmen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Abrechnungsposten">
+            <xsd:sequence>
+               <xsd:element name="Saldoart" type="dt:ST_Saldoart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wenn angegeben, bildet Anfangssaldo zzgl. Abrechnungssaldo den Endsaldo.
+Erläuterung: fachlich soll der Endsaldo nicht technisch errechnet werden; Ziel ist die Bildung einer Prüfsumme.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AbrechnungspostenAllgemein">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Abrechnungsposten, der sich nicht auf einen Schaden, Vertrag oder Partner bezieht, z.B. eine Vorauszahlung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Abrechnungsposten">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AbrechnungspostenSchadenLeistung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Schadenbezogener Abrechnungsposten. Der Schaden MUSS durch die Angabe der Schadennummer referenziert werden. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Abrechnungsposten">
+            <xsd:sequence>
+               <xsd:element name="Schadenereignis" type="schdlstg:CT_Ereignis" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Abrechnungsposten" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ein einzeln benannter, durch Buchungsdatum, Betrag, Postenart und Buchungstext beschriebener Betrag einer Abrechnung. Er kann saldiert sein, z.B. bezogen auf das Konto, und Bezahlte/unbezahlte Abrechnungsposten benennen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Abrechnungspostenart" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Abrechnungspostens, z.B. Courtage</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Nummer" type="dt:ST_Text017" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zwischen Abrechnendem und Abrechnungsempfänger eineindeutige Kennzeichnung des Abrechnungspostens.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beschreibung" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung des Postens.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AusloesenderGeschaeftsvorfall" type="dt:ST_GeVoArt" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Geschäftsvorfall, der den Posten ausgelöst hat, z.B. Folgeinkasso, Schadenzahlung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ZahlungsStatus" type="dt:ST_ZahlungsStatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kennzeichnet, ob dieser Posten aus Sicht des Abrechnenden bezahlt ist.
+Vermittlerabrechnungen können nach der erfolgten Zahlung (z.B. der Beiträge durch den Versicherungsnehmer) erfolgen, und enthalten dann also bezahlte Posten; oder aber noch unbezahlte Posten enthalten, die seitens des Abrechnenden dem Abrechnungsempfänger mitgeteilt werden (und zu denen dieser beispielsweise als Vermittler im eine Rechnung an den Kunden stellt). Synonym wird teilweise „Ist-“ bzw. „Soll-Abrechnung“ verwendet.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Abrechnungszeitraum" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AbweichenderVermittler" type="allg:CT_Vermittler" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

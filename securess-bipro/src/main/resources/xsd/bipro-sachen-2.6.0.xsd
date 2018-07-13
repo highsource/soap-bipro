@@ -1,0 +1,1025 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/sachen"
+            xmlns:sachen="http://www.bipro.net/namespace/sachen"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/sachen"
+            bipro:Name="bipro-sachen-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Anlage">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Anlage wie z.B.  eine EDV-Anlage, eine Dreh-Maschine oder ein Drucker.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="Objektkennziffer" type="dt:ST_Objektkennziffer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Genaue Objektbeschreibung nach GDV-Anlage 48</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ObjektkennzifferErweiterung" type="dt:ST_ObjektkennzifferErweiterung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Unternehmenspezifische Erweiterung der GDV-Objektkennzffer
+Bsp: Objektkennziffer 1014
+"Dampfkessel in Müllverbrennungsanlagen" -&gt; 10140 (GDV-Objektkennziffer 1014 und Objektkennziffererweiterung 0 beim Unternehmen )
+und 
+ "Öfen in Müllverbrennungsanlagen" -&gt; 10145
+(GDV-Objektkennziffer 1014 und Objektkennziffererweiterung 5 beim
+Unternehmen)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Hersteller" type="dt:ST_Text060" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Hersteller der Anlage.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Typ" type="dt:ST_Text060" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anlagentyp</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Nummer" type="dt:ST_Text060" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anlagennummer</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zubehoer" type="dt:ST_Text1000" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anlagenzubehör</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Baujahr" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Baujahr der Anlage</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Leistung" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Leistung der Anlage.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="LeistungWerteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Werteinheit der Leistung der Anlage.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Inventarnummer" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Textfeld zur Angabe einer Inventarnummer der Anlage beim Kunden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kaufpreis" type="allg:CT_Kaufpreis" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Neuwert" type="allg:CT_Neuwert" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Betriebsstunden" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Betriebsstunden der Anlage.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gebaeudeteil">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Teil eines Gebäudes, z. B. eine Wohnung, ein Raum, ein sonstiger Gebäudeteil.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_Gebaeudeteil" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Gebäudeteils.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Stockwerk" type="dt:ST_Text025" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bezeichnung des Stockwerks.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Eigentuemer" type="CT_Eigentuemer" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Mieter" type="CT_Mieter" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Vermieter" type="CT_Vermieter" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Konstruktion" type="CT_Konstruktion" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SonstigesBauwerk">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Sonstiges Bauwerk, bei denen es sich nicht im "klassischen Sinne" um ein Gebäude handelt wie z. B. ein Turm, ein Tunnel oder eine Brücke.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="Objektanschrift" type="CT_Objektanschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_GebaeudeSonderausstattung">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Bezeichnung" type="dt:ST_Text060" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Foto-Voltaikanlage, Antennen, Schwimmbad, Klimaanlage, Wärmepumpe etc.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Wert" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Werteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Luftfahrzeug">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ein Luftfahrzeug ist ein Gerät, das innerhalb der Erdatmosphäre fliegt oder fährt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="Fluggewicht" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Fluggewicht des Luftfahrzeuges</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Fluggewichteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Einheit des Fluggewichts.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Luftfahrzeugtyp" type="dt:ST_Luftfahrzeugtyp" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Typ des Luftfahrzeugs</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Objektanschrift">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Adresse">
+            <xsd:sequence>
+               <xsd:element name="Flurstueck" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Flurstück-Nummer eines bebauten oder unbebauten Grundstücks.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Parzelle" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Parzellen-Nummer eines bebauten oder unbebauten Grundstücks.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Abgangsort">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ort der Übergabe der Ware an den ersten Frachtführer als Adresse und ev. mit Geokoordinaten. Der Startort wird in der Transportversicherung fachlich als Abgangsort bezeichnet.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Adresse">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gefaehrdung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung von speziellen Gefahrumständen </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_ZusaetzlicheGegenstandsdaten">
+            <xsd:sequence>
+               <xsd:element name="EntfernungZu" type="CT_EntfernungZu" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Konstruktion">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die Konstruktion eines Objekts und das verwendete Material.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Konstruktionsteil" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Konstruktionsteils.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Material" type="dt:ST_Material" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Material, aus dem die Konstruktion gefertigt ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Materialbeschreibung" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung des Materials, falls im Attribut Material der Wert "99=Sonstiges" verwendet wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Befestigung" type="dt:ST_Befestigung" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Befestigung, z.B der Verkleidung oder des Bodenbelages.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Fahrrad">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ein Fahrrad ist ein zumeist zweirädriges (einspuriges) Landfahrzeug, das mit Muskelkraft durch das Treten von Pedalen angetrieben wird.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="Rahmennummer" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Rahmennummer ist ein für jeden Fahrradrahmen spezifischer Code, bestehend aus einer Buchstaben- und/oder Zahlenkombination, welche vom Fahrradhersteller in den Rahmen eingestanzt wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Fahrradcodierung" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Fahrradcodierung dient zur Eigentümeridentifizierung und wird bundesweit von der Polizei, dem Allgemeinen Deutschen Fahrrad-Club, der Deutschen Verkehrswacht und Fahrradhändlern vergeben.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Eigentuemer" type="CT_Eigentuemer" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gebaeude">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Beschreibung aller unmittelbaren Eigenschaften eines Gebäudes.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Gebaeudeart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Gebäudes</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bauartklasse" type="dt:ST_Bauartklasse" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Baujahr" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Kernsanierungsjahr" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Denkmalschutz" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AnzahlStockwerke" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AnzahlWohneinheiten" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Unterkellert" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Dachart" type="dt:ST_Dachart" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="AusgebautesDach" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Bauausfuehrung" type="dt:STE_Bauausfuehrung" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="AnzahlStellplaetzeImGebaeude" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Fahrzeugstellplätze im Gebäude.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EinliegerwohnungVorhanden" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Für Rechtsschutz gilt: Dieses Attribut DARF von Rechtsschutz NICHT verwendet werden. Einliegerwohungen MÜSSEN über Gebäudeeinheit.ArtID abgebildet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="RohbauBeginnDatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="RohbauEndeDatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Bezugsfertigkeit</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GebaeudeSonderausstattung" type="CT_GebaeudeSonderausstattung"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Objektanschrift" type="CT_Objektanschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="MaterialLeitungswassernetz" type="dt:ST_MaterialLeitungswassernetz"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Material des Leitungswassernetzes</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Fertighaushersteller" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Falls zur Prüfung der Fertighausgruppe (Bauartklasse) eines Fertighauses der Name der Herstellerfirma benötigt wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlGewerbeeinheiten" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">In Verbindung mit der Anzahl der Wohneinheiten können Schlüsse zur Nutzungsart gezogen werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Sanierung" type="CT_Sanierung" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Eigentuemer" type="CT_Eigentuemer" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Vermieter" type="CT_Vermieter" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Mieter" type="CT_Mieter" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="UmbauterRaum" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Umbauter Raum in Kubikmeter</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Sicherungsglaeubiger" type="partner:CT_Sicherungsglaeubiger"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Kaufpreis" type="allg:CT_Kaufpreis" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="DenkmalschutzUmfang" type="dt:ST_DenkmalschutzUmfang" minOccurs="0"
+                            maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibt die Teile eines Gebäudes, die unter Denkmalschutz stehen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ArtDerUnterkellerung" type="dt:ST_Unterkellerung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angaben zur Unterkellerung eines Gebäudes.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Konstruktion" type="CT_Konstruktion" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Absender">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Absender als Partner.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Sanierung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur genauen Ermittlung der Sanierungskriterien, sowie Kernsanierungen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Sanierungsart" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an welche Maßnahme zur Sanierung / Kernsanierung durchgeführt wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anteil" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Prozentualer Anteil der Sanierung. 0 Prozent bedeutet keine Sanierung; 100% bedeutet vollständige Sanierung der Sanierungsart (z.B. Dach)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Jahr" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Jahreszahl in der die beschriebene Sanierung / Kernsanierung (ArtID) durchgeführt wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Mieter">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Mieter, auch Pächter</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Betriebsstaette">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ort, an dem sich die Waren, Betriebseinrichtungen, bzw die zu versichernden Anlagen befinden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Betriebsstaette" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, um welche Art von Betriebsstätte es sich handelt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Objektanschrift" type="CT_Objektanschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Betrieb">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Beschreibung eines Betriebes als Risikoobjekt und dessen Anteil bei gemischter Nutzung und Mischbetrieben.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="Betriebsart" type="dt:ST_Betriebsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Bezeichnung der Betriebsart des Providers.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Stichwort" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Stichwort aus dem Stichwortverzeichnis.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anteil" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anteil der Betriebsart am Betrieb gemäß Werteinheit.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Werteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Werteinheit des Anteils.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Bestimmungsort">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Der für die Ablieferung bzw. Bereitstellung von Waren vorgesehene Ort (eventuell mit Geokoordinaten).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Adresse">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Transport">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Beschreibung von Gütern (z. B. Schüttgut oder Stückgut) während eines Transportes.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="TransportmittelSchluessel" type="dt:ST_TransportmittelSchluessel"
+                            minOccurs="0"
+                            maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, um welche Art von Transportmittel es sich handelt (in Anlehnung an GDV Anlage 57). Kann mehrfach verwendet werden, um multimodale Transporte abbilden zu können.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Transportmittel" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bezeichnung des Transportmittels (z.B. Bahn, Flugzeug, aber auch Schiffsname)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Route" type="dt:ST_Text255" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Transportroute: von … über ... nach</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Besonderheiten" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Da es sich hierbei um hoch individuelle Ausprägungen für den einzelnen Transport handelt, wird dies als Text abgebildet. (z. B. Zwischenlagerzeit für eine bestimmte Route auf Grund besondere Einflüsse 4 anstelle von 2 Tagen)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zertifikatsnummer" type="dt:ST_Text017" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zertifikatsnummer der Ware</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Warenbezeichnung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Klartext der Warenbezeichnung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Menge" type="dt:ST_Text100" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Mengenangabe speziell für Transport z.B. 4 Paletten, 3 Container</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Verpackungsart" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Verpackung der Ware (z.B. verschweißt)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Signatur" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">"Elektronische" Signatur zur eindeutigen Identifizierung der Ware (z.B. Trackingnummer)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zeitraum" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Gewicht" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gewicht der transportierten Ware in Kilogramm.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Incoterms" type="dt:ST_Incoterms" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Internationale Handelsklauseln der Internationalen Handelskammer (International Chamber of Commerce, ICC)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Haftungsgrundlage" type="dt:ST_Haftungsgrundlage" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Haftungsgrundlage des Transports</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Empfaenger" type="CT_Empfaenger" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Bestimmungsort" type="CT_Bestimmungsort" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Absender" type="CT_Absender" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Abgangsort" type="CT_Abgangsort" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Sportboot">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="Bootsname" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Registriernummer" type="dt:ST_SportbootRegistriernummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Motornummer" type="dt:ST_SportbootMotornummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_EntfernungZu">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung der Entfernung zu dem Gegenstand, der durch die Gegenstandsrolle identifiziert wird.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstandsrolle">
+            <xsd:sequence>
+               <xsd:element name="Entfernung" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wert der Entfernung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Werteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Werteinheit der Entfernung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Grundstueck">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="Flaeche" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe zur Gesamtfläche</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Werteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ausprägung qm oder ha erlaubt. Werteinheit zum Attribut Flaeche.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="UeberdachteFlaeche" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe zur gesamten überdachten Fläche (in Quadratmeter)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Eigentuemer" type="CT_Eigentuemer" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Vermieter" type="CT_Vermieter" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Mieter" type="CT_Mieter" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Objektanschrift" type="CT_Objektanschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ArtID" type="dt:ST_Grundstueckart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieses Attribut dient der Klassifikation der Grundstückart</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Eigentuemer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eigentümer, auch Nießbraucher, Dinglicher Nutzungsberechtigter</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="ArtWEG" type="dt:ST_ArtWohnungseigentuemergemeinschaft" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Wohnungseigentümergemeinschaft.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Wasserfahrzeug">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Wasserfahrzeuge sind Fahrzeuge, die zur Fortbewegung auf dem oder im Wasser bestimmt sind.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="Wasserfahrzeugtyp" type="dt:ST_Wasserfahrzeugtyp" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Typ des Wasserfahrzeugs</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="StaendigerLiegeplatz" type="dt:ST_Laenderkennzeichen" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Land des ständigen Liegeplatzes</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Registrierung" type="dt:ST_SportbootRegistriernummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Registriernummer des Wasserfahrzeuges</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Motornummer" type="dt:ST_SportbootMotornummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Motornummer des Wasserfahrzeuges</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Motorlage" type="dt:ST_BootMotorlage" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Lage des Motors des Wasserfahrzeugs</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Baujahr" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Baujahr des Wasserfahrzeugs</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ladefaehigkeit" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Ladefähigkeit ist die gesamte Ladung, die das Schiff in den Laderäumen aufnehmen kann und/oder die es bis zur Ladelinie tragen kann.
+Rechtsschutz: Die Angabe dazu ist tarifierungsrelevant für die Wasserfahrzeugtypen [03; 04; 06; 08; 09]</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="LadefaehigkeitEinheit" type="dt:ST_Werteinheit" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Einheit zum Attribut Ladefaehigkeit</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Motorleistung" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe der Motorleistung in "kW". Umrechnung von "PS" in "kW" 1 PS = 0,74 kW Rechtsschutz: Die Angabe dazu ist tarifierungsrelevant für die Wasserfahrzeugtypen [01; 05; 07; 13]</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlFassendePersonen" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Angabe dazu ist für Rechtsschutz tarifierungsrelevant für den Wasserfahrzeugtyp [02]</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Segelflaeche" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe der Segelflaeche in "qm". Die Angabe dazu ist tarifierungsrelevant für den Wasserfahrzeugtyp 12 [Segelboote und -yachten].</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EingetragenerNameSchiffsregister" type="dt:ST_Text060" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Im Schiffsregister eingetragener Schiffsname</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SchiffsregisterOrt" type="dt:ST_Text060" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ort der Schiffsregistereintragung, z.B. Amtsgericht Bremen</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vermieter">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Vermieter, auch Verpächter</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vorhaben">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Beschreibung eines Bau- oder Montagevorhabens.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_ArtDesVorhabens" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Vorhabens.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Auftraggeberrisiko" type="dt:ST_Auftraggeber" minOccurs="0"
+                            maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wer haftet für die Bauleistung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Montagezeit" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Probebetrieb" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Objektanschrift" type="CT_Objektanschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Fertigstellung" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Fertigstellung des Vorhabens. Auch geplante Fertigstellung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Abnahme" type="dt:ST_Datum" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Abnahme des Vorhabens. Auch geplante Abnahme.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="TeilweiseBenutzung" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, ab wann eine teilweise Benutzung geplant ist / möglich war.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VollstaendigeBenutzung" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, ab wann eine vollständige Benutzung geplant ist / möglich war.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Inbetriebnahme" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Inbetriebnahme des Vorhabens. Auch geplante Inberiebnahme.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Garantiezeit" type="allg:CT_Zeitraum2" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gewaesser">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Gewässer, wie z. B. See, Fluss, Bach, Meer</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Glas">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eigenständiges Glasrisiko unabhängig von Gebäude und Hausrat.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Glasrisiko" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Wert" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Werteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Objektanschrift" type="CT_Objektanschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Glasart" type="dt:STE_Glasart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Glases.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Verglasungsart" type="dt:STE_Verglasungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Verglasung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Glasverwendung" type="dt:STE_Glasverwendung" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Verwendungszweck des Glases.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Lage" type="dt:STE_Gebaeudeteil" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Lage des Glases im Gebäude.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Material" type="dt:ST_Material" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Material des Glases.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Oberflaechenbearbeitung" type="dt:STE_OberflaechenbearbeitungGlas"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Oberflächenbearbeitung des Glases.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Rahmen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Glasscheibe ist gerahmt.
+NEIN = Glasscheibe ist nicht gerahmt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Fabrikat" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Fabrikat des Glases, z. B. bei Glaskeramikkochflächen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Typenbezeichnung" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Typbezeichnung des Glases, z. B. bei Glaskeramikkochflächen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SonstigerGegenstand">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ein Gegenstand, der im BiPRO-Datenmodell nicht durch eine eigenständige Klasse spezifiziert ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="Identifikationsnummer" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Nummer, um einen Gegenstand eindeutig identifizieren zu können, z. B. Seriennummer oder Wertsachencodierung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Eigentuemer" type="CT_Eigentuemer" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Empfaenger">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Empfänger als Partner.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Tier">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstand">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Tierart" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Rasse" type="dt:ST_Text080" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">kann bei Mischlingen n-fach vorkommen.
+Bei Hunden sollte das Attribut Hunderasse verwendet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Hunderasse" type="dt:ST_Hunderasse" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">kann bei Mischlingen n-fach vorkommen. Die eigentliche Liste wird nicht referenziert und ist damit nicht direkter Bestandteil des Modells. Den Katalog finden Sie im Modell Kataloge. Die Liste kann über den generischen Suchservice (N480) durchsuch- und abrufbar gemacht werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Name" type="dt:ST_Text060" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Registriernummer" type="dt:ST_TierRegistriernummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Geburtsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Geschlecht" type="dt:ST_TierGeschlecht" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Farbe" type="dt:ST_Text060" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Nutzungsart" type="dt:ST_TierNutzungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Steuerpflicht" type="dt:ST_Tiersteuer" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Kampfhund" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob es sich bei dem Tier um einen Kampfhund handelt.
+Ja = Kampfhund
+Nein = Kein Kampfhund</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

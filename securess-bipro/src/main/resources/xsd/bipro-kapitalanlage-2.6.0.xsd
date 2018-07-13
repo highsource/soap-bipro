@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/kapitalanlage"
+            xmlns:kapanl="http://www.bipro.net/namespace/kapitalanlage"
+            xmlns:pm="http://www.bipro.net/namespace/produktmodell"
+            xmlns:kapanl-basis="http://www.bipro.net/namespace/kapitalanlage/basis"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/kapitalanlage"
+            bipro:Name="bipro-kapitalanlage-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/kapitalanlage/basis"
+               schemaLocation="bipro-kapitalanlage-basis-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/produktmodell"
+               schemaLocation="bipro-produktmodell-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Kapitalanlageelementarprodukt">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ein Investment (z.B. Aktie, Fonds, Anleihe), das Teil eines Kapitalanlageproduktes (z.B. eines Depots) ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="pm:CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="Investment" type="kapanl-basis:CT_Investment" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Kapitalanlageprodukt">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ein Kapitalanlageprodukt, z.B. Termineinlage Sparbrief, Termineinlage Festgeld, Sparkonto, Kontokorrentkonto, Geschäftsanteile, Depot</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="pm:CT_Produkt">
+            <xsd:sequence>
+               <xsd:element name="Kapitalanlage" type="kapanl-basis:CT_Kapitalanlage" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

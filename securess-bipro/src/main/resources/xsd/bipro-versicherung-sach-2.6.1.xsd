@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/versicherung/sach"
+            xmlns:sach="http://www.bipro.net/namespace/versicherung/sach"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:fragen="http://www.bipro.net/namespace/fragen"
+            xmlns:vs-pm="http://www.bipro.net/namespace/versicherung/produktmodell"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            targetNamespace="http://www.bipro.net/namespace/versicherung/sach"
+            bipro:Name="bipro-versicherung-sach-2.6.1.xsd"
+            bipro:Version="2.6.1"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6.1
+		(Build: 20160908-1036)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:annotation>
+      <xsd:documentation xml:lang="de">Das Modell bildet derzeit nur die private Sachversicherung ab. Sollte im Zuge der Normierung von gewerblichen bzw. industriellen Versicherungen weitere Objekte sinnvoll sein, die aufgrund ihrer Anzahl oder aufgrund einer sinnvollen Kapselung in ein separates Modell ausgelagert werden sollen, so ist dieses Modell bipro-sachgewerbe bzw. bipro-sachindustrie zu nennen.</xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/produktmodell"
+               schemaLocation="bipro-versicherung-produktmodell-2.6.1.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/fragen"
+               schemaLocation="bipro-fragen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_GewerbeEinflussfaktoren">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Faktoren, die die Risikoeinschätzung von Sachversicherungen in Gewerbe mittelbar beeinflussen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_ZusaetzlicheGegenstandsdaten">
+            <xsd:sequence>
+               <xsd:element name="MitversicherungVonFremdenEigentum" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob  fremdes Eigentum mitversichert werden soll.
+Wird das Attribut nicht geliefert, MUSS es als mit "false" belegt interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Faktor" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt den Faktor bzw. die Prämienrichtzahl an, um z.B. den Neuwert einer Anlage zu berechnen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="LageDerVersicherungsraeume" type="dt:ST_LageDerVersicherungsraeume"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wo befinden sich die Versicherungsräume</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Eigentumsverhaeltnis" type="dt:ST_Eigentumsverhaeltnis" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eigentums- Besitzverhältnis des Versicherungsnehmers zur versicherten Sache.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="LagePhotovoltaik" type="dt:ST_LagePhotovoltaik" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Montageort</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Einsatzort" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Einsatzort von beweglichen Anlagen (z. B. Bagger)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GewerblichVermietet" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wird eine Anlage vermietet ist dies unter Umständen zuschlagsrelevant</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bewegungsrisiko" type="dt:ST_Bewegungsrisiko" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt Auskunft über das Bewegungsrisiko der Anlage.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gefahrenmerkmal" type="dt:STE_Gefahrenmerkmal" minOccurs="0"
+                            maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Individuelle Gefahrenausprägungen zu Gewerbe</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Aufbewahrungsart" type="CT_Aufbewahrungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Vorschaden" type="vs-pm:CT_Vorschaden" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Auslagerungssicherungsdatentraeger" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Auslagerung von Sicherungsdatenträgern in andere Gefahren-/Feuerbereiche</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Fragenkomplex" type="fragen:CT_Fragenkomplex" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Sicherung" type="CT_Sicherung" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gebaeudezustand">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Risikobeurteilung des Gebäudezustandes und eventuell vorhandeneer Baumängeln</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_ZusaetzlicheGegenstandsdaten">
+            <xsd:sequence>
+               <xsd:element name="ZumAbbruchBestimmt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Attribut gibt Auskunft, ob das Gebäude zum Abbruch bestimmt ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GanzOderTeilweiseLeerstehend" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Attribut gibt Auskunft, ob das Gebäude ganz oder teilweise leerstehend ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnMehrerenStellenOffen" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Attribut gibt Auskunft, ob das Gebäude an mehreren Stellen offen ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beheizt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Attribut gibt Auskunft, ob das Gebäude beheizt ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zeitwert" type="allg:CT_Zeitwert" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Mangel" type="CT_Mangel" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Mangel">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung von Mängeln.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Mangelart" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Mangels.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beschreibung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung des vorhandenen Mangels als Freitext.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_GebaeudeEinflussfaktoren">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Faktoren, die die Risikoeinschätzung eines Gebäudes mittelbar beeinflussen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_ZusaetzlicheGegenstandsdaten">
+            <xsd:sequence>
+               <xsd:element name="Hausart" type="dt:ST_RisikokennzifferWohngebaeude" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Wohnflaeche" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wohnfläche in qm</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Nutzflaeche" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="WohnflaecheOberirdisch" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="GewerbeflaecheOberirdisch" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="WohnflaecheKeller" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="GewerbeflaecheKeller" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Gebaeudeeigentum" type="dt:ST_Gebaeudeeigentum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Nutzung" type="dt:ST_Nutzung" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Nutzung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Betriebsart" type="dt:ST_Betriebsart" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Empfehlung: GDV-Betriebsartenverzeichnis verwenden. Kann VU-spezifisch erweitert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnteilGewerblicheNutzung" type="dt:ST_Prozent" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Gebaeudewertermittlung" type="dt:ST_Gebaeudewertermittlung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Sicherung" type="CT_Sicherung" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Vorschaden" type="vs-pm:CT_Vorschaden" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Fragenkomplex" type="fragen:CT_Fragenkomplex" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Gebaeudewertermittlungsjahr" type="dt:ST_Jahr" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Jahr, in dem die Gebäudewertermittlung erfolgte.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zeitwert" type="allg:CT_Zeitwert" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Aufbewahrungsart">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Aufbewahrungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Aufbewahrungsart</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Safeart" type="dt:STE_Safeart" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Safebezeichnung" type="dt:ST_Text060" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bezeichnung/Name/Fabrikat des Safes</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_HausratEinflussfaktoren">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Faktoren, die die Risikoeinschätzung für eine Hausratversicherung mittelbar beeinflussen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_ZusaetzlicheGegenstandsdaten">
+            <xsd:sequence>
+               <xsd:element name="Risikokennziffer" type="dt:ST_RisikokennzifferHausrat" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Wohnflaeche" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wohnfläche in qm</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="LageDerWohnung" type="dt:ST_LageDerWohnung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AbgeschlosseneWohnung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wohnung abgetrennt von z. B. Büro oder Praxis</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Nutzung" type="dt:ST_Nutzung" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Nutzung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnzahlTageUnbewohnt" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Höchste Anzahl der Tage, in denen die Wohnung ununterbrochen unbewohnt ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BesondereGefaehrdungNachbarschaft" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Feuergefährliche Betriebe im Gebäude oder in der Nachbarschaft vorhanden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vorschaden" type="vs-pm:CT_Vorschaden" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Safe" type="CT_Aufbewahrungsart" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Sicherung" type="CT_Sicherung" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Fragenkomplex" type="fragen:CT_Fragenkomplex" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="UnterStrassenNiveau" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an ob sich die Wohnung unterhalb des Straßenniveaus befindet (ausgenommen nicht zu Wohnzwecken genutzte Keller-/Abstellräume).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Etage" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Etage der Wohnung. Das zweite Untergeschoss wird mit Ganzzahl 2 dargestellt. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Sicherung">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="KategorieID" type="dt:ST_Sicherungseinrichtung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ArtID" type="dt:STE_Sicherung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Sicherheitsstufe" type="dt:STE_Sicherheitsstufe" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Alarmierungsart" type="dt:STE_Alarmierungsart" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Sicherungsbezeichnung" type="dt:ST_Text060" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bezeichnung/Name/Fabrikat der Sicherung (z. B. der Einbruchmeldeanlage)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Hersteller" type="dt:ST_Text080" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Hersteller der Sicherung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Systembezeichnung" type="dt:ST_Text080" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Systembezeichnung der Sicherung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

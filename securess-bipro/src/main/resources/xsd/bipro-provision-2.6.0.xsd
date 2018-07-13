@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/provision"
+            xmlns:prov="http://www.bipro.net/namespace/provision"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:pm="http://www.bipro.net/namespace/produktmodell"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:tarif="http://www.bipro.net/namespace/versicherung/tarifierung"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/provision"
+            bipro:Name="bipro-provision-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/produktmodell"
+               schemaLocation="bipro-produktmodell-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Provisionssatz">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur vereinfachten Berechnung der Provision auf der Basis Grundlage * Provisionssatz = Provision.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Provisionsberechnung">
+            <xsd:sequence>
+               <xsd:element name="Provisionsbezugsart" type="dt:STE_Provisionsbezugsart" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bezugsgröße des Provisionssatzes.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Provisionsgrundlage" type="dt:ST_Betrag" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Höhe der Grundlage der Provisionsberechnung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Provisionssatz" type="dt:ST_Faktor" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Provisionssatz gemäß Provisionssatzeinheit.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Provisionssatzeinheit" type="dt:ST_Berechnungseinheit" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Einheit des Provisionssatz. Es MÜSSEN Werte aus der Liste
+10 = Prozent
+11 = Promille
+15 = Faktor
+verwendet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Referenz" type="CT_Referenz" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Provision">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die Gesamtprovision inkl. Stornoreserve für alle beteiligten Vermittler. Bei Untervermittlerabrechnungen MÜSSEN mehrere Provisionsvereinbarungen je Vermittler definiert werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ZusaetzlicheProduktbausteinDaten">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Diese Klasse wird verwendet um proviosionsspezifische Zusammenhänge auf allen Ebenen des Produktmodells abzubilden.
+Um mehrere Provisionsvereinbarungen abzubilden, MÜSSEN mehrere Objekte dieser Klasse übertragen werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="pm:CT_ZusaetzlicheProduktbausteinDaten">
+            <xsd:sequence>
+               <xsd:element name="Provisionsvereinbarung" type="CT_Provisionsvereinbarung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Provisionsanspruch">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Bei ratierlich ausgezahlter Provision ist der Provisionsanspruch die gesamte Provision des Vertrages, während die übermittelte Provision nur der gerade ausgezahlte ratierliche Anteil ist. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Referenz">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Mit Hilfe von Referenzen kann in der Lieferung die Grundlagen der Provisionsberechnung referenziert werden.
+Z.B. Bei Provisionsart = Beitragssumme, kann je eine Referenz auf Beitrag und Laufzeit zeigen
+Damit ist die Berechnung der Beitragssumme nachvollziehbar.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Element" type="dt:ST_Text" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ein xPath-Ausdruck mit dessen Hilfe Provisionsgrundlagen erkannt werden können.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Provisionsvereinbarung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Provisionsvereinbarung zwischen zwei Partnern, aber nicht zwingend schriftlich im Sinne eines Vertrages. Hierbei DARF es sich auch um Aktions- oder wettbewerbsbezogene (auch temporär befristete) Vereinbarungen handeln. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Provisionsart" type="dt:ST_Provisionsart" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Provision.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Provisionshaftungszeitraumbeginn" type="dt:ST_DatumZeit" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beginn des Provisionshaftungszeitraums</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Provisionshaftungszeitraumende" type="dt:ST_DatumZeit" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ende des Provisionshaftungszeitraums</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AbweichendeVereinbarung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vertragsbezogene abweichende Provisionsvereinbarung, die von der generellen Provisionsvereinbarung des Vermittlers abweicht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Stornoreserve" type="CT_Stornoreserve" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Bewertung" type="CT_Bewertung" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Provisionsberechnung" type="CT_Provisionsberechnung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BeteiligterVermittler" type="CT_BeteiligterVermittler" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Provisionsanspruch" type="CT_Provisionsanspruch" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Provision" type="CT_Provision" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AbweichendeProvisionszahlungsvoraussetzung"
+                            type="dt:STE_Provisionszahlungsvoraussetzung"
+                            minOccurs="0"
+                            maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Hierüber wird abgebildet, wann die Provision abweichend zur generellen Provisionsvereinbarung des Vermittlers fließt, z.B. nach Risikoprüfung und / oder nach Vorversicherungsprüfung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_BeteiligterVermittler">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Wenn an einer Vermittlung mehrere Vermittler beteiligt waren, so können sie mit ihren jeweiligen prozentualen Anteilen hier definiert werden.
+Die ausgewiesenen Provision ist dabei die Gesamtprovision (100%).
+Im Gegensatz dazu stehen Struktur- oder Unterabrechnungen, bei denen mehrere Provisionsvereinbarungen (pro Vermittler) mit den jeweiligen Sätzen und Provisionsbeträgen geliefert werden können. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Vermittler">
+            <xsd:sequence>
+               <xsd:element name="Provisionsanteil" type="dt:ST_Prozent" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Prozentualer Anteil des beteiligten Vermittlers.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Stornoreserve">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Der Anteil der Provision, der als Stornoreserve einbehalten wird.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Provisionsberechnung" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Abstrakte Basisklasse zur Berechnung der Provision.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Bewertung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Wert der Bewertung gemäß Einheit (z.B. Wert = "3", Einheit = "02" bedeutet: 3 Sterne).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Einheit" type="dt:STE_Bewertungseinheit" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kennzeichnet das vom Produktgeber verwendete Bewertungsschema</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Wert" type="dt:ST_Text" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wert der Bewertung gemäß Einheit.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

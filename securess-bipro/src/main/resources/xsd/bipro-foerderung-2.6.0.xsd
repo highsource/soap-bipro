@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/foerderung"
+            xmlns:foerderung="http://www.bipro.net/namespace/foerderung"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:nachr="http://www.bipro.net/namespace/nachrichten"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:gevo="http://www.bipro.net/namespace/gevo"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:mime="http://www.w3.org/2005/05/xmlmime"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            targetNamespace="http://www.bipro.net/namespace/foerderung"
+            bipro:Name="bipro-foerderung-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/gevo"
+               schemaLocation="bipro-gevo-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/nachrichten"
+               schemaLocation="bipro-nachrichten-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:element name="setAidInfoResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="AidInfoResponse" type="CT_AidInfoResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_Foerderantrag">
+      <xsd:complexContent>
+         <xsd:extension base="gevo:CT_Geschaeftsvorgang">
+            <xsd:sequence>
+               <xsd:element name="Foerderdaten" type="CT_Foerderdaten" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Foerderdaten">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Übermittlung der Daten zum Förderantrag (z.B. den Riester-Zulagenantrag).
+Hinweis: Nicht übertragene Felder werden auch nicht weitergeliefert.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Beitragsjahr" type="dt:ST_Jahr" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das Beitragsjahr ist das Jahr, für das die Beiträge vom Förderberechtigen gezahlt wurden und für das ein Förderantrag gestellt wird bzw. die Ermittlungsergebnisse berechnet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zulageberechtigt" type="dt:ST_Zulagenberechtigungsart" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob der Zulageberechtigte mittelbar oder umittelbar berechtigt ist. Ist er mittelbar berechtigt, so ist ein Partnerantrag (auch bei einem anderen Anbieter) zu Gewährung der Zulage nötig.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Dauerzulagevollmacht" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Mit dieser Auswahl wird mitgeilt, ob der Zulageberechtigte eine Dauerzulagevollmacht erteilt hat.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vollmachtsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, wann die Dauerzulagevollmacht erteilt wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AntragstellerKind" type="CT_AntragstellerKind" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Antragsteller" type="CT_Antragsteller" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AntragstellerEhegatte" type="CT_AntragstellerLebenspartner" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AntragstellerLebenspartner">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ehegatte bzw. eingetragener Lebenspartner  des Antragstellers.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="Unterschrift" type="allg:CT_Unterschrift" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AidInfoResponse">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAntwort">
+            <xsd:sequence>
+               <xsd:element name="Foerderantrag" type="CT_Foerderantrag" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AidInfoRequest">
+      <xsd:complexContent>
+         <xsd:extension base="nachr:CT_ProzessAnfrage">
+            <xsd:sequence>
+               <xsd:element name="Foerderantrag" type="CT_Foerderantrag" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="getAidInfoResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="AidInfoResponse" type="CT_AidInfoResponse" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="CT_AntragstellerKind">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partnerrolle zur Referenzierung relevanter Kinder
+Hinweis: Nicht übertragene Felder werden auch nicht weitergeliefert.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="Familienkasse" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Name und Ort der zuständigen Familienkasse.
+Die Familienkassen sind für die Durchführung des Familienleistungsausgleichs zuständig. Es ist sowohl das Einkommensteuergesetz (EStG) wie auch das Bundeskindergeldgesetz (BKGG) zu beachten. Fachlich weisungsberechtigt ist das Bundeszentralamt für Steuern (EStG) oder das Bundesministerium für Familie, Senioren, Frauen und Jugend (BKGG). </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kindergeldnummer" type="dt:ST_Kindergeldnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Nummer des Kindergeldberechtigten.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ZustimmungMutter" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kennzeichen, ob die Mutter der Übertragung der Zulagenberechtigung auf den Antragsteller zugestimmt hat.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BezugszeitraumKindergeld" type="allg:CT_Zeitraum" minOccurs="1"
+                            maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Antragsteller">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partnerrolle Antragsteller 
+Hinweis: Nicht übertragene Felder werden auch nicht weitergeliefert.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="ZulageberechtigterBeamter" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kennzeichen, ob der Antragsteller ein zulageberechtigter Beamter ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unterschrift" type="allg:CT_Unterschrift" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_PartnerdatenFoerderung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Angabe des Landes für Antragsteller, AntragstellerLebenspartner bzw. AntragstellerKind.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_ZusaetzlichePartnerdaten">
+            <xsd:sequence>
+               <xsd:element name="Staatsangehoerigkeit" type="dt:ST_Laenderkuerzel" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe der Staatsangehörigkeit bei Förderanträgen</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vorsatzwort" type="dt:ST_Text017" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vorsatzwort zu einem Namen, wie z.B. "an der", "van der", "von und zu", "vorm", "von" oder "zu der".</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="getAidInfo">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="AidInfoRequest" type="CT_AidInfoRequest" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="setAidInfo">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="AidInfoRequest" type="CT_AidInfoRequest" minOccurs="1" maxOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

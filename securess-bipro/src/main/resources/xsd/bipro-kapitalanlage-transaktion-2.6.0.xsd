@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/kapitalanlage/transaktion"
+            xmlns:kapanl-xa="http://www.bipro.net/namespace/kapitalanlage/transaktion"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:prov="http://www.bipro.net/namespace/provision"
+            xmlns:kapanl-basis="http://www.bipro.net/namespace/kapitalanlage/basis"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/kapitalanlage/transaktion"
+            bipro:Name="bipro-kapitalanlage-transaktion-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/kapitalanlage/basis"
+               schemaLocation="bipro-kapitalanlage-basis-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/provision"
+               schemaLocation="bipro-provision-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Handelsbetrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Betrag, der sich aus den Anteilen multipliziert mit dem Investmentkurs ergibt (einschließlich Ausgabeaufschlag).
+Betrag grundsätzlich ohne Vorzeichen. Kauf/Verkauf abhängig von Transaktionsart.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Abrechnungsbetrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Betrag, der gebucht wird (nach Steuern).
+Betrag grundsätzlich ohne Vorzeichen. Kauf/Verkauf abhängig von Transaktionsart.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ZusaetzlicheInvestmentDaten">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Diese Klasse ist von "ZusaetzlicheInvestmentDaten" im Namensraum "bipro-kapitalanlage-basis" abgeleitet, um eine InvestmentTransaktion einem Investment zuzuordnen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="kapanl-basis:CT_ZusaetzlicheInvestmentDaten">
+            <xsd:sequence>
+               <xsd:element name="InvestmentTransaktion" type="CT_InvestmentTransaktion" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_InvestmentTransaktion">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Transaktion zu einem Investment, z.B. Kauf, Verkauf, Einlieferung, Auslieferung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Transaktionsart" type="dt:ST_InvestmentTransaktionsart" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Investment-Transaktion.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Stornotransaktion" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Kennung, dass diese Transaktion ein Storno einer vorhergehenden Transaktion ist.
+NEIN = Keine Storno-Transaktion.
+Wird das Attribut nicht geliefert, MUSS es als mit 'NEIN' belegt interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Herkunft" type="dt:ST_Herkunft" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Herkunft, aus dem die Transaktion resultiert.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Transaktionsnummer" type="dt:ST_Text030" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Nummer zur eindeutigen Identifikation der Transaktion.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Handelsdatum" type="dt:ST_DatumZeit" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum und ev. Zeit, zu dem die Transaktion ausgeführt wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Valutadatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wertstellungsdatum der Transaktion.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Buchungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, an dem die Transaktion gebucht wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anteile" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Anteile, die bei dieser Transaktion gehandelt wurden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ausgabeaufschlag" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ausgabeaufschlag dieser Transaktion.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Investmentkurs" type="CT_Investmentkurs" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Provisionsvereinbarung" type="prov:CT_Provisionsvereinbarung"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Devisenkurs" type="allg:CT_Devisenkurs" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Abrechnungsbetrag" type="CT_Abrechnungsbetrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="TransaktionInDepotwaehrung" type="CT_Handelsbetrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="TransaktionInInvestmentwaehrung" type="CT_Handelsbetrag" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Investmentkurs">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Kurs des Investments, zu dem die Transaktion erfolgt ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/versicherung/produktmodell/komposit"
+            xmlns:pm-komp="http://www.bipro.net/namespace/versicherung/produktmodell/komposit"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:pm="http://www.bipro.net/namespace/produktmodell"
+            xmlns:vs-pm="http://www.bipro.net/namespace/versicherung/produktmodell"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:tarif="http://www.bipro.net/namespace/versicherung/tarifierung"
+            targetNamespace="http://www.bipro.net/namespace/versicherung/produktmodell/komposit"
+            bipro:Name="bipro-versicherung-komposit-2.6.1.xsd"
+            bipro:Version="2.6.1"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6.1
+		(Build: 20160908-1036)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:annotation>
+      <xsd:documentation xml:lang="de">Das Modell bildet derzeit nur die privaten Kompositsparten ab. Sollte im Zuge der Normierung von gewerblichen bzw. industriellen Versicherungen weitere Objekte sinnvoll sein, die aufgrund ihrer Anzahl oder aufgrund einer sinnvollen Kapselung in ein separates Modell ausgelagert werden sollen, so ist dieses Modell bipro-kompositgewerbe bzw. bipro-kompositindustrie zu nennen.</xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/tarifierung"
+               schemaLocation="bipro-versicherung-tarifierung-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/produktmodell"
+               schemaLocation="bipro-versicherung-produktmodell-2.6.1.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/produktmodell"
+               schemaLocation="bipro-produktmodell-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_VersichertesObjekt">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstandsrolle">
+            <xsd:sequence>
+               <xsd:element name="Versicherungsbestaetigung" type="vs-pm:CT_Versicherungsbestaetigung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Deckung">
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_Deckung" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Unterversicherungsverzicht" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Beitragssatz" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beitragssatz in Prozent oder Promille (10 bzw. 11 in Beitragssatzeinheit),
+in Haftpflicht: Prämie je Wagnis-Berechnungseinheit (20 in Beitragssatzeinheit)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beitragssatzeinheit" type="dt:ST_Berechnungseinheit" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Gefahr" type="CT_Gefahr" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="VersichertesObjekt" type="CT_VersichertesObjekt" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="VersichertePerson" type="CT_VersichertePerson" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VersichertesWagnis" type="CT_VersichertesWagnis" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Gefahrenzone" type="CT_Gefahrenzone" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Geltungsbereich" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Freitext zur Beschreibung des Geltungsbereiches der Deckung z.B. für Transportversicherungen US_Territorium, Mittelmeer, Europa, Russland</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VersichertePersonengruppe" type="CT_VersichertePersonengruppe"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gefahr">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Beschreibung von versicherten Gefahren (z.B. Feuer, Leitungswasser, Sturm,…)</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Gefahr" type="dt:STE_Gefahr" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Auswahl der Gefahr</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Selbstbeteiligung" type="vs-pm:CT_Selbstbeteiligung" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VersichertesWagnis">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Aktivitaetsrolle">
+            <xsd:sequence>
+               <xsd:element name="Versicherungsbestaetigung" type="vs-pm:CT_Versicherungsbestaetigung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_UnfallversicherungJePersonengruppe">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die Klasse UnfallVersicherungJePersonengruppe enthält zentrale Daten über eine versicherte Personengruppe innerhalb einer Unfallversicherung, z.B. das Einschlussdatum der Gruppe oder den Gesamtbeitrag der Gruppe.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_UnfallversicherungJe">
+            <xsd:sequence>
+               <xsd:element name="VersichertePersonengruppe" type="CT_VersichertePersonengruppe"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gefahrenzone">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Gefahrenzone" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Wert" type="dt:ST_Ganzzahl" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VersichertePerson">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="Gefahrengruppe" type="dt:ST_Gefahrengruppe" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VersichertePersonengruppe">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die Klasse VersichertePersonengruppe identifiziert die Personengruppe, die durch die Deckung versichert ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Personengruppenrolle">
+            <xsd:sequence>
+               <xsd:element name="Gefahrengruppe" type="dt:ST_Gefahrengruppe" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gefahrengruppe der Personengruppe.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_UnfallversicherungJe" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die Klasse UnfallversicherungJe enthält zentrale Daten über eine versicherte Person oder Personengruppe innerhalb einer Unfallversicherung, z.B. das Einschlussdatum der Person/Gruppe oder den Gesamtbeitrag der Person/Gruppe.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Einschlussdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, zu dem die versicherte Person/die versicherte Gruppe in die Unfallversicherung eingeschlossen wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ausschlussdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, zu dem die versicherte Person/die versicherte Gruppe aus der Unfallversicherung ausgeschlossen wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Aenderungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, zu dem der Vertragszustand der Unfallversicherung für diese versicherte Person/versicherte Gruppe gültig wurde.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beitrag" type="pm:CT_Beitrag" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_UnfallversicherungJeVP">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die Klasse UnfallVersicherungJeVP enthält zentrale Daten über eine versicherte Person (VP) innerhalb einer Unfallversicherung, z.B. das Einschlussdatum der VP oder den Gesamtbeitrag der VP.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_UnfallversicherungJe">
+            <xsd:sequence>
+               <xsd:element name="VersichertePerson" type="CT_VersichertePerson" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SUHVersicherung">
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Produkt">
+            <xsd:sequence>
+               <xsd:element name="Versichertenkreis" type="dt:ST_Versichertenkreis" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Partnerunabhäniges, tarifierungsrelevantes Merkmal zur Unterscheidung der Leistung bezüglich des Versichertenkreises (z.B. versicherte Familie vs. Versicherte Einzelperson)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Pauschaldeklaration" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">In der gewerblichen Sachversicherung kennzeichnet das Attribut, ob dem Vertrag eine Pauschaldeklaration zu Grunde liegt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Meldeverfahren" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Information, ob der Vertrag an einem Meldeverfahren teilnimmt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Meldeturnus" type="dt:ST_Meldeturnus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vertragliche Vereinbarung in welchem Intervall z.B. Einzeltransporte oder Umsätze gemeldet werden müssen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zeichnungsjahr" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">In bestimmten Sparten (z.B. Transport) werden Schadenaufwand und Prämieneinnahmen den jeweiligen in einem bestimmten Geschäftsjahr gezeichneten Verträgen diesen sogenannten Zeichnungsjahr zugeordnet.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="UnfallVersicherungJe" type="CT_UnfallversicherungJe" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Kondition">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung von Zu- Abschlägen einzelner Gefahren aus Gefahrenmerkmalen in Gewerbe.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="pm:CT_Kondition">
+            <xsd:sequence>
+               <xsd:element name="Gefahrenmerkmal" type="dt:STE_Gefahrenmerkmal" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe des Gefahrenmerkmals, auf das sich der Zu-Abschlag bezieht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gefahr" type="dt:STE_Gefahr" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe der Gefahr/Gefahren, auf die sich der Zu-Abschlag bezieht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VorlaeufigeDeckung">
+      <xsd:complexContent>
+         <xsd:extension base="tarif:CT_ZusaetzlicheAntragsdaten">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_VorlaeufigeDeckung" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Beginn" type="dt:ST_DatumZeit" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Ablaufart" type="dt:ST_ArtDerVorlaeufigenDeckung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Ablauf" type="dt:ST_DatumZeit" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Sparte" type="dt:ST_Sparte" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

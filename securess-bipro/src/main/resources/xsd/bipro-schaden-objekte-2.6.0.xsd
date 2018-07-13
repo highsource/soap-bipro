@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/schaden-objekte"
+            xmlns:schdobj="http://www.bipro.net/namespace/schaden-objekte"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:schdlstg="http://www.bipro.net/namespace/schaden-leistung"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/schaden-objekte"
+            bipro:Name="bipro-schaden-objekte-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/schaden-leistung"
+               schemaLocation="bipro-schaden-leistung-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_SchadenobjektGebaeude">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Gebäude, das in einen Schaden involviert ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="schdlstg:CT_Schadenobjekt">
+            <xsd:sequence>
+               <xsd:element name="WohnenBeeintraechtigt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Das Wohnen im geschädigten Gebäude ist beeinträchtigt.
+NEIN = Das Wohnen im geschädigten Gebäude ist nicht beeinträchtigt</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="WohnenBeeintraechtigtStaerke" type="dt:ST_Staerkegrad" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Stärke der Beeinträchtigung des Wohnens im geschädigten Gebäude.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SicherheitBeeintraechtigt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Die Sicherheit des geschädigten Gebäudes ist beeinträchtigt.
+NEIN = Die Sicherheit des geschädigten Gebäudes ist nicht beeinträchtigt.
+Sicherheit bedeutet hier z. B. Standsicherheit aber auch Explosionsgefahr etc.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EindringenMoeglich" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Ein Eindringen in das geschädigte Gebäude ist möglich.
+NEIN = Ein Eindringen in das geschädigte Gebäude ist nicht möglich</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ArbeitsablaufBeeintraechtigt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Der Arbeitsablauf im geschädigten Gebäude ist beeinträchtigt.
+NEIN = Der Arbeitsablauf im geschädigten Gebäude ist nicht beeinträchtigt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BetriebsunterbrechungBesteht" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Die Betriebsunterbrechung dauert an.
+NEIN = sonst</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeeintraechtigungBeschreibung" type="dt:ST_Text255" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Art und Dauer der Beeinträchtigungen bei der Nutzung des geschädigten Gebäudes.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BetroffeneBodenflaeche" type="allg:CT_Groesse" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BetroffeneDeckenflaeche" type="allg:CT_Groesse" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BetroffeneWandflaeche" type="allg:CT_Groesse" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BetroffeneFlaeche" type="allg:CT_Groesse" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AnstossbereichKfz">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Bereich an einem Fahrzeug, an dem ein Anstoß erfolgte oder nicht erfolgte. Die Klasse wird nur bei einer Kollision genutzt. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Anstossbereich" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bereich des Anstoßes.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnstossErfolgt" type="dt:ST_JaNein" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = In diesem Bereich erfolgte ein Anstoß.
+NEIN = In diesem Bereich erfolgte kein Anstoß.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anstossstaerke" type="dt:ST_Staerkegrad" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Stärke des Anstoßes.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DateiID" type="dt:ST_ID" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Referenz auf eine Datei zu diesem Anstoßbereich, z.B. ein Foto.
+Dabei MUSS die entsprechende Datei innerhalb dieser Nachricht ([Geschaeftsvorgang].Datei) übertragen werden und Anstossbereich.DateiID MUSS der ID der Datei (Datei.DateiID) entsprechen.
+Es können mehrere Dateien zu einem Anstossbereich übermittelt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VerbundenesFahrzeug">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ein Fahrzeug, das mit einem anderen Fahrzeug verbunden ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstandsrolle">
+            <xsd:sequence>
+               <xsd:element name="ZiehendesFahrzeug" type="dt:ST_JaNein" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Das Fahrzeug mit dieser Rolle ist das ziehende Fahrzeug, somit ist das Fahrzeug mit der Referenz auf diese Klasse das gezogene Fahrzeug.
+NEIN = Das Fahrzeug mit dieser Rolle ist das gezogene Fahrzeug, somit ist das Fahrzeug mit der Referenz auf diese Klasse das ziehende Fahrzeug.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SchadenobjektKfz">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Kraftfahrzeug, das in einen Schaden involviert ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="schdlstg:CT_Schadenobjekt">
+            <xsd:sequence>
+               <xsd:element name="AusgeloesteAirbags" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der beim Schadenereignis ausgelösten Airbags.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Fahrbereit" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Fahrzeug ist fahrbereit.
+NEIN = Fahrzeug ist nicht fahrbereit. Ev. ist eine Notreparatur erforderlich, um die Fahrbereitschaft wieder herzustellen (siehe Attribute NotreparaturErforderlich und NotreparaturMoeglich).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Verkehrssicher" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Fahrzeug ist verkehrssicher.
+NEIN = Fahrzeug ist nicht verkehrssicher. Ev. ist eine Notreparatur erforderlich, um die Verkehrssicherheit wieder herzustellen (siehe Attribute NotreparaturErforderlich und NotreparaturMoeglich).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NotreparaturErforderlich" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Notreparatur ist erforderlich, um die Fahrbereitschaft und/oder die Verkehrssicherheit wieder herzustellen.
+NEIN = Notreparatur ist nicht erforderlich.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NotreparaturMoeglich" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Notreparatur ist möglich, um die Fahrbereitschaft und/oder die Verkehrssicherheit wieder herzustellen.
+NEIN = Notreparatur ist nicht möglich.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Totalschaden" type="dt:ST_JaNeinKeineAntwort" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ist der Schaden am Fahrzeug ein Totalschaden? Mögliche Antworten: Ja, Nein, Vermutlich.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zerlegung" type="dt:ST_Zerlegung" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zustand der Zerlegung des Fahrzeugs.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Reparaturstatus" type="dt:ST_Reparaturstatus" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Status der Reparatur des Fahrzeugs.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Freigelegt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Die Beschädigungen des Fahrzeugs wurden so freigelegt, damit ein Sachverständiger das Fahrzeug ausreichend begutachten kann.
+NEIN = Die Beschädigungen des Fahrzeugs wurden nicht freigelegt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="NutzungsausfallGruppe" type="dt:ST_NutzungsausfallGruppe" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zuordnungsgruppe zum Nutzungsausfall gemäß Einstufungsliste "Sanden-Danner-Küppersbusch".</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeschaedigungKfz" type="CT_BeschaedigungKfz" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="VerbundenesFahrzeug" type="CT_VerbundenesFahrzeug" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="AnstossbereichKfz" type="CT_AnstossbereichKfz" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SchadenobjektTransport">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Transport, der in einen Schaden involviert ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="schdlstg:CT_Schadenobjekt">
+            <xsd:sequence>
+               <xsd:element name="Versicherungsanmeldungsnummer" type="dt:ST_Text030" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Nummer der Versicherungsanmeldung für den geschädigten Transport (Deklarationsnummer).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Versicherungsanmeldungsdatum" type="dt:ST_Datum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Versicherungsanmeldung für den geschädigten Transport (Deklarationsdatum).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SicherungTransportgut" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Sicherung des Transportguts, z.B. durch Befestigungen und/oder durch Gurte.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AeussereBeschaedigung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Es liegt eine äußere Beschädigung des Transportgutes vor.
+NEIN = Es liegt keine äußere Beschädigung des Transportgutes vor.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeschaedigungVerpackung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Die Verpackung ist beschädigt.
+NEIN = Die Verpackung ist nicht beschädigt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeschaedigungVerpackungBeschreibung" type="dt:ST_Text255" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung der Beschädigungen an der Verpackung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeiAblieferungFestgestellt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Der Schaden wurde vor oder bei der Ablieferung festgestellt.
+NEIN = Der Schaden wurde erst nach der Ablieferung festgestellt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VomFrachtfuehrerBestaetigt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Der Schaden wurde vom Frachtführer bestätigt.
+NEIN = Der Schaden wurde vom Frachtführer nicht bestätigt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SchriftlicheBestaetigung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Eine schriftliche Bestätigung des Frachtführers liegt vor.
+NEIN = Eine schriftliche Bestätigung des Frachtführers liegt nicht vor.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BestaetigungBeigefuegt" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Die schriftliche Bestätigung des Frachtführers ist beigefügt.
+NEIN = Die schriftliche Bestätigung des Frachtführers wird nachgereicht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VerantwortlichkeitDritter" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Es liegt eine Verantwortlichkeit Dritter vor.
+NEIN = Es liegt keine Verantwortlichkeit Dritter vor.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VorgehenHaftbarmachung" type="dt:ST_AnspruchErhoben" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung des Vorgehens, mit dem der Verantwortliche haftbar gemacht wurde. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="HaftungschreibenBeigefuegt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Das Haftungschreiben ist beigefügt.
+NEIN = Das Haftungschreiben muss nachgereicht werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Transportfahrzeug" type="CT_Transportfahrzeug" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Verkehrstraeger" type="CT_Verkehrstraeger" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="EntladenDurch" type="CT_EntladenDurch" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="SicherungDurch" type="CT_SicherungDurch" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_BeschaedigungKfz">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Beschädigung an einem Kraftfahrzeug.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_BeschaedigungKfz" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Beschädigung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Verkehrstraeger">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner in der Rolle eines Verkehrsträgers.
+Verkehrsträger = Aufgabenträger bzw. Verantwortungsträger für die Erstellung von Verkehrsdienstleistungen (z.B. eine Spedition, ein Bahnunternehmen, ein Schifffahrtsunternehmen, eine Fluggesellschaft).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="Regressanspruch" type="dt:ST_AnspruchErhoben" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wurden Regressansprüche gegen den Verkehrsträger erhoben?</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="RegressanspruecheDatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, an dem die Regressansprüche gegen den Verkehrsträger gestellt wurden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnspruchsschreibenBeigefuegt" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Das Anspruchsschreiben ist beigefügt.
+NEIN = Das Anspruchsschreiben wird nachgereicht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SicherungDurch">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der eine Ladungssicherung vorgenommen hat.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_SchadenobjektAnlage">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Anlage, die in einen Schaden involviert ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="schdlstg:CT_Schadenobjekt">
+            <xsd:sequence>
+               <xsd:element name="BereitsEingebaut" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Die geschädigte Anlage war bereits eingebaut.
+NEIN = Die geschädigte Anlage war noch nicht eingebaut.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VoraussichtlicheAusfallzeit" type="allg:CT_Zeitraum2" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Provisorium" type="allg:CT_Zeitraum2" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_EntladenDurch">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partner, der eine Entladung vorgenommen hat.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Transportfahrzeug">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Ein Fahrzeug, das für einen Transport genutzt wird.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstandsrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

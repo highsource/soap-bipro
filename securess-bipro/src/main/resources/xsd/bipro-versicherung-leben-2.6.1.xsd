@@ -1,0 +1,937 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/versicherung/produktmodell/leben"
+            xmlns:pm-leben="http://www.bipro.net/namespace/versicherung/produktmodell/leben"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:pm="http://www.bipro.net/namespace/produktmodell"
+            xmlns:fragen="http://www.bipro.net/namespace/fragen"
+            xmlns:vtrg="http://www.bipro.net/namespace/vertrag"
+            xmlns:vs-pm="http://www.bipro.net/namespace/versicherung/produktmodell"
+            xmlns:tarif="http://www.bipro.net/namespace/versicherung/tarifierung"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            targetNamespace="http://www.bipro.net/namespace/versicherung/produktmodell/leben"
+            bipro:Name="bipro-versicherung-leben-2.6.1.xsd"
+            bipro:Version="2.6.1"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6.1
+		(Build: 20160908-1036)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/produktmodell"
+               schemaLocation="bipro-versicherung-produktmodell-2.6.1.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/vertrag"
+               schemaLocation="bipro-vertrag-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/fragen"
+               schemaLocation="bipro-fragen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/produktmodell"
+               schemaLocation="bipro-produktmodell-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Kind">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="Foerderungshoechstalter" type="dt:ST_Ganzzahl" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Alter des Kindes bis zu dem es fuer die staatliche Foerderung beruecksichtigt werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="KindZuordnung" type="CT_KindZuordnung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Berufsgruppe">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Beschreibt die der Tarifierung zugrunde liegende Berufsgruppe</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_Berufsgruppe" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Service-Anbieter-individuelles Kennzeichen der Berufsgruppe</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_GeteilterVerlauf">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Teilung einer Leistung in unterschiedliche Steuerpflicht oder unterschiedliche Sozialversicherungspflicht (z.B. bei Riester oder bAV)</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Verlauf">
+            <xsd:sequence>
+               <xsd:element name="TeilVerlauf" type="CT_TeilVerlauf" minOccurs="2" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VorsorgeFoerderung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Beitragsförderungsdaten im Kontext der geförderten Altersvorsorge.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="pm:CT_Beitragsfoerderung">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_VorsorgeFoerderungsart" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Förderung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VWL" type="dt:ST_ArtVermoegenswirksameLeistung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der vermögenswirksamen Leistung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Elementarprodukt" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Abstrakter Basistyp von dem alle anderen Elementarprodukte (z.B. Rente, TodesfallAbsicherung usw.) abgeleitet werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="Hochrechnungszins" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zinssatz, der bei der Berechnung einer nicht festverzinslichen Wertentwicklung (z. B. Fonds) zu Grunde gelegt wird. Erfolgt eine individuelle Vorgabe durch den Consumer, so ist diese als Grundlage für das als VersicherungssummeOderLeistung gelieferte Ergebnis zu verwenden. Erfolgt keine solche Vorgabe, so ist das entsprechende Attribut in der Antwort mit dem Wert zu belegen, auf dessen Grundlage der Provider die angegebene VersicherungssummeOderLeistung ermittelt hat. Sollte eine individuelle Vorgabe durch den Consumer außerhalb des vom Provider unterstützten oder als realistisch erachteten Intervalls liegen, so korrigiert der Provider den entsprechenden Wert auf den der Vorgabe am nächsten kommenden Wert aus diesem Intervall und liefert in seiner Antwort eine entsprechende Meldung zurück.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="IstHauptversicherung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, ob das Elementarprodukt die Hauptversicherung ist. Pro Produkt gibt es genau ein Elementarprodukt, welches als Hauptversicherung fungiert.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Rechnungszins" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Garantierter Zinssatz mit dem der Sparanteil verzinst wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="UeberschussverwendungNachLeistung" type="dt:STE_Ueberschussverwendung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Steuert die Verwendung der Überschüsse nach dem Leistungsfall.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="UeberschussverwendungVorLeistung" type="dt:STE_Ueberschussverwendung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Steuert die Verwendung der Überschüsse vor dem Leistungsfall.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Produktattribut" type="dt:ST_Produktattribut" minOccurs="0"
+                            maxOccurs="unbounded">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zählt auf das Elementarprodukt zutreffende Attribute auf und ermöglicht so eine genaue Spezifikation (Tarifbezeichnung) des selben.
+
+Tarifbezeichnung
+Als Alternative zur Angabe der exakten Tarifbezeichnung des Versicherungsunternehmens im entsprechenden Attribut des Produktes steht hier ein  Mechanismus zur Beschreibung von Produkteigenschaften zur Verfügung, welcher durch die Attribute &amp;bdquo;Produktgruppe&amp;ldquo; und &amp;bdquo;Produktattribut&amp;ldquo; genutzt werden kann. Die Unterstützung dieses Mechanismus ist für den Service Provider optional</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Produktgruppe" type="dt:ST_Produktgruppe" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ordnet das Elementarprodukt einer Produktgruppe (beispielsweise Rentenversicherung, Kapitalversicherung, Berufsunfähigkeitsversicherung usw.) zu. Dieses Attribut in Kombination mit dem Produktattribut soll die Anfrage eines Service Consumers erleichtern, der die exakten Tarifbezeichnungen des Providers nicht kennt. Der Provider wird bei einer solchen Anfrage die Gruppe inkl. der Produkteigenschaften auf die eigenen Tarife zuordnen und das Ergebnis ermitteln.
+
+Tarifbezeichnung
+Als Alternative zur Angabe der exakten Tarifbezeichnung des Versicherungsunternehmens im entsprechenden Attribut des Produktes steht hier ein  Mechanismus zur Beschreibung von Produkteigenschaften zur Verfügung, welcher durch die Attribute &amp;bdquo;Produktgruppe&amp;ldquo; und &amp;bdquo;Produktattribut&amp;ldquo; genutzt werden kann. Die Unterstützung dieses Mechanismus ist für den Service Provider optional</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeitragWeitererhebenBeiAblauf" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Nur relevant wenn das Elementarprodukt nicht die Hauptversicherung ist. Gibt an, ob die Beiträge von Zusätzen nach deren Wegfall zu Gunsten der Hauptversicherung weitererhoben werden sollen. Beispiel: Die Hauptversicherung ist eine Basisrente mit Aufschubzeit bis zum 67. Lebensjahr und einem zusätzlichen BU-Schutz, der mit Vollendung des 60. Lebensjahres abläuft. Bei entsprechender Belegung des Attributs wird der Beitrag nach Erreichen des 60. Lebensjahres in unveränderter Höhe weitererhoben und der Beitragsanteil, der bisher für den BU-Schutz aufgewendet wurde, fließt fortan in die Hauptversicherung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Endalter" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe zur Ermittlung der Vertragsdauer durch den Versicherer aufgrund der Angabe eines Endalter (Stichwort "gebrochene Dauern").</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Umstellungsoption" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dient der Kennzeichnung ob nach Vollendung eines ebensabschnitts (z.B. Ausbildung) die Option auf Änderung der vereinbarten Leistung und/oder Erhöhung der Rente (ggf. mit vereinfachter oder ganz ohne erneute Gesundheitsprüfung) besteht. Beispiel: Nimmt die versicherte Person innerhalb eines bestimmten Zeitraums nach Beendigung der Schulausbildung oder des Studiums einen Beruf auf, so besteht das Recht, den Vertrag auf eine Berufsunfähigkeitsversicherung mit Verzicht auf abstrakte Verweisung umzustellen. Ggf. kann zusätzlich die versicherte Rente ohne (oder mit vereinfachten) Gesundheitsfragen erhöht werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="MitversichertePerson" type="CT_MitversichertePerson" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VersichertePerson" type="CT_VersichertePerson" minOccurs="1"
+                            maxOccurs="1"/>
+               <xsd:element name="Berufsgruppe" type="CT_Berufsgruppe" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Verlauf" type="CT_Verlauf" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Umtauschrecht" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Recht auf Wagniswechsel</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AusloesungDerLeistung" type="dt:ST_AusloesungDerLeistung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt den Auslöser für die Zahlung einer Leistung an.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Stundung" type="CT_Stundung" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="InLeistung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Leistungserbringung.
+Ja = Es wird zur Zeit eine Leistung für dieses Elemetarprodukt erbracht.
+Nein = Es besteht kein Leistungsfall für dieses Elementarprodukt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vom Provider generierte, eindeutige Referenznummer zur Identifizierung des Objektes über Prozesse hinweg, insbesondere zwischen Auskunfts- und Änderungsprozessen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_TeilVerlauf">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zur Sozialversicherungspflicht einer Leistung (z.B. bei bAV)</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="KvPvPflicht" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Unterliegt die Leistung der Beitragspflicht zur gesetzlichen Kranken- und Pflegeversicherung?</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VerlaufsEintrag" type="CT_VerlaufsEintrag" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Beitragsschuldner" type="pm:CT_Beitragsschuldner" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="FoerderInfo" type="CT_VorsorgeFoerderung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VersichertePerson">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="Eintrittsalter" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eintrittsalter der versicherten Person</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ArbeitskraftAbsicherung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Umfasst alle Arten der Berufs- und Erwerbsunfähigkeitsversicherung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="Art" type="dt:STE_UnfaehigkeitsZusatzArt" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt die Art der Absicherung an. Möglich sind neben Beitragsbefreiung der Hauptversicherung und Rente auch VU-individuelle Auspraegungen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Auspraegung" type="dt:STE_UnfaehigkeitsZusatzAuspraegung" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, in welchen Fällen die Absicherung greift. Zum Beispiel bei
+Berufsunfähigkeit, Erwerbsunfähigkeit, unfallbedingter Berufsunfähigkeit, Erwerbsminderung etc.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Staffel" type="dt:ST_BUStaffel" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Leistungsstaffel: Gibt an ab welchem Grad der Berufs-/Erwerbsunfähigkeit (ausgedrückt als Prozentsatz) die volle Leistung fällig wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DynamisierungDerHauptversicherungImLeistungsfall" type="dt:ST_JaNein"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Falls es sich hier um eine Zusatzversicherung handelt, kann mit diesem Attribut angegeben werden, ob auf die Beiträge zur Hauptversicherung im Leistungsfall die vereinbarte Dynamik angewendet werden soll.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BUUmstellungsoption" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">I. d. R. bereits eine tarifierungsrelevante Option, die bei Vertragsabschluss vereinbart wird. Sie dient der Vereinbarung einer Option auf Umstellung des Vertrages auf eine Berufsunfähigkeitsversicherung mit Verzicht auf die Anwendung einer abstrakten Verweisungsklausel. Anwendungsszenario: Nimmt die versicherte Person innerhalb eines bestimmten Zeitraums nach Beendigung der Schulausbildung oder des Studiums einen Beruf auf, so besteht das Recht, den Vertrag auf eine Berufsunfähigkeitsversicherung mit Verzicht auf abstrakte Verweisung umzustellen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KindZuordnung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Soll bei ZulagenRenten vom Webservice der Mindesteigenbeitrag (ST_Eigenbeitragsart = min) des Hauptvertrags berechnet werden, ist für jedes vorhandene Kind-Objekt die Kinderzulage zu berücksichtigen. Im Vertrag selbst werden die Kinderzulagen dann NICHT berücksichtigt, wenn das Kind dem (Ehe-) Partner zugeordnet ist. Fehlt die KindZuordnung, werden die Zulagen im Vertrag berücksichtigt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Hobby">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_Hobby" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ZulagenRente">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Dient der Abbildung von Zulagenrententarifen (Riester).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Rente">
+            <xsd:sequence>
+               <xsd:element name="ZulagenDaten" type="CT_ZulagenDaten" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_MitversichertePerson">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="Eintrittsalter" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eintrittsalter der mitversicherten Person</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_UnfallAbsicherung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Umfasst Produkte der Unfallabsicherung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Elementarprodukt">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_TodesfallAbsicherung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Umfasst Produkte der Todesfallabsicherung (Risikolebensversicherung).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="Waisenrentenschlussalter" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Der Wert gibt an, bis zum Erreichen welchen Alters eine Waisenrente ausbezahlt wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="LeistungBis" type="dt:ST_LeistungsdauerTodesfallAbsicherung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Definiert die maximale Dauer der Leistung an Hinterbliebene. Schließt sich Wechselseitig mit Hinterbliebenenrentenschlussalter aus</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_PflegeAbsicherung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Umfasst Produkte zur Pflegeabsicherung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Elementarprodukt">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Stundung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung von Stundung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Grund" type="dt:STE_Stundungsgrund" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grund für die Stundung. Je nach Gesellschaft werden für verschiedende Gründe andere Dauern bzw. andere Konditionen abgebildet.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Risikoschutz" type="dt:ST_JaNein" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Risikoschutz besteht weiterhin.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zinsberechnung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wird für die Stundung Zinsen berechnet. Es gibt Stundungsgründe, die dazu führen das für die Stundung keine Zinsen berechnet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="RueckzahlungsArt" type="dt:ST_Rueckzahlungsart" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Rückzahlungsvereinbarung für fehlende Sparbeiträge.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Dauer" type="allg:CT_Zeitraum" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Produkt">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Daten zum Produkt</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Produkt">
+            <xsd:sequence>
+               <xsd:element name="Verlauf" type="CT_Verlauf" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="VorgabeBerechnung" type="CT_VorgabeBerechnung" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Beitragsdepot" type="CT_Beitragsdepot" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Zuzahlungsrecht" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, ob ein Zuzahlungsrecht besteht</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="FinanzierungDerZusage" type="dt:ST_FinanzierungDerZusage" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, auf welchem Weg die Zusage finanziert wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SteuerlicheFoerderung" type="dt:ST_SteuerlicheFoerderung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der steuerlichen Förderung </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Drittrecht" type="dt:ST_Drittrecht" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, welcher Art Rechte Dritter aus diesem Vertrag sind.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Stundung" type="CT_Stundung" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="BAVDaten" type="CT_BAVDaten" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Referenz" type="dt:ST_Referenz" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vom Provider generierte, eindeutige Referenznummer zur Identifizierung des Objektes über Prozesse hinweg, insbesondere zwischen Auskunfts- und Änderungsprozessen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Risikopruefung">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_ZusaetzlichePartnerdaten">
+            <xsd:sequence>
+               <xsd:element name="Fragenkomplex" type="fragen:CT_Fragenkomplex" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Traegerunternehmen">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Partnerrolle zur Referenzierung von Trägerunternehmen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_BAVDaten">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung zusätzlicher Daten im Kontext der betrieblichen Altervorsorge.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Durchfuehrungsweg" type="dt:ST_Durchfuehrungsweg" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Durchführungsweg der betrieblichen Altervorsorge</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="PSVPflicht" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob der Vertrag PSV-pflichtig ist. PSV = Pensionssicherungsverein. Diese Angabe MUSS auf Seite des Produktgebers ermittelt und übertragen werden. Sie DARF deshalb NICHT vorgegeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unverfallbarkeit" type="CT_Unverfallbarkeit" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Zusage" type="CT_Zusage" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KapitalbildendeVersicherung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Umfasst reine Kapitalbildende Versicherungen</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="FlexibleAuszahlphase" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="TeilauszahlungenMitUeberschuss" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Teilauszahlungen enthalten Überschussanteile</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Verrentungsoption" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">ja = Verrentung der Ablaufleistung;
+nein = Auszahlung der Kapitalleistung
+Wird das Attribut nicht angegeben MUSS es als mit Nein belegt interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Abrufphase" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Beitragsdepot">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Als Beitragsdepot wird ein Guthabenkonto bei einer Versicherungsgesellschaft, das z. B. eine Kapitallebensversicherung oder Rentenversicherung bedient, bezeichnet. Bei einem Beitragsdepot wird eine größere Summe, die in einen Versicherungservertrag investiert werden soll, an den Versicherer überwiesen. Aus diesem Beitragsdepot werden vom Versicherer fünf Jahresbeiträge in den Vertrag bezahlt, sofern nichts anderes vorgegeben wurde. Für das Beitragsdepot werden feste oder variable Zinssätze vereinbart, mit denen das Guthaben verzinst wird. Die Wiederauffüllung eines Beitragsdepots kann im Standard derzeit nicht abgebildet werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Zinssatz" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Jährlicher Zinsatz mit dem das Guthaben im Attribut Betrag verzinst wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zinstyp" type="dt:ST_Zinstyp" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Typisierung des Zinssatzes z. B. als variablen oder festen Zins.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Guthaben" type="allg:CT_Betrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Rente">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Umfasst alle Rentenversicherungen inkl. Privater Rente, Basisrente (Rürup) und Zulagenrente (Riester).
+Die Attribute Garantiezeit und GarantiezeitArt DÜRFEN NICHT gleichzeitig verwendet werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="BeitragsRueckgewaehrBeiTod" type="dt:ST_Beitragsrueckgewaehr"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Steuert, ob bei Tarifen, bei denen zunächst für den Fall des Todes der Versicherten Person keine Leistung vereinbart ist, die bis zum Zeitpunkt des Todes eingezahlten Beiträge bzw. der Wert der Versicherung, welcher bei z.B. fondsgebundenen Versicherungen auch höher als die Summe der eingezahlten Beiträge sein kann, an die Hinterbliebenen ausgezahlt werden sollen. Bei Basisrenten (Rürup) sind die gesetzlichen Bestimmungen bezüglich Einschränkungen der Auszahlung an Hinterbliebene zu beachten.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeitragsRueckgewaehrBeiAblauf" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bei den Fondsgebundenen Versicherungen ist zum Ende der Ansparphase zunächst keine Höhe der Erlebensfallleistung garantiert. Diese ist allein abhängig von der Wertentwicklung der Fondsanteile, da die Sparanteile der Beiträge vollständig in Anteilen an Investmentfonds angelegt werden.
+Diese konsequente Anlage der Beiträge in Fondsanteilen bietet einerseits die Chance auf eine überdurchschnittliche Wertentwicklung, beinhaltet aber auch das Risiko, dass zum Ende der Ansparphase die Ablaufleistung z. B. die Summe der gezahlten Beiträge unterschreiten könnte.
+Um dieses Verlustrisiko auszuschließen, kann vereinbart werden, dass zum Ende der Ansparphase die Summe der gezahlten Beiträge ohne die Beiträge für eingeschlossene Zusatzversicherungen als Erlebensfallleistung garantiert wird.
+Für diese Garantie wird dann ein Teil des Beitrags nicht in Fondsanteile investiert, sondern konventionell angelegt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ablaufmanagement" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, ob die gutgeschriebenen Fondsanteile gegen Ende der Laufzeit schrittweise in Risikoärmere Anlagen wie z.B. Geldmarktfonds umgeschichtet werden sollen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="UebergangsalterKind" type="dt:ST_Uebergangsalter" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Planmäßiger Übergang des Vertrags bei Kinderversorgungsprodukten vom Versorger auf das versicherte Kind, Wertebereich des Datentyps: Ganzzahlen im Bereich 18 bis 25 jeweils inklusive. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GarantiezeitArt" type="dt:ST_GarantiezeitArt" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Über GarantiezeitArt (min, max) kann gesteuert werden, dass vom Webservice die minimal bzw. maximal mögliche Garantiezeit zu berechnen ist. In diesem Fall ist die Vorgabe der Garantiezeit nicht erforderlich, sie wird vom Webservice geliefert. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Garantiezeit" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="UebergangVN" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="FlexibleAuszahlphase" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Abrufphase" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Zertifizierungsnummer" type="dt:ST_Zertifizierungsnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zertifizierungsnummer staatlich geförderter Rententarife.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kapitalwahlrecht" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">ja = Kapitalwahlrecht besteht
+nein = Kapitalwahhlrecht besteht nicht oder wurde nicht ausgeübt
+Wird das Attribut nicht angegeben, MUSS es als mit Nein belegt interpretiert werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gefahr">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die zu versichernde Gefahr</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_GefahrArt" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">VU-individuelles Kennzeichen der zu versichernden Gefahr</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bezeichnung" type="dt:STE_GefahrBezeichnung" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">VU-individuelle Beschreibung der zu versichernden Gefahr</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Risiko">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Daten des zu versichernden Risikos</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_ZusaetzlichePartnerdaten">
+            <xsd:sequence>
+               <xsd:element name="Nichtraucher" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe, ob der Partner Nichtraucher ist. Ein gelegentlicher Raucher ist kein Nichtraucher.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gefahr" type="CT_Gefahr" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Auslandsaufenthalt" type="CT_Auslandsaufenthalt" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Hobby" type="CT_Hobby" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="VorNebenVersicherung" type="vtrg:CT_VorNebenVertrag" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Auslandsaufenthalt">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zu einem Auslandsaufenthalt</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Land" type="dt:ST_Laenderkennzeichen" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das Länderkennzeichen des Landes</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gebiet" type="dt:ST_Text080" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Das Gebiet in diesem Land</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Dauer" type="allg:CT_Zeitraum" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ZulagenDaten">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Enthält die für die Berechnung der staatlichen Förderung benötigten Zusatzinformationen. Eine reine Berechnung der Förderung im Rahmen der Kundenberatung ist an dieser Stelle nicht vorgesehen. Die Informationen dienen lediglich der exakten Tarifierung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Foerderungsberechtigung" type="dt:ST_Foerderungsberechtigung"
+                            minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dient der Feststellung ob und wenn ja in welcher Eigenschaft der Versicherungsnehmer zum geförderten Personenkreis zählt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EinkommenVorjahr" type="dt:ST_Betrag" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bruttoeinkommen des Versicherungsnehmers im Vorjahr. Dient der Bestimmung des Mindesteigenbeitrags, der zum Erzielen der vollen staatlichen Förderung notwendig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="EinkommenVorjahrPartner" type="dt:ST_Betrag" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bruttoeinkommen des Ehe- oder Lebenspartners des Versicherungsnehmers im Vorjahr.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Eigenbeitragsart" type="dt:ST_Eigenbeitragsart" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, ob der Versicherungsnehmer den minimal erforderlichen Eigenbeitrag zum Erzielen der vollen staatlichen Zulage, den maximal geförderten Eigenbeitrag oder einen individuell vereinbarten Eigenbeitrag einzahlen möchte.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Verrechnungsmodell" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Verrechnung der Zulagen (bei Riesterverträgen); Wenn Verrechnungsmodell=true, dann wird die Zulagenrente automatisch mit dem maximal geförderten Beitrag (=Eigenbeitrag) berechnet. Die Zulagen werden bei der Ermittlung des Eigenbeitrags nicht berücksichtigt, sondern erst mit den Beiträgen des Folgejahres verrechnet.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="GrundzulagePartnerBeruecksichtigen" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Soll bei ZulagenRenten vom Webservice der Mindesteigenbeitrag (ST_Eigenbeitragsart = min) des Hauptvertrags berechnet werden, wird die Information benötigt, ob ein Partnervertrag vorhanden ist und die Grundzulage des Partners berücksichtigt werden muss.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kinder" type="CT_Kind" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Verlauf">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Versicherungsverlauf (genutzt zur Rückgabe des Verlaufsergebnis)</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_LeistungsArtVerlaufEintrag" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">ArtID (Schlüsselwert des Eintrags)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="UeberschussSatzTyp" type="dt:ST_Szenario" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Hochrechnungsszenario (bis zu 5 Varianten möglich). Inhalt ist vom VU selbst festzulegen (z.B. 2,75%, 3,75%) </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="SzenarioBeschreibung" type="dt:ST_Text080" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">beschreibender Text zum UeberschussSatzTyp</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Leistungsfalltyp" type="dt:STE_LeistungSchluessel" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an von welchem Typ der Leistungsfall ist. (z.B. Pflegebedürftigkeitsstufe)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Verlaufseintrag" type="CT_VerlaufsEintrag" minOccurs="1"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Berechnungsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Gibt an, zu welchem Zeitpunkt die im Verlauf enthaltenen Werte ermittelt wurden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Zusage">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung einer Arbeitgeber-Zusage im Kontext der betrieblichen Altersvorsorge.
+
+Dabei erfolgt die Angabe der Zusageform konkret (z.B. Zusageform = 01 (Beitragszusage mit Mindestleistung)), die fachlichen Inhalte (z.B. 2% des Gehalts als AG-Anteil) werden lediglich mittels Zusagenummer und ZusagenummerAG aus dem zugrundeliegenden Rahmenvertrag referenziert.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Zusageform" type="dt:ST_Zusageform" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Form der Zusage.
+Die Zusageform MUSS angegeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zusagedatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Zusage.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zusagenummer" type="dt:ST_Text017" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zusagenummer auf Produktgeberseite.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ZusagenummerAG" type="dt:ST_Text017" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zusagenummer des Versorgungswerks - auf Arbeitgeberseite bzw. auf Seiten der Unterstützungskasse</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="BeginnEntgeltumwandlung" type="dt:ST_BeginnEntgeltumwandlung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beginn der Entgeltumwandlung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Traegerunternehmen" type="CT_Traegerunternehmen" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Unverfallbarkeit">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung der Unverfallbarkeit des Arbeitgeberleistungsteils der betrieblichen Altersvorsorge.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_ArtDerUnverfallbarkeit" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Unverfallbarkeit. 
+Unverfallbarkeit bezieht sich ausschließlich auf den Arbeitgeber-Anteil.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Stichtag" type="dt:ST_Datum" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Stichtag ab dem die Unverfallbarkeit der Leistung aus den Beiträgen gilt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VorgabeBerechnung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Dient der expliziten Vorgabe der für die Berechnung maßgeblich heranzuziehenden Leistungs- und Beitragsobjekte. Für die Prozesse Tarifierung, Vorschlag/Angebot und Antrag ist die Angabe verpflichtend (das Objekt ist dann so zu behandeln, als wäre seine Kardinalität 1..*). </xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_VorgabeBerechnung" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vorgabeparamter zur Berechnung. Die Schlüssel entsprechenden den fachlichen Bedeutungen der Datentypen STE_Beitragsart und STE_VorgabeBerechnungBasis.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kontext" type="dt:STE_VorgabeBerechnungKontext" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Über den Kontext wird festgelegt, wo die Informationen für die Durchführung einer Berechnung im Modell gefunden werden können. Die alleinige Schlüsselung mit ArtID=GarantierteRente reicht beispielsweise nicht aus, um festzustellen, ob es sich hierbei um garantierte Vorgabe für eine Rentenversicherung oder um eine Vorgabe zur Berufsunfähigkeitsversicherung handelt. Erst unter Hinzunahme des Kontextes Rente bzw. ArbeitskraftAbsicherung kann verdeutlicht werden, dass die Vorgaben in VersicherungssummeOderLeistung unterhalb des Elementarproduktes Rente bzw. ArbeitskraftAbsicherung zu finden sind.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_UnspezifischesElementarprodukt">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Zu Verwendung im speziellen Kontext. DARF NUR verwendet werden, wenn das konkrete Elementarprodukt nicht bekannt ist (z.B. bei Übertragung mit Norm 430.4).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Elementarprodukt">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VerlaufsEintrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Einzelner Eintrag im Versicherungsverlauf.
+Das Bezugsdatum, an dem der angegebene Eintrag gilt, MUSS über das Attribut Stichtag abgebildet werden.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence>
+               <xsd:element name="Art" type="dt:ST_Text060" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Vor der Einführung von erweiterbaren Aufzählungstypen wurde hier der VU--spezifische Schlüssel eingetragen, sofern die ArtID im Verlauf mit 0 (VU-individuell) geschlüsselt wurde. Heute kann dieses Attribut vom Versicherer individuell befüllt werden, um z. B. Überschussmodelle zu berücksichtigen.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

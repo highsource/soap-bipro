@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/versicherung/produktmodell/rechtsschutz"
+            xmlns:pm-rs="http://www.bipro.net/namespace/versicherung/produktmodell/rechtsschutz"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:vs-pm="http://www.bipro.net/namespace/versicherung/produktmodell"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:mime="http://www.w3.org/2005/05/xmlmime"
+            targetNamespace="http://www.bipro.net/namespace/versicherung/produktmodell/rechtsschutz"
+            bipro:Name="bipro-versicherung-rechtsschutz-2.6.1.xsd"
+            bipro:Version="2.6.1"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6.1
+		(Build: 20160908-1036)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/produktmodell"
+               schemaLocation="bipro-versicherung-produktmodell-2.6.1.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_GebaeudeEinflussfaktoren">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Faktoren, die die Risikoeinschätzung eines Grundstueckes mittelbar beeinflussen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_ZusaetzlicheGegenstandsdaten">
+            <xsd:sequence>
+               <xsd:element name="Flaeche" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Angabe zur Gesamtfläche</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Werteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Werteinheit zum Attribut Flaeche</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Nutzung" type="dt:ST_Nutzung" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Entscheidung, ob z.B. ein VN für ein Objekt in seiner Eigenschaft z.B. als Vermieter oder Mieter versichert werden soll. Dies bestimmt u.a. den Beitrag.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gebaeudeeinheit" type="CT_Gebaeudeeinheit" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Leistungsart">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Das Elementarprodukt Leistungsart MUSS immer von LeistungsartBereich referenziert werden. Rechtsschutzversicherung DARF dieses Elementarprodukt NICHT referenzieren.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:STE_Leistungsart" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ausprägungen gem. Standard RS Leistungsarten siehe bipro-Datentypen:</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="LeistungsartTyp" type="dt:ST_LeistungsartTyp" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Attribut gibt an ob es sich um eine RS-Service oder RS-Versicherungsleistung handelt</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="MitversichertePerson" type="CT_MitversichertePerson" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="VersichertesObjekt" type="CT_VersichertesObjekt" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Wartezeit" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VersichertePerson" type="CT_VersichertePerson" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VorNebenVersicherung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Angaben zu bestehenden oder beendeten Vor- bzw. Nebenversicherungen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Fremdversicherungsart" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Abgangsgrund" type="dt:ST_Abgangsgrund" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Abgangsdatum" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Sparte" type="dt:ST_Sparte" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Ablehnungsgrund" type="dt:ST_Text1000" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grund/Ursache aus welchem ein Antrag von einem anderen Versicherer bereits abgelehnt wurde</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_LeistungsartBereich">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Abgeleitet vom Elementarprodukt Rechtsschutz, um die Leistungsarten in Bereiche zu gliedern.
+Folgende LeistungsartBereich-Kombinationen sind möglich:
+Beruf 
+Gewerbe (enthält auch Sonder und Spezial)
+Immobilie
+Privat
+Verkehr
+Beruf, Gewerbe
+Beruf, Verkehr
+Beruf, Immobilie
+Beruf, Immobilie, Verkehr
+Immobilie, Gewerbe
+Immobilie, Verkehr
+Privat, Beruf
+Privat, Verkehr
+Privat, Immobilie
+Verkehr, Gewerbe
+Beruf, Verkehr, Gewerbe
+Immobilie, Verkehr, Gewerbe
+Privat, Beruf, Immobilie
+Privat, Beruf, Verkehr
+Privat, Immobilie, Verkehr
+Privat, Immobilie, Verkehr, Gewerbe
+Privat, Beruf, Immobilie, Verkehr
+Privat, Beruf, Immobilie, Verkehr, Gewerbe</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Elementarprodukt">
+            <xsd:sequence>
+               <xsd:element name="LeistungsartBereich" type="dt:ST_LeistungsartBereich" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Aufzählung der einzelnen Rechtsschutzbereiche in einem Produkt. Der Bereich Gewerbe enthält auch Sonder und Spezial.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Leistungsart" type="CT_Leistungsart" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="ArtVerkehrsrechtsschutz" type="dt:ST_ArtVerkehrsrechtsschutz"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Verkehrsrechtsschutzes (Fahrer, Fahrzeug, Verkehr). Dieses Attribut DARF NUR beim Leistungsartbereich Verkehr oder Gewerbe verwendet werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_PartnerdatenRechtsschutz">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_ZusaetzlichePartnerdaten">
+            <xsd:sequence>
+               <xsd:element name="Tarifgruppe" type="dt:STE_Tarifgruppe" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Tarifgruppe (z.B. FinanzDienstleister, Beamter, Normal, ) leitet sich aus dem Beruf des VN ab und ermöglicht Tarifgruppenspezifische Tarife.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Berufsgruppeneinteilung" type="dt:STE_Berufsgruppeneinteilung"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieses Feld MUSS gefüllt werden, wenn der Partner eine juristische Person ist. GDV Anlage 33 Berufsgruppeneinteilung Industrie RS</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Vorschaden" type="vs-pm:CT_Vorschaden" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="AnzahlFahrer" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anzahl der Fahrer zur juristischen Person.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_GrundstueckEinflussfaktoren">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Faktoren, die die Risikoeinschätzung eines Grundstueckes mittelbar beeinflussen.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_ZusaetzlicheGegenstandsdaten">
+            <xsd:sequence>
+               <xsd:element name="Nutzung" type="dt:ST_Nutzung" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibt, in welchem Eigentum und Nutzungsverhältnis der Versicherungsnehmer zum angegebenen Objekt steht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Mietwert" type="allg:CT_Mietwert" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_MitversichertePerson">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eine Mitversicherte Person steht in einer Beziehung (z.B. Ehe) zu einer Versicherten Person und ist auf Grund dieser Beziehung mitversichert. Beide sind namentlich bekannt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VersichertePerson">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gebaeudeeinheit">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Unterscheidet die Gebäudeeinheiten innerhalb eines Gebaudes.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Gebaeudeeinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Unterscheidet die Gebäudeeinheiten innerhalb eines Gebäudes.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Mietwert" type="allg:CT_Mietwert" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Rechtsschutzversicherung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Produkt der Sparte Rechtsschutz.
+In der Liste der Elementarprodukte (geerbt von taa:Produkt) DÜRFEN NUR Elementarprodukte der Art Leistungsartbereich verwendet werden.
+Es MUSS mindestens ein Elementarprodukte der Art Leistungsartbereich geliefert werden.
+Referenzierung von Rechtsschutzversicherung zu versichertes Objekt DARF NUR genutzt werden wenn keine Referenz vom Elementarprodukt (Leistungsart) zu VersichertesObjekt vorliegt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="vs-pm:CT_Produkt">
+            <xsd:sequence>
+               <xsd:element name="Versichertenkreis" type="dt:ST_Versichertenkreis" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Partnerunabhäniges, tarifierungsrelevantes Merkmal zur Unterscheidung der Leistung bezüglich des Versichertenkreises  (z.B. versicherte Familie vs. Versicherte Einzelperson)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zielgruppe" type="dt:STE_Zielgruppe" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Zielgruppe (Junge Leute, Senioren, Schadenfreiheitsbonus,&amp;hellip;.)</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Tarifversion" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Tarifversion kennzeichnet eindeutig die zugrundeliegenden ARB, z.B. Tarifversion 2010-01-01 steht für die ARB, die am 01.01.2010 in Kraft getreten sind. Wenn mehrere Tarifstände , welche nur Monat und Jahr beinhalten MUSS der Tag (TT) mit 01 ergänzt werden.
+Hat er nur einen Tarifstand zum Jahr, dann MUSS auf Tag (TT) und Monat (MM) jeweils mit 01 ergänzt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VersichertesObjekt" type="CT_VersichertesObjekt" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="VersichertePerson" type="CT_VersichertePerson" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Geltungsbereich" type="dt:ST_Geltungsbereich" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Geltungsbereich, für den die Rechtsschutzversicherung Deckung gewährt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VersichertesObjekt">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstandsrolle">
+            <xsd:sequence>
+               <xsd:element name="AnzahlGleichartigerObjekte" type="dt:ST_Ganzzahl" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Dieses Attribut gibt die Anzahl der gleichartigen Objekte (Wasserfahrzeuge) an.
+Die Angabe dazu ist tarivierungsrelvant für die Wasserfahrzeugtypen [10; 11]</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Nutzlastklasse" type="dt:ST_Nutzlastklasse" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Nutzlastklasse eines Lastkraftwagens. Das Attribut DARF NUR verwendet werden, wenn das versicherte Objekt ein Lastkraftwagen ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

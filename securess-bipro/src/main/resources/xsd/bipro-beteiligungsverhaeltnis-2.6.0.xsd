@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/beteiligungsverhaeltnis"
+            xmlns:btvh="http://www.bipro.net/namespace/beteiligungsverhaeltnis"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:pm="http://www.bipro.net/namespace/produktmodell"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:mime="http://www.w3.org/2005/05/xmlmime"
+            targetNamespace="http://www.bipro.net/namespace/beteiligungsverhaeltnis"
+            bipro:Name="bipro-beteiligungsverhaeltnis-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:annotation>
+      <xsd:documentation xml:lang="de">Für Verträge, an denen mehr als ein Versicherer beteiligt ist (typisch im Industriegeschäft).</xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/produktmodell"
+               schemaLocation="bipro-produktmodell-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Beteiligungsverhaeltnis">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Diese Klasse spezifiziert den Anteil eines Vermittlers an einem Gesamtvertrag und die Aufteilung dieses Anteils auf mehrere Versicherer.
+
+Beispiel Normalfall:
+Vermittler A vermittlet den Gesamtvertrag und beteiligt das führende VU X zu 60 % und das beteiligte VU Y zu 40 %.
+Beteiligungsverhaeltnis.AnteilVermittler = 100
+Beteiligungsanteil.AnteilVU = 60
+Beteiligungsanteil.VUFuehrend = Ja
+Beteiligungsanteil.Versicherungsunternehmen = VU X
+Beteiligungsanteil.AnteilVU = 40
+Beteiligungsanteil.VUFuehrend = Nein
+Beteiligungsanteil.Versicherungsunternehmen = VU Y
+
+Beispiel Vermittler nur partiell beteiligt:
+Vermittler A vermittlet einen Anteil am Gesamtvertrag von 60 % und beteiligt das führende VU X zu 40 % und das beteiligte VU Y zu 20 %.
+Beteiligungsverhaeltnis.AnteilVermittler = 60
+Beteiligungsanteil.AnteilVU = 40
+Beteiligungsanteil.VUFuehrend = Ja
+Beteiligungsanteil.Versicherungsunternehmen = VU X
+Beteiligungsanteil.AnteilVU = 20
+Beteiligungsanteil.VUFuehrend = Nein
+Beteiligungsanteil.Versicherungsunternehmen = VU Y</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="GueltigAb" type="dt:ST_Datum" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum, ab dem das Beteiligungsverhaeltnis gültig ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnteilVermittler" type="dt:ST_Prozent" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anteil des Vermittlers am Gesamtvertrag</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AbrechnungVermittlerMitBeteiligten" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = Vermittler rechnet mit allen beteiligten Versicherern ab.
+NEIN = Vermittler rechnet nur mit dem führenden Versicherer ab. </xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Beteiligungsanteil" type="CT_Beteiligungsanteil" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ZusaetzlicheProduktbausteinDaten">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Diese Klasse ermöglicht, das Beteiligungsverhältnis vom Produktbaustein zu referenzieren.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="pm:CT_ZusaetzlicheProduktbausteinDaten">
+            <xsd:sequence>
+               <xsd:element name="Beteiligungsverhaeltnis" type="CT_Beteiligungsverhaeltnis" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Beteiligungsanteil">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Die Klasse Beteiligungsanteil spezifiziert den Anteil eines Versicherers innerhalb eines Beteiligungsverhälnisses.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="AnteilVU" type="dt:ST_Prozent" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anteil des VU am Beteiligungsverhältnis</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="VUFuehrend" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">JA = VU ist führender Versicherer
+NEIN = VU ist nicht-führender beteiligter Versicherer</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unternehmen" type="allg:CT_Unternehmen" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Vertragsnummer" type="allg:CT_Vertragsnummer" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

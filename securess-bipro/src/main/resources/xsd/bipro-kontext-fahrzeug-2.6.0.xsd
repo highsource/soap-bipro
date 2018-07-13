@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/kontext/fahrzeug"
+            xmlns:kt-fz="http://www.bipro.net/namespace/kontext/fahrzeug"
+            xmlns:fz="http://www.bipro.net/namespace/fahrzeug"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:kt="http://www.bipro.net/namespace/kontext"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/kontext/fahrzeug"
+            bipro:Name="bipro-kontext-fahrzeug-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/kontext"
+               schemaLocation="bipro-kontext-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/fahrzeug"
+               schemaLocation="bipro-fahrzeug-2.6.0.xsd"/>
+   <xsd:element name="Ergebniseintrag" type="kt-fz:CT_FahrzeugsucheErgebnis"/>
+   <xsd:complexType name="CT_FahrzeugsucheErgebnis">
+      <xsd:complexContent>
+         <xsd:extension base="kt:CT_Ergebniseintrag">
+            <xsd:sequence>
+               <xsd:element name="Fahrzeug" type="fz:CT_Fahrzeug" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Fahrzeugsuche">
+      <xsd:complexContent>
+         <xsd:extension base="kt:CT_Filter">
+            <xsd:sequence>
+               <xsd:element name="Herstellername" type="dt:ST_Text025" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Name des Herstellers, nach dem gesucht wird.
+Der eingegebene Text MUSS dann zu einem Treffer führen, wenn der Text als beliebiger Teil des Herstellernamens vorkommt.
+Groß-/Kleinschreibung MUSS ignoriert werden.
+Semantisch gleichwertige Namen bzw. Abkürzungen MÜSSEN berücksichtigt werden (z.B. MUSS die Suche nach "VW" auch "Volkswagen" finden und umgekehrt).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Modellname" type="dt:ST_Text050" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Name des Fahrzeugmodells, nach dem gesucht wird.
+Der eingegebene Text MUSS dann zu einem Treffer führen, wenn der Text als beliebiger Teil des Modellnamens vorkommt.
+Groß-/Kleinschreibung MUSS ignoriert werden.
+Beispielsweise MUSS die Suche nach "Golf" alle Varianten von Fahrzeugen des Typs "Golf" finden, z. B. auch "1KP (GOLF V PLUS 1.4)".</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="MotorLeistungUntereGrenze" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Untere Grenze des Suchbereichs für die Motorleistung. Falls nicht angegeben, ist die untere Grenze = 0. Die Einheit (kw oder PS) wird durch das Attribut MotorLeistungEinheit spezifiziert.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="MotorLeistungObereGrenze" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Obere Grenze des Suchbereichs für die Motorleistung. Falls nicht angegeben, hat die Suche kein oberes Limit. Die Einheit (kw oder PS) wird durch das Attribut MotorLeistungEinheit spezifiziert.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="MotorLeistungEinheit" type="dt:ST_Werteinheit" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Einheit der Motorleistung (kw oder PS).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="HubraumUntereGrenze" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Untere Grenze des Suchbereichs für den Hubraum in ccm. Falls nicht angegeben, ist die untere Grenze = 0.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="HubraumObereGrenze" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Obere Grenze des Suchbereichs für den Hubraum in ccm. Falls nicht angegeben, hat die Suche kein oberes Limit.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="Filter" type="kt-fz:CT_Fahrzeugsuche"/>
+</xsd:schema>

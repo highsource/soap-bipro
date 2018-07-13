@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/kapitalanlage/basis"
+            xmlns:kapanl-basis="http://www.bipro.net/namespace/kapitalanlage/basis"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/kapitalanlage/basis"
+            bipro:Name="bipro-kapitalanlage-basis-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Abtretungsglaeubiger">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Gläubiger der abgetretenen Kapitalanlage.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence>
+               <xsd:element name="DatumDerAbtretung" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der Abtretung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Rangfolge" type="dt:ST_Ganzzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Rangfolge des Abtretungsgläubigers.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="AnteiligerBetrag" type="CT_AnteiligerBetrag" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Kapitalanlage">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Eine Kapitalanlage, z.B. Termineinlage Sparbrief, Termineinlage Festgeld, Sparkonto, Kontokorrentkonto, Geschäftsanteile, Depot.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ArtID" type="dt:ST_Kapitalanlageart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Kapitalanlage.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Unterdepotnummer" type="dt:ST_Depotnummer" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Identifizierung des Unterdepots, falls das Depot aus Unterdepots besteht.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Waehrung" type="dt:ST_Waehrungsschluessel" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Währung, in der die Kapitalanlage geführt wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="DatumErsteEinzahlung" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Datum der ersten Einzahlung auf die Kapitalanlage.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Abtretung" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kennzeichen, ob zu der Kapitalanlage eine Abtretung vorliegt.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zinsen" type="CT_Zinsen" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Vereinbarung" type="CT_Vereinbarung" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Saldo" type="CT_Saldo" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Abtretungsglaeubiger" type="CT_Abtretungsglaeubiger" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Bestand">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Bestandswert eines Investments zu einem bestimmten Stichtag.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vereinbarung">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Vereinbarung der Vertragspartner über Erträge und Kosten einer Kapitalanlage (z. B. Zins, Gebühr, Bonus).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="KategorieID" type="dt:ST_VereinbarungKategorieID" minOccurs="1"
+                            maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Kategorie der Vereinbarung (z. B. Zins, Gebühr, Bonus).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ArtID" type="dt:ST_Vereinbarung" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der Vereinbarung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Wert" type="dt:ST_Dezimalzahl" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Wert der Vereinbarung, z.B. Zinssatz, Gebührenbetrag.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Werteinheit" type="dt:ST_Werteinheit" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">z.B. Prozent, Betrag</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Waehrung" type="dt:ST_Waehrungsschluessel" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Währung, falls der Wert ein Betrag ist.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Zahlungsweise" type="dt:ST_Zahlungsweise" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Grundlage des Werts, z.B. Zinssatz pro Monat, pro Jahr etc., Betrag pro Monat, pro Jahr etc.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bezeichnung" type="dt:ST_Text100" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bezeichnung der Vereinbarung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bedingung" type="dt:ST_Vereinbarungsbedingung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bedingung, für die die Vereinbarung gilt (z.B. für Bestand, für Zuzahlung).</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="UntererGrenzwert" type="CT_Grenzwert" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Zeitraum" type="allg:CT_Zeitraum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ObererGrenzwert" type="CT_Grenzwert" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Investment">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Informationen zu einem Investment (z.B. Aktie, Fonds, Anleihe).</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="ISIN" type="dt:ST_ISIN" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die International Securities Identification Number (ISIN) ist eine zwölfstellige Buchstaben-Zahlen-Kombination und stellt eine Identifikation für ein Wertpapier dar, das an der Börse gehandelt wird. Der Aufbau der ISIN wird in der ISO 6166 beschrieben.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Wertpapierkennnummer" type="dt:ST_Wertpapierkennnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Die Wertpapierkennnummer (WKN abgekürzt) ist eine in Deutschland verwendete sechsstellige Ziffern- und Buchstabenkombination zur Identifizierung von Wertpapieren.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Bezeichnung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Bezeichnung des Investments, z.B. Fondsname.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Wertpapierklassifikation" type="dt:ST_Text100" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Klassifikation des Investments, z.B. Aktien Deutschland, Aktien Europa, Renten Griechenland</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anteile" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anteile bzw. Stücke des Investments.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Waehrung" type="dt:ST_Waehrungsschluessel" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Währung, in der das Investment gehandelt wird.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="ZusaetzlicheInvestmentDaten" type="CT_ZusaetzlicheInvestmentDaten"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Devisenkurs" type="allg:CT_Devisenkurs" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Investmentkurs" type="CT_Investmentkurs" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BestandInInvestmentwaehrung" type="CT_Bestand" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="BestandInDepotwaehrung" type="CT_Bestand" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AnteiligerBetrag">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Anteiliger Betrag des Abtretungsgläubigers an der gesamten Kapitalanlage.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Grenzwert">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Grenzwert der Vereinbarung, wenn die Vereinbarung nach Beträgen gestaffelt ist.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Zinsen">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Aufgelaufene Zinsen aus einer Kapitalanlage zu einem Stichtag.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Saldo">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Saldo einer Kapitalanlage zu einem bestimmten Stichtag.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_ZusaetzlicheInvestmentDaten" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Erweiterungen zu Investmentdaten in einem anderen Kontext.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Investmentkurs">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Kurs zum Bewertungsstichtag, z.B. Rücknahmekurs.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Geldwert">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

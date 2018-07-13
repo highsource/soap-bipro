@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/kontext/unternehmen"
+            xmlns:kt-u="http://www.bipro.net/namespace/kontext/unternehmen"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:kontext="http://www.bipro.net/namespace/kontext"
+            xmlns:allgemein="http://www.bipro.net/namespace/allgemein"
+            targetNamespace="http://www.bipro.net/namespace/kontext/unternehmen"
+            bipro:Name="bipro-kontext-unternehmen-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/kontext"
+               schemaLocation="bipro-kontext-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:element name="Filter" type="kt-u:CT_Unternehmenssuche"/>
+   <xsd:complexType name="CT_Unternehmenssuche">
+      <xsd:complexContent>
+         <xsd:extension base="kontext:CT_Filter">
+            <xsd:sequence>
+               <xsd:element name="Name" type="dt:ST_Text060" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Name des Unternehmens, ggf. auch Teile des Namens.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Ort" type="dt:ST_Text030" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ort, an dem die Versicherer ihren Hauptsitz oder eine Niederlassung haben.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Sparte" type="dt:ST_Sparte" minOccurs="0" maxOccurs="1" nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Spartenkontext für die Aufbereitung der Ergebnisse</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_UnternehmenssucheErgebnis">
+      <xsd:complexContent>
+         <xsd:extension base="kontext:CT_Ergebniseintrag">
+            <xsd:sequence>
+               <xsd:element name="Unternehmen" type="allgemein:CT_Unternehmen" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="Ergebniseintrag" type="kt-u:CT_UnternehmenssucheErgebnis"/>
+</xsd:schema>

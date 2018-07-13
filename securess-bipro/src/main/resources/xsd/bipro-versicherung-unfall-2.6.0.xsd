@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/versicherung/unfall"
+            xmlns:unfall="http://www.bipro.net/namespace/versicherung/unfall"
+            xmlns:fragen="http://www.bipro.net/namespace/fragen"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            targetNamespace="http://www.bipro.net/namespace/versicherung/unfall"
+            bipro:Name="bipro-versicherung-unfall-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:annotation>
+      <xsd:documentation xml:lang="de">Das Modell bildet derzeit nur die private Unfallversicherung ab. Sollte im Zuge der Normierung von gewerblichen Versicherungen weitere Objekte sinnvoll sein, die aufgrund ihrer Anzahl oder aufgrund einer sinnvollen Kapselung in ein separates Modell ausgelagert werden sollen, so ist dieses Modell bipro-unfallgewerbe zu nennen.</xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/fragen"
+               schemaLocation="bipro-fragen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:complexType name="CT_AntragsdatenUnfall">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_ZusaetzlichePartnerdaten">
+            <xsd:sequence>
+               <xsd:element name="Schweigepflichtsentbindung" type="dt:ST_JaNein" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Fragenkomplex" type="fragen:CT_Fragenkomplex" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

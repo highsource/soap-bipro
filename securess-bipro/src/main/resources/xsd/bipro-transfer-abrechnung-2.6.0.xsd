@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/transfer/abrechnung"
+            xmlns:xf-abrg="http://www.bipro.net/namespace/transfer/abrechnung"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:abrg="http://www.bipro.net/namespace/abrechnung"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:xf="http://www.bipro.net/namespace/transfer"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            targetNamespace="http://www.bipro.net/namespace/transfer/abrechnung"
+            bipro:Name="bipro-transfer-abrechnung-2.6.0.xsd"
+            bipro:Version="2.6.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6
+		(Build: 20160617-1214)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/transfer"
+               schemaLocation="bipro-transfer-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/abrechnung"
+               schemaLocation="bipro-abrechnung-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:complexType name="CT_KlaerungsantwortTransfer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klärungsantwort auf eine Klärungsanfrage.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="xf:CT_Transfer">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AbrechnungsanforderungTransfer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Anforderung einer Abrechnung einer bestimmten Abrechnungsart, ggf. mit einigen Einschränkungen hinsichtlich des Posteninhalts der Abrechnung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AbrechnungTransfer">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AbrechnungslieferungTransfer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Lieferung einer Abrechnung einer bestimmten Abrechnungsart, ggf. mit einigen Einschränkungen hinsichtlich des Posteninhalts der Abrechnung</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_AbrechnungTransfer">
+            <xsd:sequence>
+               <xsd:element name="Saldo" type="abrg:CT_Saldo" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Postengruppe" type="abrg:CT_Postengruppe" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AbrechnungTransfer" abstract="true">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Abstrakte Klasse, die als Basis für die Abrechnungslieferung und die Abrechnungsanforderung dient und die einschränkenden Objekte referenziert</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="xf:CT_Transfer">
+            <xsd:sequence>
+               <xsd:element name="Abrechnungsart" type="dt:ST_Abrechnungsart" minOccurs="1" maxOccurs="1">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art der angeforderten oder gelieferten Abrechnung</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Gegenstand" type="allg:CT_Gegenstand" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="EinschraenkungAufBeitragszahler" type="partner:CT_Beitragszahler"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="EinschraenkungAufZeitraum" type="allg:CT_Zeitraum" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="EinschraenkungAufAktenzeichen" type="allg:CT_Schadennummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="EinschraenkungAufVertrag" type="allg:CT_Vertragsnummer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="EinschraenkungAufVertragspartner" type="partner:CT_Vertragspartner"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="EinschraenkungAufSchadennummer" type="allg:CT_Schadennummer"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_KlaerungsanfrageTransfer">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klärungsanfrage zu einem - ggf. auch fehlenden - Posten in einer Abrechnungslieferung.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="xf:CT_Transfer">
+            <xsd:sequence>
+               <xsd:element name="Gruppenposten" type="abrg:CT_Postengruppe" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="KlaerungspostenSaldo" type="abrg:CT_Saldo" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Klaerungsposten" type="abrg:CT_Abrechnungsposten" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

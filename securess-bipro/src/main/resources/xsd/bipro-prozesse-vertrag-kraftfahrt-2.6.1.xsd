@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/prozesse/versicherung/vertrag/kraftfahrt"
+            xmlns:pz-kf="http://www.bipro.net/namespace/prozesse/versicherung/vertrag/kraftfahrt"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:fz="http://www.bipro.net/namespace/fahrzeug"
+            xmlns:pm-kf="http://www.bipro.net/namespace/versicherung/produktmodell/kraftfahrt"
+            xmlns:pz-vtrg="http://www.bipro.net/namespace/prozesse/vertrag"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/prozesse/versicherung/vertrag/kraftfahrt"
+            bipro:Name="bipro-prozesse-vertrag-kraftfahrt-2.6.1.xsd"
+            bipro:Version="2.6.1"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6.1
+		(Build: 20160908-1036)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/prozesse/vertrag"
+               schemaLocation="bipro-prozesse-vertrag-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/produktmodell/kraftfahrt"
+               schemaLocation="bipro-versicherung-kraftfahrt-2.6.1.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/fahrzeug"
+               schemaLocation="bipro-fahrzeug-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:complexType name="CT_AenderungVertragKfz" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="pz-vtrg:CT_AenderungVertrag">
+            <xsd:sequence>
+               <xsd:element name="AktuellerKilometerstand" type="dt:ST_Ganzzahl" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Aktueller Kilometerstand bei Vertragsänderung.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Kennzeichen" type="fz:CT_Kennzeichen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragKfzFahrzeug">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragKfz">
+            <xsd:sequence>
+               <xsd:element name="Halter" type="partner:CT_Partner" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="NeuesKennzeichen" type="fz:CT_Kennzeichen" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragKfzTarifmerkmale">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragKfz">
+            <xsd:sequence>
+               <xsd:element name="Fahrer" type="fz:CT_Fahrer" minOccurs="0" maxOccurs="unbounded"/>
+               <xsd:element name="Fahrzeugnutzung" type="fz:CT_Fahrzeugnutzung" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Partner" type="partner:CT_Partner" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_AenderungVertragKfzDeckung">
+      <xsd:complexContent>
+         <xsd:extension base="CT_AenderungVertragKfz">
+            <xsd:sequence>
+               <xsd:element name="KfzVersicherung" type="pm-kf:CT_KfzVersicherung" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>

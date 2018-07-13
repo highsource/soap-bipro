@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.bipro.net/namespace/versicherung/haftpflicht"
+            xmlns:hpfl="http://www.bipro.net/namespace/versicherung/haftpflicht"
+            xmlns:basis="http://www.bipro.net/namespace/basis"
+            xmlns:partner="http://www.bipro.net/namespace/partner"
+            xmlns:fragen="http://www.bipro.net/namespace/fragen"
+            xmlns:vs-pm="http://www.bipro.net/namespace/versicherung/produktmodell"
+            xmlns:dt="http://www.bipro.net/namespace/datentypen"
+            xmlns:allg="http://www.bipro.net/namespace/allgemein"
+            xmlns:bipro="http://www.bipro.net/namespace"
+            targetNamespace="http://www.bipro.net/namespace/versicherung/haftpflicht"
+            bipro:Name="bipro-versicherung-haftpflicht-2.6.1.xsd"
+            bipro:Version="2.6.1"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:appinfo>BiPRO Release 2.6.1
+		(Build: 20160908-1036)</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:annotation>
+      <xsd:documentation xml:lang="de">Das Modell bildet derzeit nur die private Haftpflichtversicherung ab. Sollte im Zuge der Normierung von gewerblichen bzw. industriellen Versicherungen weitere Objekte sinnvoll sein, die aufgrund ihrer Anzahl oder aufgrund einer sinnvollen Kapselung in ein separates Modell ausgelagert werden sollen, so ist dieses Modell bipro-haftpflichtgewerbe bzw. bipro-haftpflichtindustrie zu nennen.</xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://www.bipro.net/namespace/datentypen"
+               schemaLocation="bipro-datentypen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/versicherung/produktmodell"
+               schemaLocation="bipro-versicherung-produktmodell-2.6.1.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/fragen"
+               schemaLocation="bipro-fragen-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/partner"
+               schemaLocation="bipro-partner-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/allgemein"
+               schemaLocation="bipro-allgemein-2.6.0.xsd"/>
+   <xsd:import namespace="http://www.bipro.net/namespace/basis"
+               schemaLocation="bipro-basis-2.6.0.xsd"/>
+   <xsd:complexType name="CT_Jagd">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Jagdscheinnummer" type="dt:ST_Text017" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VersichertesTier" type="CT_VersichertesTier" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="UntereJagdbehoerde" type="CT_UntereJagdbehoerde" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Bauherren">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Fertigstellung" type="dt:ST_Datum" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ArtEigenleistung" type="dt:ST_Text080" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Wagnisanschrift" type="CT_Wagnisanschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="ArtBauvorhaben" type="dt:ST_ArtDesVorhabens" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Art des Bauvorhabens</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Gewaesserschaden">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Einbaujahr" type="dt:ST_Jahr" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Trinkwasserschutzgebiet" type="dt:ST_JaNein" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Wagnisanschrift" type="CT_Wagnisanschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_MitversicherteNichtehelicheLebensgemeinschaft">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Hauptwagnis">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur genauen Beschreibung des Betriebes und dessen Anteil bei Mischbetrieben.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Aktivitaetsrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VersichertesSportboot">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstandsrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_HausUndGrundbesitzer">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Wagnisanschrift" type="CT_Wagnisanschrift" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Vermoegensschaden">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung eines Vermögensschadenwagnisses.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_DiensthaftpflichtGiltFuer">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Wassersport">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="VersichertesSportboot" type="CT_VersichertesSportboot" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_VersichertesTier">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Gegenstandsrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Haftpflichtwagnis">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Aktivitaet">
+            <xsd:sequence>
+               <xsd:element name="Wagnisart" type="dt:STE_Wagnisart" minOccurs="1" maxOccurs="1"/>
+               <xsd:element name="Berechnungseinheit" type="dt:ST_BerechnungseinheitHaftpflicht"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Wagnismenge" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Waehrung" type="dt:ST_Waehrungsschluessel" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Ist die Wagnismenge ein Geldbetrag, MUSS in diesem Attribut die Währung angegeben werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Jagd" type="CT_Jagd" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Privat" type="CT_Privat" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <xsd:element name="Wassersport" type="CT_Wassersport" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Tierhalter" type="CT_Tierhalter" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Vorschaden" type="vs-pm:CT_Vorschaden" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="HausUndGrundbesitzer" type="CT_HausUndGrundbesitzer" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Gewaesserschaden" type="CT_Gewaesserschaden" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Bauherren" type="CT_Bauherren" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Fragenkomplex" type="fragen:CT_Fragenkomplex" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="Wagnistext" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Textliche Umsetzung der Wagnisart. DARF NICHT anstelle der Wagnisart genutzt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Wagnisbeschreibung" type="dt:ST_Text1000" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Beschreibung des Wagnisses. DARF NICHT anstelle der Wagnisart genutzt werden.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Hauptwagnis" type="CT_Hauptwagnis" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Tierhalter">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="NameReitbeteiligung" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="VersichertesTier" type="CT_VersichertesTier" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_MitversicherterAngehoeriger">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Betriebswagnis">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur genauen Beschreibung des Betriebes und dessen Anteil bei Mischbetrieben.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="CT_Haftpflichtwagnis">
+            <xsd:sequence>
+               <xsd:element name="Betriebsart" type="dt:ST_Betriebsart" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Eindeutige Bezeichnung der Betriebsart des Providers.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Stichwort" type="dt:ST_Text255" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Stichwort aus dem Stichwortverzeichnis.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Anteil" type="dt:ST_Dezimalzahl" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Anteil der Betriebsart am Betrieb gemäß Werteinheit.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Werteinheit" type="dt:ST_Werteinheit" minOccurs="0" maxOccurs="1"
+                            nillable="true">
+                  <xsd:annotation>
+                     <xsd:documentation xml:lang="de">Werteinheit des Anteils.</xsd:documentation>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="Umweltbasis" type="CT_Umweltbasis" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Umweltschaden" type="CT_Umweltschaden" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Betriebshaftpflicht" type="CT_Betriebshaftpflicht" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="Vermoegensschaden" type="CT_Vermoegensschaden" minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Umweltbasis">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung eines Umweltbasiswagnisses.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Wagnisanschrift" type="CT_Wagnisanschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Privat">
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Mitversicherungsart" type="dt:ST_Mitversicherungsart" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="MitversicherterAngehoeriger" type="CT_MitversicherterAngehoeriger"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="MitversichertePerson" type="CT_MitversichertePerson" minOccurs="0"
+                            maxOccurs="unbounded"/>
+               <xsd:element name="MitversicherteNichtehelicheLebensgemeinschaft"
+                            type="CT_MitversicherteNichtehelicheLebensgemeinschaft"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="true"/>
+               <xsd:element name="DiensthaftpflichtGiltFuer" type="CT_DiensthaftpflichtGiltFuer"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Umweltschaden">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung eines Umweltschadenwagnisses.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Wagnisanschrift" type="CT_Wagnisanschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Wagnisanschrift">
+      <xsd:complexContent>
+         <xsd:extension base="allg:CT_Adresse">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_Betriebshaftpflicht">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="de">Klasse zur Abbildung eines Betriebshaftpflichtwagnisses.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="basis:CT_Objekt">
+            <xsd:sequence>
+               <xsd:element name="Wagnisanschrift" type="CT_Wagnisanschrift" minOccurs="0" maxOccurs="1"
+                            nillable="true"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_MitversichertePerson">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CT_UntereJagdbehoerde">
+      <xsd:complexContent>
+         <xsd:extension base="partner:CT_Partnerrolle">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+</xsd:schema>
