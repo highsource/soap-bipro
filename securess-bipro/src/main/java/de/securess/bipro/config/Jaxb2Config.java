@@ -32,7 +32,7 @@ public class Jaxb2Config {
 				new ClassPathResource("/xsd/bipro-transfer-gevo-2.6.0.xsd"),
 				new ClassPathResource("/xsd/bipro-gevo-2.6.0.xsd"),
 				new ClassPathResource("/xsd/bipro-prozesse-vertrag-2.6.0.xsd"),
-				new ClassPathResource("xsd/bipro-basis-2.6.0.xsd")
+				new ClassPathResource("/xsd/bipro-basis-2.6.0.xsd")
 				);
 		Map<String, Object> properties = new HashMap<>();
 		properties.put(Marshaller.JAXB_FORMATTED_OUTPUT, true);
