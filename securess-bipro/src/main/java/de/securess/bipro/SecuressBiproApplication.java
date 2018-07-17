@@ -106,7 +106,7 @@ public class SecuressBiproApplication implements CommandLineRunner {
 		ctTransfer.setSparte(objFactory.createCTTransferSparte("050")); 			
 		ctTransfer.getBeitrag().add(null);
 		JAXBElement<String> value = new JAXBElement<String>(
-				new QName("http://wwww.bipro.net/namespace/transfer/gevo","ArtID"), String.class, "value"
+				new QName("http://www.bipro.net/namespace/gevo","ArtID"), String.class, "value"
 				);
 		value.setValue("120000000");
 		CTGeschaeftsvorgang ctVertragsauskunft = new CTVertragsauskunft();
